@@ -1,0 +1,44 @@
+cabal-version:      3.6
+name:               raylib-hs
+version:            4.0.0.0
+author:             Daniel Cabral
+maintainer:         Daniel Cabral
+
+extra-source-files:
+    README.md
+
+common common-extensions
+  default-extensions: GHC2021
+
+library
+    import: common-extensions
+    exposed-modules:
+        Raylib
+    build-depends:    base ^>=4.16.1.0,
+        bytestring ^>= 0.11.3.1,
+        text ^>= 1.2.5.0,
+        containers ^>= 0.6.5.1
+    c-sources:
+      cbits/raylib_wrapper.c
+    includes:
+      raylib.h
+      cbits/raylib_wrapper.h
+    --remember to remove prefix "lib" from the c library name. **sigh** gets me all the time.
+    extra-libraries:
+        raylib
+    hs-source-dirs:      src
+    --TODO:Can we just use a folder instead of specifiying each individual art asset??
+
+executable core-basic-window
+    build-depends: base, raylib-hs
+    hs-source-dirs: examples/core
+    main-is: CoreBasicWindow.hs
+    ghc-options: -main-is Examples.CoreBasicWindow
+
+executable core-basic-screen-manager
+    build-depends: base, raylib-hs
+    hs-source-dirs: examples/core
+    main-is: CoreBasicScreenManager.hs
+    ghc-options: -main-is Examples.CoreBasicScreenManager
+
+
