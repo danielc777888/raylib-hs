@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Examples.CoreBasicWindow where
 
 import Raylib

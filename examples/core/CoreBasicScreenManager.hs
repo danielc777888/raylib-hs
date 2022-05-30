@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Examples.CoreBasicScreenManager where
 
 import Raylib

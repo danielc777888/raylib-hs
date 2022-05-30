@@ -10,24 +10,36 @@ extra-source-files:
 common common-extensions
   default-extensions: GHC2021
 
+flag examples
+  description:       Build examples
+  default:           False
+  manual:            True
+
 library
     import: common-extensions
     exposed-modules:
         Raylib
-    build-depends:    base ^>=4.16.1.0,
-        bytestring ^>= 0.11.3.1,
-        text ^>= 1.2.5.0,
-        containers ^>= 0.6.5.1
+        Raylib.Colors
+        Raylib.Structs
+        Raylib.Core
+        Raylib.Models
+        Raylib.Text
+        Raylib.Shapes
+        Raylib.Textures
+        Raylib.Audio
+    build-depends:    base,
+        bytestring,
+        text,
+        containers
     c-sources:
-      cbits/raylib_wrapper.c
+      cbits/raylib-hs.c
     includes:
       raylib.h
-      cbits/raylib_wrapper.h
+      cbits/raylib-hs.h
     --remember to remove prefix "lib" from the c library name. **sigh** gets me all the time.
     extra-libraries:
         raylib
     hs-source-dirs:      src
-    --TODO:Can we just use a folder instead of specifiying each individual art asset??
 
 executable core-basic-window
     build-depends: base, raylib-hs
