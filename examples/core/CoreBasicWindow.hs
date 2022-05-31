@@ -16,6 +16,8 @@ gameLoop = do
   if not done
     then do
       beginDrawing
+      clearBackground rayWhite
+      drawText "Congrats! You created your first window!" 190 200 20 lightGray
       endDrawing
       gameLoop
     else return ()

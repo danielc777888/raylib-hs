@@ -25,8 +25,8 @@ initAudioDevice = do cInitAudioDevice
 --audio loading
 foreign import ccall unsafe "raylib-hs.h C_LoadSound" cLoadSound :: CString -> IO (Ptr Sound)
 loadSound :: T.Text -> IO (Ptr Sound)
-loadSound f = do f' <- newCString (T.unpack f)
-                 cLoadSound f'
+loadSound f = withCString (T.unpack f) (\f' ->
+                 cLoadSound f')
 
 foreign import ccall unsafe "raylib-hs.h C_UnloadSound" cUnloadSound :: Ptr Sound -> IO ()
 unloadSound :: Ptr Sound -> IO ()

@@ -1,11 +1,13 @@
 module Raylib.Structs (
+ Texture,
  Texture2D,
  Font (Font),
  Sound,
  Vector2 (Vector2),
- Color,
- RayKeyboardKey (..),
- TraceLogType (..),
+ Color (Color),
+ KeyboardKey (..),
+ Gesture (..),
+ TraceLogLevel (..),
  Rectangle (Rectangle)) where
 
 import Foreign.Storable
@@ -14,23 +16,32 @@ import Foreign.C
 
 #include <raylib.h>
 
-data Texture2D = Texture2D CInt CInt CInt CInt CInt
-instance Storable Texture2D where
-  sizeOf _ = #{size Texture2D}
-  alignment _ = #{alignment Texture2D}
+type Texture2D = Texture
+
+data Texture = Texture
+  { textureId :: !CInt
+  , textureWidth :: !CInt
+  , textureHeight :: !CInt
+  , textureMipmaps :: !CInt
+  , textureFormat :: !CInt
+  } deriving (Eq, Show)
+
+instance Storable Texture where
+  sizeOf _ = #{size Texture}
+  alignment _ = #{alignment Texture}
   peek ptr = do
-    id' <- (#peek Texture2D, id) ptr
-    width' <- (#peek Texture2D, width) ptr
-    height' <- (#peek Texture2D, height) ptr
-    mipmaps' <- (#peek Texture2D, mipmaps) ptr
-    format' <- (#peek Texture2D, format) ptr
-    return (Texture2D id' width' height' mipmaps' format')
-  poke ptr (Texture2D id' width' height' mipmaps' format') = do
-    (#poke Texture2D, id) ptr id'
-    (#poke Texture2D, width) ptr width'
-    (#poke Texture2D, height) ptr height'
-    (#poke Texture2D, mipmaps) ptr mipmaps'
-    (#poke Texture2D, format) ptr format'
+    id' <- (#peek Texture, id) ptr
+    width' <- (#peek Texture, width) ptr
+    height' <- (#peek Texture, height) ptr
+    mipmaps' <- (#peek Texture, mipmaps) ptr
+    format' <- (#peek Texture, format) ptr
+    return (Texture id' width' height' mipmaps' format')
+  poke ptr (Texture id' width' height' mipmaps' format') = do
+    (#poke Texture, id) ptr id'
+    (#poke Texture, width) ptr width'
+    (#poke Texture, height) ptr height'
+    (#poke Texture, mipmaps) ptr mipmaps'
+    (#poke Texture, format) ptr format'
 
 data Color = Color CUChar CUChar CUChar CUChar
 instance Storable Color where
@@ -48,7 +59,7 @@ instance Storable Color where
     (#poke Color, b) ptr b'
     (#poke Color, a) ptr a'
 
-data RayKeyboardKey = Ray_Key_Apostrophe
+data KeyboardKey = Key_Apostrophe
                 | Key_Comma
                 | Key_Minus
                 | Key_Period
@@ -152,9 +163,10 @@ data RayKeyboardKey = Ray_Key_Apostrophe
                 | Key_Kp_Subtract
                 | Key_Kp_Add
                 | Key_Kp_Enter
-                | Ray_Key_Kp_Equal deriving (Show, Eq)
-instance Enum RayKeyboardKey where
-  fromEnum Ray_Key_Apostrophe = #{const KEY_APOSTROPHE}
+                | Key_Kp_Equal deriving (Show, Eq)
+
+instance Enum KeyboardKey where
+  fromEnum Key_Apostrophe = #{const KEY_APOSTROPHE}
   fromEnum Key_Comma = #{const KEY_COMMA}
   fromEnum Key_Minus = #{const KEY_MINUS}
   fromEnum Key_Period = #{const KEY_PERIOD}
@@ -258,8 +270,8 @@ instance Enum RayKeyboardKey where
   fromEnum Key_Kp_Subtract = #{const KEY_KP_SUBTRACT}
   fromEnum Key_Kp_Add = #{const KEY_KP_ADD}
   fromEnum Key_Kp_Enter = #{const KEY_KP_ENTER}
-  fromEnum Ray_Key_Kp_Equal = #{const KEY_KP_EQUAL}
-  toEnum #{const KEY_APOSTROPHE} = Ray_Key_Apostrophe
+  fromEnum Key_Kp_Equal = #{const KEY_KP_EQUAL}
+  toEnum #{const KEY_APOSTROPHE} = Key_Apostrophe
   toEnum #{const KEY_COMMA} = Key_Comma
   toEnum #{const KEY_MINUS} = Key_Minus
   toEnum #{const KEY_PERIOD} = Key_Period
@@ -363,8 +375,45 @@ instance Enum RayKeyboardKey where
   toEnum #{const KEY_KP_SUBTRACT} = Key_Kp_Subtract
   toEnum #{const KEY_KP_ADD} = Key_Kp_Add
   toEnum #{const KEY_KP_ENTER} = Key_Kp_Enter
-  toEnum #{const KEY_KP_EQUAL} = Ray_Key_Kp_Equal
+  toEnum #{const KEY_KP_EQUAL} = Key_Kp_Equal
   toEnum _ = error "no such value for KeyboardKey"
+
+
+data Gesture = GestureNone
+              | GestureTap
+              | GestureDoubleTap
+              | GestureHold
+              | GestureDrag
+              | GestureSwipeRight
+              | GestureSwipeLeft
+              | GestureSwipeUp
+              | GestureSwipeDown
+              | GesturePinchIn
+              | GesturePinchOut deriving (Show, Eq)
+
+instance Enum Gesture where
+  fromEnum GestureNone = #{const GESTURE_NONE}
+  fromEnum GestureTap = #{const GESTURE_TAP}
+  fromEnum GestureDoubleTap = #{const GESTURE_DOUBLETAP}
+  fromEnum GestureHold = #{const GESTURE_HOLD}
+  fromEnum GestureDrag = #{const GESTURE_DRAG}
+  fromEnum GestureSwipeRight = #{const GESTURE_SWIPE_RIGHT}
+  fromEnum GestureSwipeLeft = #{const GESTURE_SWIPE_LEFT}
+  fromEnum GestureSwipeUp = #{const GESTURE_SWIPE_UP}
+  fromEnum GestureSwipeDown = #{const GESTURE_SWIPE_DOWN}
+  fromEnum GesturePinchIn = #{const GESTURE_PINCH_IN}
+  fromEnum GesturePinchOut = #{const GESTURE_PINCH_OUT}
+  toEnum #{const GESTURE_NONE} = GestureNone
+  toEnum #{const GESTURE_TAP} = GestureTap
+  toEnum #{const GESTURE_DOUBLETAP} = GestureDoubleTap
+  toEnum #{const GESTURE_HOLD} = GestureHold
+  toEnum #{const GESTURE_DRAG} = GestureDrag
+  toEnum #{const GESTURE_SWIPE_RIGHT} = GestureSwipeRight
+  toEnum #{const GESTURE_SWIPE_LEFT} = GestureSwipeLeft
+  toEnum #{const GESTURE_SWIPE_UP} = GestureSwipeUp
+  toEnum #{const GESTURE_SWIPE_DOWN} = GestureSwipeDown
+  toEnum #{const GESTURE_PINCH_IN} = GesturePinchIn
+  toEnum #{const GESTURE_PINCH_OUT} = GesturePinchOut
 
 data AudioStream = AudioStream (Ptr CInt) CUInt CUInt CUInt
 instance Storable AudioStream where
@@ -479,30 +528,31 @@ instance Storable Font where
     (#poke Font, glyphs) ptr glyphs'
 
 
-data TraceLogType = All
-                  | Trace
-                  | Debug
-                  | Info
-                  | Warning
-                  | Error
-                  | Fatal
-                  | None deriving (Show, Eq)
-instance Enum TraceLogType where
-  fromEnum All = #{const LOG_ALL}
-  fromEnum Trace = #{const LOG_TRACE}
-  fromEnum Debug = #{const LOG_DEBUG}
-  fromEnum Info = #{const LOG_INFO}
-  fromEnum Warning = #{const LOG_WARNING}
-  fromEnum Error = #{const LOG_ERROR}
-  fromEnum Fatal = #{const LOG_FATAL}
-  fromEnum None = #{const LOG_NONE}
-  toEnum #{const LOG_ALL} = All
-  toEnum #{const LOG_TRACE} = Trace
-  toEnum #{const LOG_DEBUG} = Debug
-  toEnum #{const LOG_INFO} = Info
-  toEnum #{const LOG_WARNING} = Warning
-  toEnum #{const LOG_ERROR} = Error
-  toEnum #{const LOG_FATAL} = Fatal
-  toEnum #{const LOG_NONE} = None
+data TraceLogLevel = LogAll
+                  | LogTrace
+                  | LogDebug
+                  | LogInfo
+                  | LogWarning
+                  | LogError
+                  | LogFatal
+                  | LogNone deriving (Show, Eq)
+
+instance Enum TraceLogLevel where
+  fromEnum LogAll = #{const LOG_ALL}
+  fromEnum LogTrace = #{const LOG_TRACE}
+  fromEnum LogDebug = #{const LOG_DEBUG}
+  fromEnum LogInfo = #{const LOG_INFO}
+  fromEnum LogWarning = #{const LOG_WARNING}
+  fromEnum LogError = #{const LOG_ERROR}
+  fromEnum LogFatal = #{const LOG_FATAL}
+  fromEnum LogNone = #{const LOG_NONE}
+  toEnum #{const LOG_ALL} = LogAll
+  toEnum #{const LOG_TRACE} = LogTrace
+  toEnum #{const LOG_DEBUG} = LogDebug
+  toEnum #{const LOG_INFO} = LogInfo
+  toEnum #{const LOG_WARNING} = LogWarning
+  toEnum #{const LOG_ERROR} = LogError
+  toEnum #{const LOG_FATAL} = LogFatal
+  toEnum #{const LOG_NONE} = LogNone
 
 

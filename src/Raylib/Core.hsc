@@ -1,22 +1,20 @@
 module Raylib.Core (
- -- Window related functions
+ -- window related functions
  initWindow,
  windowShouldClose,
  closeWindow,
  toggleFullScreen,
  getMonitorWidth,
  getMonitorHeight,
-  --core drawing
+ -- drawing related functions
+ clearBackground,
  beginDrawing,
  endDrawing,
- --core timing
  setTargetFPS,
  getTime,
  getFrameTime,
- --core input
  isKeyPressed,
  isKeyDown,
- --core misc
  getRandomValue,
  traceLog,
 
@@ -30,11 +28,11 @@ import Raylib.Structs
 
 #include <raylib.h>
 
--- Initialize window and OpenGL context
+-- window related functions
 foreign import ccall unsafe "raylib.h InitWindow" cInitWindow :: CInt -> CInt -> CString -> IO ()
 initWindow :: Int -> Int -> T.Text -> IO ()
-initWindow width height title = do title' <- newCString (T.unpack title)
-                                   cInitWindow (fromIntegral width) (fromIntegral height) title'
+initWindow width height title = withCString (T.unpack title) (\title' ->
+                                   cInitWindow (fromIntegral width) (fromIntegral height) title')
 
 foreign import ccall unsafe "raylib.h WindowShouldClose" cWindowShouldClose :: IO CBool
 windowShouldClose :: IO Bool
@@ -60,16 +58,7 @@ getMonitorHeight :: Int -> IO Int
 getMonitorHeight x = do h <- cGetMonitorHeight (fromIntegral x)
                         return (fromIntegral h)
 
---core drawing
-foreign import ccall unsafe "raylib.h BeginDrawing" cBeginDrawing :: IO ()
-beginDrawing :: IO ()
-beginDrawing = do cBeginDrawing
 
-foreign import ccall unsafe "raylib.h EndDrawing" cEndDrawing :: IO ()
-endDrawing :: IO ()
-endDrawing = do cEndDrawing
-
---core timing
 foreign import ccall unsafe "raylib.h SetTargetFPS" cSetTargetFPS :: CInt -> IO ()
 setTargetFPS :: Int -> IO ()
 setTargetFPS fps = do cSetTargetFPS (fromIntegral fps)
@@ -84,28 +73,37 @@ getFrameTime :: IO Float
 getFrameTime = do t <- cGetFrameTime
                   return (realToFrac t)
 
---core input
 foreign import ccall unsafe "raylib.h IsKeyPressed" cIsKeyPressed :: CInt -> IO CBool
-isKeyPressed :: RayKeyboardKey -> IO Bool
+isKeyPressed :: KeyboardKey -> IO Bool
 isKeyPressed k = do p <- cIsKeyPressed (fromIntegral (fromEnum k))
                     return (toBool p)
 
 foreign import ccall unsafe "raylib.h IsKeyDown" cIsKeyDown :: CInt -> IO CBool
-isKeyDown :: RayKeyboardKey -> IO Bool
+isKeyDown :: KeyboardKey -> IO Bool
 isKeyDown k = do p <- cIsKeyDown (fromIntegral (fromEnum k))
                  return (toBool p)
---core misc
+
 foreign import ccall unsafe "raylib.h GetRandomValue" cGetRandomValue :: CInt -> CInt -> IO CInt
 getRandomValue :: Int -> Int -> IO Int
 getRandomValue min max = do v <- cGetRandomValue (fromIntegral min) (fromIntegral max)
                             return (fromIntegral v)
 
 foreign import ccall unsafe "raylib.h TraceLog" cTraceLog :: CInt -> CString -> IO ()
-traceLog :: TraceLogType -> String -> IO ()
-traceLog t s = do s' <- newCString s
-                  cTraceLog (fromIntegral (fromEnum t)) s'
+traceLog :: TraceLogLevel -> String -> IO ()
+traceLog t s = withCString s (\s' ->
+                  cTraceLog (fromIntegral (fromEnum t)) s')
 
+ -- drawing related functions
 
+foreign import ccall unsafe "raylib-hs.h C_ClearBackground" cClearBackground :: Ptr Color -> IO ()
+clearBackground :: Color -> IO ()
+clearBackground c = with c(\c_ptr -> cClearBackground c_ptr)
 
+foreign import ccall unsafe "raylib.h BeginDrawing" cBeginDrawing :: IO ()
+beginDrawing :: IO ()
+beginDrawing = do cBeginDrawing
 
+foreign import ccall unsafe "raylib.h EndDrawing" cEndDrawing :: IO ()
+endDrawing :: IO ()
+endDrawing = do cEndDrawing
 

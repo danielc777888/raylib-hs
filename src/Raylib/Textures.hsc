@@ -18,8 +18,8 @@ import Raylib.Structs
 --texture loading
 foreign import ccall unsafe "raylib-hs.h C_LoadTexture" cLoadTexture :: CString -> IO (Ptr Texture2D)
 loadTexture :: T.Text -> IO (Ptr Texture2D)
-loadTexture f = do f' <- newCString (T.unpack f)
-                   cLoadTexture f'
+loadTexture f = withCString (T.unpack f) (\f' ->
+                   cLoadTexture f')
 
 foreign import ccall unsafe "raylib-hs.h C_UnloadTexture" cUnloadTexture :: Ptr Texture2D -> IO ()
 unloadTexture :: Ptr Texture2D -> IO ()
