@@ -43,7 +43,13 @@ instance Storable Texture where
     (#poke Texture, mipmaps) ptr mipmaps'
     (#poke Texture, format) ptr format'
 
-data Color = Color CUChar CUChar CUChar CUChar
+data Color = Color
+  { colorR :: !CUChar
+  , colorG :: !CUChar
+  , colorB :: !CUChar
+  , colorA :: !CUChar
+  } deriving (Eq, Show)
+
 instance Storable Color where
   sizeOf _ = #{size Color}
   alignment _ = #{alignment Color}
@@ -415,7 +421,13 @@ instance Enum Gesture where
   toEnum #{const GESTURE_PINCH_IN} = GesturePinchIn
   toEnum #{const GESTURE_PINCH_OUT} = GesturePinchOut
 
-data AudioStream = AudioStream (Ptr CInt) CUInt CUInt CUInt
+data AudioStream = AudioStream
+  { audioStreamBuffer :: !(Ptr CInt)
+  , audioStreamSampleRate :: !CUInt
+  , audioStreamSampleSize :: !CUInt
+  , audioStreamChannels :: !CUInt
+  }
+
 instance Storable AudioStream where
   sizeOf _ = #{size AudioStream}
   alignment _ = #{alignment AudioStream}
@@ -431,7 +443,11 @@ instance Storable AudioStream where
     (#poke AudioStream, sampleSize) ptr sampleSize'
     (#poke AudioStream, channels) ptr channels'
 
-data Sound = Sound AudioStream CUInt
+data Sound = Sound
+  { soundStream :: AudioStream
+  , soundFrameCount :: !CUInt
+  }
+
 instance Storable Sound where
   sizeOf _ = #{size Sound}
   alignment _ = #{alignment Sound}
