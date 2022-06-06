@@ -23,37 +23,37 @@ main :: IO ()
 main = do
   initWindow screenWidth screenHeight "raylib [core] example - basic screen manager"
   setTargetFPS 60
-  let g = Game {framesCounter = 0, currentScreen = Logo}
-  gameLoop g
+  let game = Game {framesCounter = 0, currentScreen = Logo}
+  gameLoop game
   closeWindow
 
 gameLoop :: Game -> IO ()
-gameLoop g = do
+gameLoop game = do
   done <- windowShouldClose
   if not done
     then do
-      ke <- isKeyPressed Key_Enter
-      gt <- isGestureDetected GestureTap
-      let g' = update g ke gt
+      keyEnter <- isKeyPressed Key_Enter
+      gestureTap <- isGestureDetected GestureTap
+      let game' = update game keyEnter gestureTap
       beginDrawing
       clearBackground rayWhite
-      draw g'
+      draw (currentScreen game')
       endDrawing
-      gameLoop g'
+      gameLoop game'
     else end
 
 end :: IO ()
 end = return ()
 
 update :: Game -> Bool -> Bool -> Game
-update g ke gt = case (currentScreen g) of
-  Logo -> if (framesCounter g) > 120 then g {currentScreen = Title} else g {framesCounter = (framesCounter g) + 1}
-  Title -> if ke || gt then g {currentScreen = GamePlay} else g
-  GamePlay -> if ke || gt then g {currentScreen = Ending} else g
-  Ending -> if ke || gt then g {currentScreen = Title} else g
+update game keyEnter gestureTap = case currentScreen game of
+  Logo -> if framesCounter game > 120 then game {currentScreen = Title} else game {framesCounter = framesCounter game + 1}
+  Title -> if keyEnter || gestureTap then game {currentScreen = GamePlay} else game
+  GamePlay -> if keyEnter || gestureTap then game {currentScreen = Ending} else game
+  Ending -> if keyEnter || gestureTap then game {currentScreen = Title} else game
 
-draw :: Game -> IO ()
-draw g = case (currentScreen g) of
+draw :: GameScreen -> IO ()
+draw screen = case screen of
   Logo -> do
     drawText "LOGO SCREEN" 20 20 40 lightGray
     drawText "WAIT for 2 SECONDS" 290 220 20 gray
