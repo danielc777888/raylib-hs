@@ -28,29 +28,29 @@ main = do
   closeWindow
 
 gameLoop :: Game -> IO ()
-gameLoop game = do
+gameLoop g = do
   done <- windowShouldClose
   if not done
     then do
       keyEnter <- isKeyPressed Key_Enter
       gestureTap <- isGestureDetected GestureTap
-      let game' = update game keyEnter gestureTap
+      let g' = update g keyEnter gestureTap
       beginDrawing
       clearBackground rayWhite
-      draw (currentScreen game')
+      draw (currentScreen g')
       endDrawing
-      gameLoop game'
+      gameLoop g'
     else end
 
 end :: IO ()
 end = return ()
 
 update :: Game -> Bool -> Bool -> Game
-update game keyEnter gestureTap = case currentScreen game of
-  Logo -> if framesCounter game > 120 then game {currentScreen = Title} else game {framesCounter = framesCounter game + 1}
-  Title -> if keyEnter || gestureTap then game {currentScreen = GamePlay} else game
-  GamePlay -> if keyEnter || gestureTap then game {currentScreen = Ending} else game
-  Ending -> if keyEnter || gestureTap then game {currentScreen = Title} else game
+update g keyEnter gestureTap = case currentScreen g of
+  Logo -> if framesCounter g > 120 then g {currentScreen = Title} else g {framesCounter = framesCounter g + 1}
+  Title -> if keyEnter || gestureTap then g {currentScreen = GamePlay} else g
+  GamePlay -> if keyEnter || gestureTap then g {currentScreen = Ending} else g
+  Ending -> if keyEnter || gestureTap then g {currentScreen = Title} else g
 
 draw :: GameScreen -> IO ()
 draw screen = case screen of
