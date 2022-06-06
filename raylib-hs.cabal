@@ -3,12 +3,21 @@ name:               raylib-hs
 version:            4.0.0.0
 author:             Daniel Cabral
 maintainer:         Daniel Cabral
+copyright:          2022 Daniel Cabral
+build-type:         Simple
+license:            Zlib
+homepage:           https://github.com/danielc777888/raylib-hs
+bug-reports:        https://github.com/danielc777888/raylib-hs/issues
+synopsis:           Haskell raylib bindings
+description:        Haskell raylib bindings
+
 
 extra-source-files:
     README.md
 
 common common-extensions
-  default-extensions: GHC2021
+  --default-extensions: GHC2021
+  default-language: GHC2021
 
 flag examples
   description:       Build examples
@@ -44,13 +53,11 @@ library
 executable core-basic-window
     build-depends: base, raylib-hs
     hs-source-dirs: examples/core
-    main-is: CoreBasicWindow.hs
-    ghc-options: -main-is Examples.CoreBasicWindow
+    main-is: core_basic_window.hs
 
 executable core-basic-screen-manager
     build-depends: base, raylib-hs
     hs-source-dirs: examples/core
-    main-is: CoreBasicScreenManager.hs
-    ghc-options: -main-is Examples.CoreBasicScreenManager
+    main-is: core_basic_screen_manager.hs
 
 

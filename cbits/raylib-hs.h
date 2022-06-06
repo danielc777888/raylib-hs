@@ -17,3 +17,6 @@ void C_DrawTextEx(Font *font, const char *text, Vector2 *position, float fontSiz
 Sound *C_LoadSound(const char *fileName);
 void C_UnloadSound(Sound *sound);
 void C_PlaySound(Sound *sound);
+
+// shapes
+void C_DrawRectangle(int posX, int posY, int width, int height, Color *color);

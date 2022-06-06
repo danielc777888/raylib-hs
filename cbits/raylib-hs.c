@@ -73,3 +73,9 @@ void C_PlaySound(Sound *sound)
 {
   PlaySound(*sound);
 }
+
+// shapes
+void C_DrawRectangle(int posX, int posY, int width, int height, Color *color)
+{
+  DrawRectangle(posX, posY, width, height, *color);
+}

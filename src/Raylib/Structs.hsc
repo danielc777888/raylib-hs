@@ -459,7 +459,11 @@ instance Storable Sound where
     (#poke Sound, stream) ptr stream'
     (#poke Sound, frameCount) ptr frameCount'
 
-data Vector2 = Vector2 CFloat CFloat
+data Vector2 = Vector2
+  { vector2X :: !CFloat
+  , vector2Y :: !CFloat
+  } deriving (Show, Eq)
+
 instance Storable Vector2 where
   sizeOf _ = #{size Vector2}
   alignment _ = #{alignment Vector2}
@@ -471,7 +475,14 @@ instance Storable Vector2 where
     (#poke Vector2, x) ptr x'
     (#poke Vector2, y) ptr y'
 
-data Image = Image (Ptr CInt) CInt CInt CInt CInt
+data Image = Image
+  { imageData :: !(Ptr CInt)
+  , imageWidth :: !CInt
+  , imageHeight :: !CInt
+  , imageMipmaps :: !CInt
+  , imageFormat :: !CInt
+  }
+
 instance Storable Image where
   sizeOf _ = #{size Image}
   alignment _ = #{alignment Image}
@@ -489,7 +500,14 @@ instance Storable Image where
     (#poke Image, mipmaps) ptr mipmaps'
     (#poke Image, format) ptr format'
 
-data GlyphInfo = GlyphInfo CInt CInt CInt CInt Image
+data GlyphInfo = GlyphInfo
+  { glyphInfoValue :: !CInt
+  , glyphInfoOffsetX :: !CInt
+  , glyphInfoOffsetY :: !CInt
+  , glyphInfoAdvanceX :: !CInt
+  , glyphInfoImage :: !Image
+  }
+
 instance Storable GlyphInfo where
   sizeOf _ = #{size GlyphInfo}
   alignment _ = #{alignment GlyphInfo}
@@ -507,7 +525,13 @@ instance Storable GlyphInfo where
     (#poke GlyphInfo, advanceX) ptr advanceX'
     (#poke GlyphInfo, image) ptr image'
 
-data Rectangle = Rectangle CFloat CFloat CFloat CFloat
+data Rectangle = Rectangle
+  { rectangleX :: !CFloat
+  , rectangleY :: !CFloat
+  , rectangleWidth :: !CFloat
+  , rectangleHeight :: !CFloat
+  } deriving (Show, Eq)
+
 instance Storable Rectangle where
   sizeOf _ = #{size Rectangle}
   alignment _ = #{alignment Rectangle}
@@ -523,7 +547,15 @@ instance Storable Rectangle where
     (#poke Rectangle, width) ptr width'
     (#poke Rectangle, height) ptr height'
 
-data Font = Font CInt CInt CInt Texture2D (Ptr Rectangle) (Ptr GlyphInfo)
+data Font = Font
+  { fontBaseSize :: !CInt
+  , fontGlyphCount :: !CInt
+  , fontGlyphPadding :: !CInt
+  , fontTexture :: !Texture2D
+  , fontRecs :: !(Ptr Rectangle)
+  , fontGlyphs :: !(Ptr GlyphInfo)
+  }
+
 instance Storable Font where
   sizeOf _ = #{size Font}
   alignment _ = #{alignment Font}

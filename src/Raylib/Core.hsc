@@ -1,12 +1,10 @@
 module Raylib.Core (
- -- window related functions
  initWindow,
  windowShouldClose,
  closeWindow,
  toggleFullScreen,
  getMonitorWidth,
  getMonitorHeight,
- -- drawing related functions
  clearBackground,
  beginDrawing,
  endDrawing,
@@ -17,7 +15,7 @@ module Raylib.Core (
  isKeyDown,
  getRandomValue,
  traceLog,
-
+ isGestureDetected
 ) where
 
 import qualified Data.Text as T
@@ -29,6 +27,7 @@ import Raylib.Structs
 #include <raylib.h>
 
 -- window related functions
+
 foreign import ccall unsafe "raylib.h InitWindow" cInitWindow :: CInt -> CInt -> CString -> IO ()
 initWindow :: Int -> Int -> T.Text -> IO ()
 initWindow width height title = withCString (T.unpack title) (\title' ->
@@ -106,4 +105,13 @@ beginDrawing = do cBeginDrawing
 foreign import ccall unsafe "raylib.h EndDrawing" cEndDrawing :: IO ()
 endDrawing :: IO ()
 endDrawing = do cEndDrawing
+
+-- gestures and touch handling functions
+
+foreign import ccall unsafe "raylib.h IsGestureDetected" cIsGestureDetected :: CInt -> IO CBool
+isGestureDetected :: Gesture -> IO Bool
+isGestureDetected g = do
+                    d <- cIsGestureDetected (fromIntegral (fromEnum g))
+                    return (toBool d)
+
 
