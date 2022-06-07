@@ -18,7 +18,6 @@ module Raylib.Core (
  isGestureDetected
 ) where
 
-import qualified Data.Text as T
 import Foreign.Storable
 import Foreign
 import Foreign.C
@@ -29,8 +28,8 @@ import Raylib.Structs
 -- window related functions
 
 foreign import ccall unsafe "raylib.h InitWindow" cInitWindow :: CInt -> CInt -> CString -> IO ()
-initWindow :: Int -> Int -> T.Text -> IO ()
-initWindow width height title = withCString (T.unpack title) (\title' ->
+initWindow :: Int -> Int -> String -> IO ()
+initWindow width height title = withCString title (\title' ->
                                    cInitWindow (fromIntegral width) (fromIntegral height) title')
 
 foreign import ccall unsafe "raylib.h WindowShouldClose" cWindowShouldClose :: IO CBool

@@ -65,323 +65,323 @@ instance Storable Color where
     (#poke Color, b) ptr b'
     (#poke Color, a) ptr a'
 
-data KeyboardKey = Key_Apostrophe
-                | Key_Comma
-                | Key_Minus
-                | Key_Period
-                | Key_Slash
-                | Key_Zero
-                | Key_One
-                | Key_Two
-                | Key_Three
-                | Key_Four
-                | Key_Five
-                | Key_Six
-                | Key_Seven
-                | Key_Eight
-                | Key_Nine
-                | Key_Semicolon
-                | Key_Equal
-                | Key_A
-                | Key_B
-                | Key_C
-                | Key_D
-                | Key_E
-                | Key_F
-                | Key_G
-                | Key_H
-                | Key_I
-                | Key_J
-                | Key_K
-                | Key_L
-                | Key_M
-                | Key_N
-                | Key_O
-                | Key_P
-                | Key_Q
-                | Key_R
-                | Key_S
-                | Key_T
-                | Key_U
-                | Key_V
-                | Key_W
-                | Key_X
-                | Key_Y
-                | Key_Z
-                | Key_Space
-                | Key_Escape
-                | Key_Enter
-                | Key_Tab
-                | Key_Backspace
-                | Key_Insert
-                | Key_Delete
-                | Key_Right
-                | Key_Left
-                | Key_Down
-                | Key_Up
-                | Key_Page_Up
-                | Key_Page_Down
-                | Key_Home
-                | Key_End
-                | Key_Caps_Lock
-                | Key_Scroll_Lock
-                | Key_Num_Lock
-                | Key_Print_Screen
-                | Key_Pause
-                | Key_F1
-                | Key_F2
-                | Key_F3
-                | Key_F4
-                | Key_F5
-                | Key_F6
-                | Key_F7
-                | Key_F8
-                | Key_F9
-                | Key_F10
-                | Key_F11
-                | Key_F12
-                | Key_Left_Shift
-                | Key_Left_Control
-                | Key_Left_Alt
-                | Key_Left_Super
-                | Key_Right_Shift
-                | Key_Right_Control
-                | Key_Right_Alt
-                | Key_Right_Super
-                | Key_Kb_Menu
-                | Key_Left_Bracket
-                | Key_Backslash
-                | Key_Right_Bracket
-                | Key_Grave
-                | Key_Kp_0
-                | Key_Kp_1
-                | Key_Kp_2
-                | Key_Kp_3
-                | Key_Kp_4
-                | Key_Kp_5
-                | Key_Kp_6
-                | Key_Kp_7
-                | Key_Kp_8
-                | Key_Kp_9
-                | Key_Kp_Decimal
-                | Key_Kp_Divide
-                | Key_Kp_Multiply
-                | Key_Kp_Subtract
-                | Key_Kp_Add
-                | Key_Kp_Enter
-                | Key_Kp_Equal deriving (Show, Eq)
+data KeyboardKey = KeyApostrophe
+                | KeyComma
+                | KeyMinus
+                | KeyPeriod
+                | KeySlash
+                | KeyZero
+                | KeyOne
+                | KeyTwo
+                | KeyThree
+                | KeyFour
+                | KeyFive
+                | KeySix
+                | KeySeven
+                | KeyEight
+                | KeyNine
+                | KeySemicolon
+                | KeyEqual
+                | KeyA
+                | KeyB
+                | KeyC
+                | KeyD
+                | KeyE
+                | KeyF
+                | KeyG
+                | KeyH
+                | KeyI
+                | KeyJ
+                | KeyK
+                | KeyL
+                | KeyM
+                | KeyN
+                | KeyO
+                | KeyP
+                | KeyQ
+                | KeyR
+                | KeyS
+                | KeyT
+                | KeyU
+                | KeyV
+                | KeyW
+                | KeyX
+                | KeyY
+                | KeyZ
+                | KeySpace
+                | KeyEscape
+                | KeyEnter
+                | KeyTab
+                | KeyBackspace
+                | KeyInsert
+                | KeyDelete
+                | KeyRight
+                | KeyLeft
+                | KeyDown
+                | KeyUp
+                | KeyPageUp
+                | KeyPageDown
+                | KeyHome
+                | KeyEnd
+                | KeyCapsLock
+                | KeyScrollLock
+                | KeyNumLock
+                | KeyPrintScreen
+                | KeyPause
+                | KeyF1
+                | KeyF2
+                | KeyF3
+                | KeyF4
+                | KeyF5
+                | KeyF6
+                | KeyF7
+                | KeyF8
+                | KeyF9
+                | KeyF10
+                | KeyF11
+                | KeyF12
+                | KeyLeftShift
+                | KeyLeftControl
+                | KeyLeftAlt
+                | KeyLeftSuper
+                | KeyRightShift
+                | KeyRightControl
+                | KeyRightAlt
+                | KeyRightSuper
+                | KeyKbMenu
+                | KeyLeftBracket
+                | KeyBackslash
+                | KeyRightBracket
+                | KeyGrave
+                | KeyKp0
+                | KeyKp1
+                | KeyKp2
+                | KeyKp3
+                | KeyKp4
+                | KeyKp5
+                | KeyKp6
+                | KeyKp7
+                | KeyKp8
+                | KeyKp9
+                | KeyKpDecimal
+                | KeyKpDivide
+                | KeyKpMultiply
+                | KeyKpSubtract
+                | KeyKpAdd
+                | KeyKpEnter
+                | KeyKpEqual deriving (Show, Eq)
 
 instance Enum KeyboardKey where
-  fromEnum Key_Apostrophe = #{const KEY_APOSTROPHE}
-  fromEnum Key_Comma = #{const KEY_COMMA}
-  fromEnum Key_Minus = #{const KEY_MINUS}
-  fromEnum Key_Period = #{const KEY_PERIOD}
-  fromEnum Key_Slash = #{const KEY_SLASH}
-  fromEnum Key_Zero = #{const KEY_ZERO}
-  fromEnum Key_One = #{const KEY_ONE}
-  fromEnum Key_Two = #{const KEY_TWO}
-  fromEnum Key_Three = #{const KEY_THREE}
-  fromEnum Key_Four = #{const KEY_FOUR}
-  fromEnum Key_Five = #{const KEY_FIVE}
-  fromEnum Key_Six = #{const KEY_SIX}
-  fromEnum Key_Seven = #{const KEY_SEVEN}
-  fromEnum Key_Eight = #{const KEY_EIGHT}
-  fromEnum Key_Nine = #{const KEY_NINE}
-  fromEnum Key_Semicolon = #{const KEY_SEMICOLON}
-  fromEnum Key_Equal = #{const KEY_EQUAL}
-  fromEnum Key_A = #{const KEY_A}
-  fromEnum Key_B = #{const KEY_B}
-  fromEnum Key_C = #{const KEY_C}
-  fromEnum Key_D = #{const KEY_D}
-  fromEnum Key_E = #{const KEY_E}
-  fromEnum Key_F = #{const KEY_F}
-  fromEnum Key_G = #{const KEY_G}
-  fromEnum Key_H = #{const KEY_H}
-  fromEnum Key_I = #{const KEY_I}
-  fromEnum Key_J = #{const KEY_J}
-  fromEnum Key_K = #{const KEY_K}
-  fromEnum Key_L = #{const KEY_L}
-  fromEnum Key_M = #{const KEY_M}
-  fromEnum Key_N = #{const KEY_N}
-  fromEnum Key_O = #{const KEY_O}
-  fromEnum Key_P = #{const KEY_P}
-  fromEnum Key_Q = #{const KEY_Q}
-  fromEnum Key_R = #{const KEY_R}
-  fromEnum Key_S = #{const KEY_S}
-  fromEnum Key_T = #{const KEY_T}
-  fromEnum Key_U = #{const KEY_U}
-  fromEnum Key_V = #{const KEY_V}
-  fromEnum Key_W = #{const KEY_W}
-  fromEnum Key_X = #{const KEY_X}
-  fromEnum Key_Y = #{const KEY_Y}
-  fromEnum Key_Z = #{const KEY_Z}
-  fromEnum Key_Space = #{const KEY_SPACE}
-  fromEnum Key_Escape = #{const KEY_ESCAPE}
-  fromEnum Key_Enter = #{const KEY_ENTER}
-  fromEnum Key_Tab = #{const KEY_TAB}
-  fromEnum Key_Backspace = #{const KEY_BACKSPACE}
-  fromEnum Key_Insert = #{const KEY_INSERT}
-  fromEnum Key_Delete = #{const KEY_DELETE}
-  fromEnum Key_Right = #{const KEY_RIGHT}
-  fromEnum Key_Left = #{const KEY_LEFT}
-  fromEnum Key_Down = #{const KEY_DOWN}
-  fromEnum Key_Up = #{const KEY_UP}
-  fromEnum Key_Page_Up = #{const KEY_PAGE_UP}
-  fromEnum Key_Page_Down = #{const KEY_PAGE_DOWN}
-  fromEnum Key_Home = #{const KEY_HOME}
-  fromEnum Key_End = #{const KEY_END}
-  fromEnum Key_Caps_Lock = #{const KEY_CAPS_LOCK}
-  fromEnum Key_Scroll_Lock = #{const KEY_SCROLL_LOCK}
-  fromEnum Key_Num_Lock = #{const KEY_NUM_LOCK}
-  fromEnum Key_Print_Screen = #{const KEY_PRINT_SCREEN}
-  fromEnum Key_Pause = #{const KEY_PAUSE}
-  fromEnum Key_F1 = #{const KEY_F1}
-  fromEnum Key_F2 = #{const KEY_F2}
-  fromEnum Key_F3 = #{const KEY_F3}
-  fromEnum Key_F4 = #{const KEY_F4}
-  fromEnum Key_F5 = #{const KEY_F5}
-  fromEnum Key_F6 = #{const KEY_F6}
-  fromEnum Key_F7 = #{const KEY_F7}
-  fromEnum Key_F8 = #{const KEY_F8}
-  fromEnum Key_F9 = #{const KEY_F9}
-  fromEnum Key_F10 = #{const KEY_F10}
-  fromEnum Key_F11 = #{const KEY_F11}
-  fromEnum Key_F12 = #{const KEY_F12}
-  fromEnum Key_Left_Shift = #{const KEY_LEFT_SHIFT}
-  fromEnum Key_Left_Control = #{const KEY_LEFT_CONTROL}
-  fromEnum Key_Left_Alt = #{const KEY_LEFT_ALT}
-  fromEnum Key_Left_Super = #{const KEY_LEFT_SUPER}
-  fromEnum Key_Right_Shift = #{const KEY_RIGHT_SHIFT}
-  fromEnum Key_Right_Control = #{const KEY_RIGHT_CONTROL}
-  fromEnum Key_Right_Alt = #{const KEY_RIGHT_ALT}
-  fromEnum Key_Right_Super = #{const KEY_RIGHT_SUPER}
-  fromEnum Key_Kb_Menu = #{const KEY_KB_MENU}
-  fromEnum Key_Left_Bracket = #{const KEY_LEFT_BRACKET}
-  fromEnum Key_Backslash = #{const KEY_BACKSLASH}
-  fromEnum Key_Right_Bracket = #{const KEY_RIGHT_BRACKET}
-  fromEnum Key_Grave = #{const KEY_GRAVE}
-  fromEnum Key_Kp_0 = #{const KEY_KP_0}
-  fromEnum Key_Kp_1 = #{const KEY_KP_1}
-  fromEnum Key_Kp_2 = #{const KEY_KP_2}
-  fromEnum Key_Kp_3 = #{const KEY_KP_3}
-  fromEnum Key_Kp_4 = #{const KEY_KP_4}
-  fromEnum Key_Kp_5 = #{const KEY_KP_5}
-  fromEnum Key_Kp_6 = #{const KEY_KP_6}
-  fromEnum Key_Kp_7 = #{const KEY_KP_7}
-  fromEnum Key_Kp_8 = #{const KEY_KP_8}
-  fromEnum Key_Kp_9 = #{const KEY_KP_9}
-  fromEnum Key_Kp_Decimal = #{const KEY_KP_DECIMAL}
-  fromEnum Key_Kp_Divide = #{const KEY_KP_DIVIDE}
-  fromEnum Key_Kp_Multiply = #{const KEY_KP_MULTIPLY}
-  fromEnum Key_Kp_Subtract = #{const KEY_KP_SUBTRACT}
-  fromEnum Key_Kp_Add = #{const KEY_KP_ADD}
-  fromEnum Key_Kp_Enter = #{const KEY_KP_ENTER}
-  fromEnum Key_Kp_Equal = #{const KEY_KP_EQUAL}
-  toEnum #{const KEY_APOSTROPHE} = Key_Apostrophe
-  toEnum #{const KEY_COMMA} = Key_Comma
-  toEnum #{const KEY_MINUS} = Key_Minus
-  toEnum #{const KEY_PERIOD} = Key_Period
-  toEnum #{const KEY_SLASH} = Key_Slash
-  toEnum #{const KEY_ZERO} = Key_Zero
-  toEnum #{const KEY_ONE} = Key_One
-  toEnum #{const KEY_TWO} = Key_Two
-  toEnum #{const KEY_THREE} = Key_Three
-  toEnum #{const KEY_FOUR} = Key_Four
-  toEnum #{const KEY_FIVE} = Key_Five
-  toEnum #{const KEY_SIX} = Key_Six
-  toEnum #{const KEY_SEVEN} = Key_Seven
-  toEnum #{const KEY_EIGHT} = Key_Eight
-  toEnum #{const KEY_NINE} = Key_Nine
-  toEnum #{const KEY_SEMICOLON} = Key_Semicolon
-  toEnum #{const KEY_EQUAL} = Key_Equal
-  toEnum #{const KEY_A} = Key_A
-  toEnum #{const KEY_B} = Key_B
-  toEnum #{const KEY_C} = Key_C
-  toEnum #{const KEY_D} = Key_D
-  toEnum #{const KEY_E} = Key_E
-  toEnum #{const KEY_F} = Key_F
-  toEnum #{const KEY_G} = Key_G
-  toEnum #{const KEY_H} = Key_H
-  toEnum #{const KEY_I} = Key_I
-  toEnum #{const KEY_J} = Key_J
-  toEnum #{const KEY_K} = Key_K
-  toEnum #{const KEY_L} = Key_L
-  toEnum #{const KEY_M} = Key_M
-  toEnum #{const KEY_N} = Key_N
-  toEnum #{const KEY_O} = Key_O
-  toEnum #{const KEY_P} = Key_P
-  toEnum #{const KEY_Q} = Key_Q
-  toEnum #{const KEY_R} = Key_R
-  toEnum #{const KEY_S} = Key_S
-  toEnum #{const KEY_T} = Key_T
-  toEnum #{const KEY_U} = Key_U
-  toEnum #{const KEY_V} = Key_V
-  toEnum #{const KEY_W} = Key_W
-  toEnum #{const KEY_X} = Key_X
-  toEnum #{const KEY_Y} = Key_Y
-  toEnum #{const KEY_Z} = Key_Z
-  toEnum #{const KEY_SPACE} = Key_Space
-  toEnum #{const KEY_ESCAPE} = Key_Escape
-  toEnum #{const KEY_ENTER} = Key_Enter
-  toEnum #{const KEY_TAB} = Key_Tab
-  toEnum #{const KEY_BACKSPACE} = Key_Backspace
-  toEnum #{const KEY_INSERT} = Key_Insert
-  toEnum #{const KEY_DELETE} = Key_Delete
-  toEnum #{const KEY_RIGHT} = Key_Right
-  toEnum #{const KEY_LEFT} = Key_Left
-  toEnum #{const KEY_DOWN} = Key_Down
-  toEnum #{const KEY_UP} = Key_Up
-  toEnum #{const KEY_PAGE_UP} = Key_Page_Up
-  toEnum #{const KEY_PAGE_DOWN} = Key_Page_Down
-  toEnum #{const KEY_HOME} = Key_Home
-  toEnum #{const KEY_END} = Key_End
-  toEnum #{const KEY_CAPS_LOCK} = Key_Caps_Lock
-  toEnum #{const KEY_SCROLL_LOCK} = Key_Scroll_Lock
-  toEnum #{const KEY_NUM_LOCK} = Key_Num_Lock
-  toEnum #{const KEY_PRINT_SCREEN} = Key_Print_Screen
-  toEnum #{const KEY_PAUSE} = Key_Pause
-  toEnum #{const KEY_F1} = Key_F1
-  toEnum #{const KEY_F2} = Key_F2
-  toEnum #{const KEY_F3} = Key_F3
-  toEnum #{const KEY_F4} = Key_F4
-  toEnum #{const KEY_F5} = Key_F5
-  toEnum #{const KEY_F6} = Key_F6
-  toEnum #{const KEY_F7} = Key_F7
-  toEnum #{const KEY_F8} = Key_F8
-  toEnum #{const KEY_F9} = Key_F9
-  toEnum #{const KEY_F10} = Key_F10
-  toEnum #{const KEY_F11} = Key_F11
-  toEnum #{const KEY_F12} = Key_F12
-  toEnum #{const KEY_LEFT_SHIFT} = Key_Left_Shift
-  toEnum #{const KEY_LEFT_CONTROL} = Key_Left_Control
-  toEnum #{const KEY_LEFT_ALT} = Key_Left_Alt
-  toEnum #{const KEY_LEFT_SUPER} = Key_Left_Super
-  toEnum #{const KEY_RIGHT_SHIFT} = Key_Right_Shift
-  toEnum #{const KEY_RIGHT_CONTROL} = Key_Right_Control
-  toEnum #{const KEY_RIGHT_ALT} = Key_Right_Alt
-  toEnum #{const KEY_RIGHT_SUPER} = Key_Right_Super
-  toEnum #{const KEY_KB_MENU} = Key_Kb_Menu
-  toEnum #{const KEY_LEFT_BRACKET} = Key_Left_Bracket
-  toEnum #{const KEY_BACKSLASH} = Key_Backslash
-  toEnum #{const KEY_RIGHT_BRACKET} = Key_Right_Bracket
-  toEnum #{const KEY_GRAVE} = Key_Grave
-  toEnum #{const KEY_KP_0} = Key_Kp_0
-  toEnum #{const KEY_KP_1} = Key_Kp_1
-  toEnum #{const KEY_KP_2} = Key_Kp_2
-  toEnum #{const KEY_KP_3} = Key_Kp_3
-  toEnum #{const KEY_KP_4} = Key_Kp_4
-  toEnum #{const KEY_KP_5} = Key_Kp_5
-  toEnum #{const KEY_KP_6} = Key_Kp_6
-  toEnum #{const KEY_KP_7} = Key_Kp_7
-  toEnum #{const KEY_KP_8} = Key_Kp_8
-  toEnum #{const KEY_KP_9} = Key_Kp_9
-  toEnum #{const KEY_KP_DECIMAL} = Key_Kp_Decimal
-  toEnum #{const KEY_KP_DIVIDE} = Key_Kp_Divide
-  toEnum #{const KEY_KP_MULTIPLY} = Key_Kp_Multiply
-  toEnum #{const KEY_KP_SUBTRACT} = Key_Kp_Subtract
-  toEnum #{const KEY_KP_ADD} = Key_Kp_Add
-  toEnum #{const KEY_KP_ENTER} = Key_Kp_Enter
-  toEnum #{const KEY_KP_EQUAL} = Key_Kp_Equal
+  fromEnum KeyApostrophe = #{const KEY_APOSTROPHE}
+  fromEnum KeyComma = #{const KEY_COMMA}
+  fromEnum KeyMinus = #{const KEY_MINUS}
+  fromEnum KeyPeriod = #{const KEY_PERIOD}
+  fromEnum KeySlash = #{const KEY_SLASH}
+  fromEnum KeyZero = #{const KEY_ZERO}
+  fromEnum KeyOne = #{const KEY_ONE}
+  fromEnum KeyTwo = #{const KEY_TWO}
+  fromEnum KeyThree = #{const KEY_THREE}
+  fromEnum KeyFour = #{const KEY_FOUR}
+  fromEnum KeyFive = #{const KEY_FIVE}
+  fromEnum KeySix = #{const KEY_SIX}
+  fromEnum KeySeven = #{const KEY_SEVEN}
+  fromEnum KeyEight = #{const KEY_EIGHT}
+  fromEnum KeyNine = #{const KEY_NINE}
+  fromEnum KeySemicolon = #{const KEY_SEMICOLON}
+  fromEnum KeyEqual = #{const KEY_EQUAL}
+  fromEnum KeyA = #{const KEY_A}
+  fromEnum KeyB = #{const KEY_B}
+  fromEnum KeyC = #{const KEY_C}
+  fromEnum KeyD = #{const KEY_D}
+  fromEnum KeyE = #{const KEY_E}
+  fromEnum KeyF = #{const KEY_F}
+  fromEnum KeyG = #{const KEY_G}
+  fromEnum KeyH = #{const KEY_H}
+  fromEnum KeyI = #{const KEY_I}
+  fromEnum KeyJ = #{const KEY_J}
+  fromEnum KeyK = #{const KEY_K}
+  fromEnum KeyL = #{const KEY_L}
+  fromEnum KeyM = #{const KEY_M}
+  fromEnum KeyN = #{const KEY_N}
+  fromEnum KeyO = #{const KEY_O}
+  fromEnum KeyP = #{const KEY_P}
+  fromEnum KeyQ = #{const KEY_Q}
+  fromEnum KeyR = #{const KEY_R}
+  fromEnum KeyS = #{const KEY_S}
+  fromEnum KeyT = #{const KEY_T}
+  fromEnum KeyU = #{const KEY_U}
+  fromEnum KeyV = #{const KEY_V}
+  fromEnum KeyW = #{const KEY_W}
+  fromEnum KeyX = #{const KEY_X}
+  fromEnum KeyY = #{const KEY_Y}
+  fromEnum KeyZ = #{const KEY_Z}
+  fromEnum KeySpace = #{const KEY_SPACE}
+  fromEnum KeyEscape = #{const KEY_ESCAPE}
+  fromEnum KeyEnter = #{const KEY_ENTER}
+  fromEnum KeyTab = #{const KEY_TAB}
+  fromEnum KeyBackspace = #{const KEY_BACKSPACE}
+  fromEnum KeyInsert = #{const KEY_INSERT}
+  fromEnum KeyDelete = #{const KEY_DELETE}
+  fromEnum KeyRight = #{const KEY_RIGHT}
+  fromEnum KeyLeft = #{const KEY_LEFT}
+  fromEnum KeyDown = #{const KEY_DOWN}
+  fromEnum KeyUp = #{const KEY_UP}
+  fromEnum KeyPageUp = #{const KEY_PAGE_UP}
+  fromEnum KeyPageDown = #{const KEY_PAGE_DOWN}
+  fromEnum KeyHome = #{const KEY_HOME}
+  fromEnum KeyEnd = #{const KEY_END}
+  fromEnum KeyCapsLock = #{const KEY_CAPS_LOCK}
+  fromEnum KeyScrollLock = #{const KEY_SCROLL_LOCK}
+  fromEnum KeyNumLock = #{const KEY_NUM_LOCK}
+  fromEnum KeyPrintScreen = #{const KEY_PRINT_SCREEN}
+  fromEnum KeyPause = #{const KEY_PAUSE}
+  fromEnum KeyF1 = #{const KEY_F1}
+  fromEnum KeyF2 = #{const KEY_F2}
+  fromEnum KeyF3 = #{const KEY_F3}
+  fromEnum KeyF4 = #{const KEY_F4}
+  fromEnum KeyF5 = #{const KEY_F5}
+  fromEnum KeyF6 = #{const KEY_F6}
+  fromEnum KeyF7 = #{const KEY_F7}
+  fromEnum KeyF8 = #{const KEY_F8}
+  fromEnum KeyF9 = #{const KEY_F9}
+  fromEnum KeyF10 = #{const KEY_F10}
+  fromEnum KeyF11 = #{const KEY_F11}
+  fromEnum KeyF12 = #{const KEY_F12}
+  fromEnum KeyLeftShift = #{const KEY_LEFT_SHIFT}
+  fromEnum KeyLeftControl = #{const KEY_LEFT_CONTROL}
+  fromEnum KeyLeftAlt = #{const KEY_LEFT_ALT}
+  fromEnum KeyLeftSuper = #{const KEY_LEFT_SUPER}
+  fromEnum KeyRightShift = #{const KEY_RIGHT_SHIFT}
+  fromEnum KeyRightControl = #{const KEY_RIGHT_CONTROL}
+  fromEnum KeyRightAlt = #{const KEY_RIGHT_ALT}
+  fromEnum KeyRightSuper = #{const KEY_RIGHT_SUPER}
+  fromEnum KeyKbMenu = #{const KEY_KB_MENU}
+  fromEnum KeyLeftBracket = #{const KEY_LEFT_BRACKET}
+  fromEnum KeyBackslash = #{const KEY_BACKSLASH}
+  fromEnum KeyRightBracket = #{const KEY_RIGHT_BRACKET}
+  fromEnum KeyGrave = #{const KEY_GRAVE}
+  fromEnum KeyKp0 = #{const KEY_KP_0}
+  fromEnum KeyKp1 = #{const KEY_KP_1}
+  fromEnum KeyKp2 = #{const KEY_KP_2}
+  fromEnum KeyKp3 = #{const KEY_KP_3}
+  fromEnum KeyKp4 = #{const KEY_KP_4}
+  fromEnum KeyKp5 = #{const KEY_KP_5}
+  fromEnum KeyKp6 = #{const KEY_KP_6}
+  fromEnum KeyKp7 = #{const KEY_KP_7}
+  fromEnum KeyKp8 = #{const KEY_KP_8}
+  fromEnum KeyKp9 = #{const KEY_KP_9}
+  fromEnum KeyKpDecimal = #{const KEY_KP_DECIMAL}
+  fromEnum KeyKpDivide = #{const KEY_KP_DIVIDE}
+  fromEnum KeyKpMultiply = #{const KEY_KP_MULTIPLY}
+  fromEnum KeyKpSubtract = #{const KEY_KP_SUBTRACT}
+  fromEnum KeyKpAdd = #{const KEY_KP_ADD}
+  fromEnum KeyKpEnter = #{const KEY_KP_ENTER}
+  fromEnum KeyKpEqual = #{const KEY_KP_EQUAL}
+  toEnum #{const KEY_APOSTROPHE} = KeyApostrophe
+  toEnum #{const KEY_COMMA} = KeyComma
+  toEnum #{const KEY_MINUS} = KeyMinus
+  toEnum #{const KEY_PERIOD} = KeyPeriod
+  toEnum #{const KEY_SLASH} = KeySlash
+  toEnum #{const KEY_ZERO} = KeyZero
+  toEnum #{const KEY_ONE} = KeyOne
+  toEnum #{const KEY_TWO} = KeyTwo
+  toEnum #{const KEY_THREE} = KeyThree
+  toEnum #{const KEY_FOUR} = KeyFour
+  toEnum #{const KEY_FIVE} = KeyFive
+  toEnum #{const KEY_SIX} = KeySix
+  toEnum #{const KEY_SEVEN} = KeySeven
+  toEnum #{const KEY_EIGHT} = KeyEight
+  toEnum #{const KEY_NINE} = KeyNine
+  toEnum #{const KEY_SEMICOLON} = KeySemicolon
+  toEnum #{const KEY_EQUAL} = KeyEqual
+  toEnum #{const KEY_A} = KeyA
+  toEnum #{const KEY_B} = KeyB
+  toEnum #{const KEY_C} = KeyC
+  toEnum #{const KEY_D} = KeyD
+  toEnum #{const KEY_E} = KeyE
+  toEnum #{const KEY_F} = KeyF
+  toEnum #{const KEY_G} = KeyG
+  toEnum #{const KEY_H} = KeyH
+  toEnum #{const KEY_I} = KeyI
+  toEnum #{const KEY_J} = KeyJ
+  toEnum #{const KEY_K} = KeyK
+  toEnum #{const KEY_L} = KeyL
+  toEnum #{const KEY_M} = KeyM
+  toEnum #{const KEY_N} = KeyN
+  toEnum #{const KEY_O} = KeyO
+  toEnum #{const KEY_P} = KeyP
+  toEnum #{const KEY_Q} = KeyQ
+  toEnum #{const KEY_R} = KeyR
+  toEnum #{const KEY_S} = KeyS
+  toEnum #{const KEY_T} = KeyT
+  toEnum #{const KEY_U} = KeyU
+  toEnum #{const KEY_V} = KeyV
+  toEnum #{const KEY_W} = KeyW
+  toEnum #{const KEY_X} = KeyX
+  toEnum #{const KEY_Y} = KeyY
+  toEnum #{const KEY_Z} = KeyZ
+  toEnum #{const KEY_SPACE} = KeySpace
+  toEnum #{const KEY_ESCAPE} = KeyEscape
+  toEnum #{const KEY_ENTER} = KeyEnter
+  toEnum #{const KEY_TAB} = KeyTab
+  toEnum #{const KEY_BACKSPACE} = KeyBackspace
+  toEnum #{const KEY_INSERT} = KeyInsert
+  toEnum #{const KEY_DELETE} = KeyDelete
+  toEnum #{const KEY_RIGHT} = KeyRight
+  toEnum #{const KEY_LEFT} = KeyLeft
+  toEnum #{const KEY_DOWN} = KeyDown
+  toEnum #{const KEY_UP} = KeyUp
+  toEnum #{const KEY_PAGE_UP} = KeyPageUp
+  toEnum #{const KEY_PAGE_DOWN} = KeyPageDown
+  toEnum #{const KEY_HOME} = KeyHome
+  toEnum #{const KEY_END} = KeyEnd
+  toEnum #{const KEY_CAPS_LOCK} = KeyCapsLock
+  toEnum #{const KEY_SCROLL_LOCK} = KeyScrollLock
+  toEnum #{const KEY_NUM_LOCK} = KeyNumLock
+  toEnum #{const KEY_PRINT_SCREEN} = KeyPrintScreen
+  toEnum #{const KEY_PAUSE} = KeyPause
+  toEnum #{const KEY_F1} = KeyF1
+  toEnum #{const KEY_F2} = KeyF2
+  toEnum #{const KEY_F3} = KeyF3
+  toEnum #{const KEY_F4} = KeyF4
+  toEnum #{const KEY_F5} = KeyF5
+  toEnum #{const KEY_F6} = KeyF6
+  toEnum #{const KEY_F7} = KeyF7
+  toEnum #{const KEY_F8} = KeyF8
+  toEnum #{const KEY_F9} = KeyF9
+  toEnum #{const KEY_F10} = KeyF10
+  toEnum #{const KEY_F11} = KeyF11
+  toEnum #{const KEY_F12} = KeyF12
+  toEnum #{const KEY_LEFT_SHIFT} = KeyLeftShift
+  toEnum #{const KEY_LEFT_CONTROL} = KeyLeftControl
+  toEnum #{const KEY_LEFT_ALT} = KeyLeftAlt
+  toEnum #{const KEY_LEFT_SUPER} = KeyLeftSuper
+  toEnum #{const KEY_RIGHT_SHIFT} = KeyRightShift
+  toEnum #{const KEY_RIGHT_CONTROL} = KeyRightControl
+  toEnum #{const KEY_RIGHT_ALT} = KeyRightAlt
+  toEnum #{const KEY_RIGHT_SUPER} = KeyRightSuper
+  toEnum #{const KEY_KB_MENU} = KeyKbMenu
+  toEnum #{const KEY_LEFT_BRACKET} = KeyLeftBracket
+  toEnum #{const KEY_BACKSLASH} = KeyBackslash
+  toEnum #{const KEY_RIGHT_BRACKET} = KeyRightBracket
+  toEnum #{const KEY_GRAVE} = KeyGrave
+  toEnum #{const KEY_KP_0} = KeyKp0
+  toEnum #{const KEY_KP_1} = KeyKp1
+  toEnum #{const KEY_KP_2} = KeyKp2
+  toEnum #{const KEY_KP_3} = KeyKp3
+  toEnum #{const KEY_KP_4} = KeyKp4
+  toEnum #{const KEY_KP_5} = KeyKp5
+  toEnum #{const KEY_KP_6} = KeyKp6
+  toEnum #{const KEY_KP_7} = KeyKp7
+  toEnum #{const KEY_KP_8} = KeyKp8
+  toEnum #{const KEY_KP_9} = KeyKp9
+  toEnum #{const KEY_KP_DECIMAL} = KeyKpDecimal
+  toEnum #{const KEY_KP_DIVIDE} = KeyKpDivide
+  toEnum #{const KEY_KP_MULTIPLY} = KeyKpMultiply
+  toEnum #{const KEY_KP_SUBTRACT} = KeyKpSubtract
+  toEnum #{const KEY_KP_ADD} = KeyKpAdd
+  toEnum #{const KEY_KP_ENTER} = KeyKpEnter
+  toEnum #{const KEY_KP_EQUAL} = KeyKpEqual
   toEnum _ = error "no such value for KeyboardKey"
 
 

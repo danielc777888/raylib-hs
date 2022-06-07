@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 import Raylib
 
 data GameScreen
@@ -32,7 +30,7 @@ gameLoop g = do
   done <- windowShouldClose
   if not done
     then do
-      keyEnter <- isKeyPressed Key_Enter
+      keyEnter <- isKeyPressed KeyEnter
       gestureTap <- isGestureDetected GestureTap
       let g' = update g keyEnter gestureTap
       beginDrawing
