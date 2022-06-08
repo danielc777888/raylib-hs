@@ -21,6 +21,7 @@ module Raylib.Core (
 import Foreign.Storable
 import Foreign
 import Foreign.C
+import qualified Data.Text as T
 import Raylib.Structs
 
 #include <raylib.h>
@@ -28,8 +29,8 @@ import Raylib.Structs
 -- window related functions
 
 foreign import ccall unsafe "raylib.h InitWindow" cInitWindow :: CInt -> CInt -> CString -> IO ()
-initWindow :: Int -> Int -> String -> IO ()
-initWindow width height title = withCString title (\title' ->
+initWindow :: Int -> Int -> T.Text -> IO ()
+initWindow width height title = withCString (T.unpack title) (\title' ->
                                    cInitWindow (fromIntegral width) (fromIntegral height) title')
 
 foreign import ccall unsafe "raylib.h WindowShouldClose" cWindowShouldClose :: IO CBool
@@ -87,8 +88,8 @@ getRandomValue min max = do v <- cGetRandomValue (fromIntegral min) (fromIntegra
                             return (fromIntegral v)
 
 foreign import ccall unsafe "raylib.h TraceLog" cTraceLog :: CInt -> CString -> IO ()
-traceLog :: TraceLogLevel -> String -> IO ()
-traceLog t s = withCString s (\s' ->
+traceLog :: TraceLogLevel -> T.Text -> IO ()
+traceLog t s = withCString (T.unpack s) (\s' ->
                   cTraceLog (fromIntegral (fromEnum t)) s')
 
  -- drawing related functions
