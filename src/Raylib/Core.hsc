@@ -23,6 +23,7 @@ import Foreign
 import Foreign.C
 import qualified Data.Text as T
 import Raylib.Structs
+import Raylib.Enums
 
 #include <raylib.h>
 
