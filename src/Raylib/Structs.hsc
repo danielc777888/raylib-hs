@@ -1,26 +1,31 @@
 module Raylib.Structs (
- Texture (Texture),
- Texture2D,
- TextureCubeMap,
- RenderTexture (RenderTexture),
- RenderTexture2D,
- Image (Image),
- Font (Font),
- Sound (Sound),
- AudioStream (AudioStream),
- Vector2 (Vector2),
- Vector3 (Vector3),
- Vector4 (Vector4),
- Quaternion,
- Color (Color),
- Rectangle (Rectangle),
- Matrix (Matrix),
- NPatchInfo (NPatchInfo),
- Camera,
- Camera3D (Camera3D),
- Camera2D (Camera2D),
- Mesh (Mesh),
- Shader (Shader)) where
+ Texture (..),
+ Texture2D (..),
+ TextureCubeMap (..),
+ RenderTexture (..),
+ RenderTexture2D (..),
+ Image (..),
+ Font (..),
+ Sound (..),
+ AudioStream (..),
+ Vector2 (..),
+ Vector3 (..),
+ Vector4 (..),
+ Quaternion (..),
+ Color (..),
+ Rectangle (..),
+ Matrix (..),
+ NPatchInfo (..),
+ Camera (..),
+ Camera3D (..),
+ Camera2D (..),
+ Mesh (..),
+ Shader (..),
+ MaterialMap (..),
+ Material (..),
+ Transform (..),
+ BoneInfo (..),
+ Model (..)) where
 
 import Foreign.Storable
 import Foreign
@@ -504,3 +509,132 @@ instance Storable Shader where
     poke ptr (Shader id' locs') = do
         (#poke Shader, id) ptr id'
         (#poke Shader, locs) ptr locs'
+
+data MaterialMap = MaterialMap
+    { materialMapTexture :: !Texture2D
+    , materialMapColor :: !Color
+    , materialMapValue :: !CFloat
+    }
+
+instance Storable MaterialMap where
+    sizeOf _ = #{size MaterialMap}
+    alignment _ = #{alignment MaterialMap}
+    peek ptr = do
+        texture' <- (#peek MaterialMap, texture) ptr
+        color' <- (#peek MaterialMap, color) ptr
+        value' <- (#peek MaterialMap, value) ptr
+        return $! MaterialMap texture' color' value'
+    poke ptr (MaterialMap texture' color' value') = do
+        (#poke MaterialMap, texture) ptr texture'
+        (#poke MaterialMap, color) ptr color'
+        (#poke MaterialMap, value) ptr value'
+
+data Material = Material
+    { materialShader :: !Shader
+    , materialMaps :: !(Ptr MaterialMap)
+    , materialParams :: ![CFloat]
+    }
+
+instance Storable Material where
+    sizeOf _ = #{size Material}
+    alignment _ = #{alignment Material}
+    peek ptr = do
+        shader' <- (#peek Material, shader) ptr
+        maps' <- (#peek Material, maps) ptr
+        params' <- peekArray 4 ((#ptr Material, params) ptr)
+        return $! Material shader' maps' params'
+    poke ptr (Material shader' maps' params') = do
+        (#poke Material, shader) ptr shader'
+        (#poke Material, maps) ptr maps'
+        pokeArray ((#ptr Material, params) ptr) params'
+
+data Transform = Transform
+    { transformTranslation :: !Vector3
+    , transformRotation :: !Quaternion
+    , transformScale :: !Vector3
+    }
+
+instance Storable Transform where
+    sizeOf _ = #{size Transform}
+    alignment _ = #{alignment Transform}
+    peek ptr = do
+        translation' <- (#peek Transform, translation) ptr
+        rotation' <- (#peek Transform, rotation) ptr
+        scale' <- (#peek Transform, scale) ptr
+        return $! Transform translation' rotation' scale'
+    poke ptr (Transform translation' rotation' scale') = do
+        (#poke Transform, translation) ptr translation'
+        (#poke Transform, rotation) ptr rotation'
+        (#poke Transform, scale) ptr scale'
+
+data BoneInfo = BoneInfo
+    { boneInfoName :: ![CChar]
+    , boneInfoParent :: !CInt
+    }
+
+instance Storable BoneInfo where
+    sizeOf _ = #{size BoneInfo}
+    alignment _ = #{alignment BoneInfo}
+    peek ptr = do
+        name' <- peekArray 32 ((#ptr BoneInfo, name) ptr)
+        parent' <- (#peek BoneInfo, parent) ptr
+        return $! BoneInfo name' parent'
+    poke ptr (BoneInfo name' parent') = do
+        pokeArray ((#ptr BoneInfo, name) ptr) name'
+        (#poke BoneInfo, parent) ptr parent'
+
+    {-
+typedef struct Model {
+    Matrix transform;       // Local transform matrix
+
+    int meshCount;          // Number of meshes
+    int materialCount;      // Number of materials
+    Mesh *meshes;           // Meshes array
+    Material *materials;    // Materials array
+    int *meshMaterial;      // Mesh material number
+
+    // Animation data
+    int boneCount;          // Number of bones
+    BoneInfo *bones;        // Bones information (skeleton)
+    Transform *bindPose;    // Bones base transformation (pose)
+} Model;
+-}
+
+data Model = Model
+    { modelTransform :: !Matrix
+    , modelMeshCount :: !CInt
+    , modelMaterialCount :: !CInt
+    , modelMeshes :: !(Ptr Mesh)
+    , modelMaterials :: !(Ptr Material)
+    , modelMeshMaterial :: !(Ptr CInt)
+    , modelBoneCount :: !CInt
+    , modelBones :: !(Ptr BoneInfo)
+    , modelBindPose :: !(Ptr Transform)
+    }
+
+instance Storable Model where
+    sizeOf _ = #{size Model}
+    alignment _ = #{alignment Model}
+    peek ptr = do
+        transform' <- (#peek Model, transform) ptr
+        meshCount' <- (#peek Model, meshCount) ptr
+        materialCount' <- (#peek Model, materialCount) ptr
+        meshes' <- (#peek Model, meshes) ptr
+        materials' <- (#peek Model, materials) ptr
+        meshMaterial' <- (#peek Model, meshMaterial) ptr
+        boneCount' <- (#peek Model, boneCount) ptr
+        bones' <- (#peek Model, bones) ptr
+        bindPose' <- (#peek Model, bindPose) ptr
+        return $! Model transform' meshCount' materialCount' meshes' materials' meshMaterial' boneCount' bones' bindPose'
+    poke ptr (Model transform' meshCount' materialCount' meshes' materials' meshMaterial' boneCount' bones' bindPose') = do
+        (#poke Model, transform) ptr transform'
+        (#poke Model, meshCount) ptr meshCount'
+        (#poke Model, materialCount) ptr materialCount'
+        (#poke Model, meshes) ptr meshes'
+        (#poke Model, materials) ptr materials'
+        (#poke Model, meshMaterial) ptr meshMaterial'
+        (#poke Model, boneCount) ptr boneCount'
+        (#poke Model, bones) ptr bones'
+        (#poke Model, bindPose) ptr bindPose'
+
+
