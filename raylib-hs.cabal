@@ -50,6 +50,7 @@ library
         raylib
     hs-source-dirs:      src
     extra-lib-dirs: /usr/local/lib
+    include-dirs: /usr/local/include
 
 executable core-basic-window
     build-depends: base, raylib-hs

@@ -1,11 +1,13 @@
 module Raylib.Structs (
- Texture,
+ Texture (Texture),
  Texture2D,
- RenderTexture,
+ TextureCubeMap,
+ RenderTexture (RenderTexture),
  RenderTexture2D,
- Image,
- Font,
- Sound,
+ Image (Image),
+ Font (Font),
+ Sound (Sound),
+ AudioStream (AudioStream),
  Vector2 (Vector2),
  Vector3 (Vector3),
  Vector4 (Vector4),
@@ -13,7 +15,12 @@ module Raylib.Structs (
  Color (Color),
  Rectangle (Rectangle),
  Matrix (Matrix),
- NPatchInfo (NPatchInfo)) where
+ NPatchInfo (NPatchInfo),
+ Camera,
+ Camera3D (Camera3D),
+ Camera2D (Camera2D),
+ Mesh (Mesh),
+ Shader (Shader)) where
 
 import Foreign.Storable
 import Foreign
@@ -22,6 +29,7 @@ import Foreign.C
 #include <raylib.h>
 
 type Texture2D = Texture
+type TextureCubeMap = Texture
 
 type Quaternion = Vector4
 
@@ -376,3 +384,123 @@ instance Storable NPatchInfo where
     (#poke NPatchInfo, right) ptr right'
     (#poke NPatchInfo, bottom) ptr bottom'
     (#poke NPatchInfo, layout) ptr layout'
+
+type Camera = Camera3D
+
+data Camera3D = Camera3D
+  { camera3DPosition :: !Vector3
+  , camera3DTarget :: !Vector3
+  , camera3DUp :: !Vector3
+  , camera3DFovy :: !CFloat
+  , camera3DProjection :: !CInt
+  }
+
+instance Storable Camera3D where
+  sizeOf _ = #{size Camera3D}
+  alignment _ = #{alignment Camera3D}
+  peek ptr = do
+    position' <- (#peek Camera3D, position) ptr
+    target' <- (#peek Camera3D, target) ptr
+    up' <- (#peek Camera3D, up) ptr
+    fovy' <- (#peek Camera3D, fovy) ptr
+    projection' <- (#peek Camera3D, projection) ptr
+    return $! Camera3D position' target' up' fovy' projection'
+  poke ptr (Camera3D position' target' up' fovy' projection') = do
+    (#poke Camera3D, position) ptr position'
+    (#poke Camera3D, target) ptr target'
+    (#poke Camera3D, up) ptr up'
+    (#poke Camera3D, fovy) ptr fovy'
+    (#poke Camera3D, projection) ptr projection'
+
+data Camera2D = Camera2D
+  { camera2DOffset :: !Vector2
+  , camera2DTarget :: !Vector2
+  , camera2DRotation :: !CFloat
+  , camera2DZoom :: !CFloat
+  }
+
+instance Storable Camera2D where
+  sizeOf _ = #{size Camera2D}
+  alignment _ = #{alignment Camera2D}
+  peek ptr = do
+    offset' <- (#peek Camera2D, offset) ptr
+    target' <- (#peek Camera2D, target) ptr
+    rotation' <- (#peek Camera2D, rotation) ptr
+    zoom' <- (#peek Camera2D, zoom) ptr
+    return $! Camera2D offset' target' rotation' zoom'
+  poke ptr (Camera2D offset' target' rotation' zoom') = do
+    (#poke Camera2D, offset) ptr offset'
+    (#poke Camera2D, target) ptr target'
+    (#poke Camera2D, rotation) ptr rotation'
+    (#poke Camera2D, zoom) ptr zoom'
+
+data Mesh = Mesh
+  { meshVertexCount :: !CInt
+  , meshTriangleCount :: !CInt
+  , meshVertices :: !(Ptr CFloat)
+  , meshTexcoords :: !(Ptr CFloat)
+  , meshTexcoords2 :: !(Ptr CFloat)
+  , meshNormals :: !(Ptr CFloat)
+  , meshTangents :: !(Ptr CFloat)
+  , meshColors :: !(Ptr CInt)
+  , meshIndices :: !(Ptr CInt)
+  , meshAnimVertices :: !(Ptr CFloat)
+  , meshAnimNormals :: !(Ptr CFloat)
+  , meshBoneIds :: !(Ptr CInt)
+  , meshBoneWeights :: !(Ptr CFloat)
+  , meshVaoId :: !CInt
+  , meshVboId :: !(Ptr CInt)
+  }
+
+instance Storable Mesh where
+  sizeOf _ = #{size Mesh}
+  alignment _ = #{alignment Mesh}
+  peek ptr = do
+    vertexCount' <- (#peek Mesh, vertexCount) ptr
+    triangleCount' <- (#peek Mesh, triangleCount) ptr
+    vertices' <- (#peek Mesh, vertices) ptr
+    texcoords' <- (#peek Mesh, texcoords) ptr
+    texcoords2' <- (#peek Mesh, texcoords2) ptr
+    normals' <- (#peek Mesh, normals) ptr
+    tangents' <- (#peek Mesh, tangents) ptr
+    colors' <- (#peek Mesh, colors) ptr
+    indices' <- (#peek Mesh, indices) ptr
+    animVertices' <- (#peek Mesh, animVertices) ptr
+    animNormals' <- (#peek Mesh, animNormals) ptr
+    boneIds' <- (#peek Mesh, boneIds) ptr
+    boneWeights' <- (#peek Mesh, boneWeights) ptr
+    vaoId' <- (#peek Mesh, vaoId) ptr
+    vboId' <- (#peek Mesh, vboId) ptr
+    return $! Mesh vertexCount' triangleCount' vertices' texcoords' texcoords2' normals' tangents' colors' indices' animVertices' animNormals' boneIds' boneWeights' vaoId' vboId'
+  poke ptr (Mesh vertexCount' triangleCount' vertices' texcoords' texcoords2' normals' tangents' colors' indices' animVertices' animNormals' boneIds' boneWeights' vaoId' vboId') = do
+    (#poke Mesh, vertexCount) ptr vertexCount'
+    (#poke Mesh, triangleCount) ptr triangleCount'
+    (#poke Mesh, vertices) ptr vertices'
+    (#poke Mesh, texcoords) ptr texcoords'
+    (#poke Mesh, texcoords2) ptr texcoords2'
+    (#poke Mesh, normals) ptr normals'
+    (#poke Mesh, tangents) ptr tangents'
+    (#poke Mesh, colors) ptr colors'
+    (#poke Mesh, indices) ptr indices'
+    (#poke Mesh, animVertices) ptr animVertices'
+    (#poke Mesh, animNormals) ptr animNormals'
+    (#poke Mesh, boneIds) ptr boneIds'
+    (#poke Mesh, boneWeights) ptr boneWeights'
+    (#poke Mesh, vaoId) ptr vaoId'
+    (#poke Mesh, vboId) ptr vboId'
+
+data Shader = Shader
+    { shaderId :: !CInt
+    , shaderLocs :: !(Ptr CInt)
+    }
+
+instance Storable Shader where
+    sizeOf _ = #{size Shader}
+    alignment _ = #{alignment Shader}
+    peek ptr = do
+        id' <- (#peek Shader, id) ptr
+        locs' <- (#peek Shader, locs) ptr
+        return $! Shader id' locs'
+    poke ptr (Shader id' locs') = do
+        (#poke Shader, id) ptr id'
+        (#poke Shader, locs) ptr locs'
