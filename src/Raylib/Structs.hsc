@@ -25,7 +25,13 @@ module Raylib.Structs (
  Material (..),
  Transform (..),
  BoneInfo (..),
- Model (..)) where
+ Model (..),
+ ModelAnimation (..),
+ Ray (..),
+ RayCollision (..),
+ Wave (..),
+ Music (..)
+ ) where
 
 import Foreign.Storable
 import Foreign
@@ -583,22 +589,6 @@ instance Storable BoneInfo where
         pokeArray ((#ptr BoneInfo, name) ptr) name'
         (#poke BoneInfo, parent) ptr parent'
 
-    {-
-typedef struct Model {
-    Matrix transform;       // Local transform matrix
-
-    int meshCount;          // Number of meshes
-    int materialCount;      // Number of materials
-    Mesh *meshes;           // Meshes array
-    Material *materials;    // Materials array
-    int *meshMaterial;      // Mesh material number
-
-    // Animation data
-    int boneCount;          // Number of bones
-    BoneInfo *bones;        // Bones information (skeleton)
-    Transform *bindPose;    // Bones base transformation (pose)
-} Model;
--}
 
 data Model = Model
     { modelTransform :: !Matrix
@@ -636,5 +626,132 @@ instance Storable Model where
         (#poke Model, boneCount) ptr boneCount'
         (#poke Model, bones) ptr bones'
         (#poke Model, bindPose) ptr bindPose'
+
+data ModelAnimation = ModelAnimation
+    { modelAnimationBoneCount :: !CInt
+    , modelAnimationFrameCount :: !CInt
+    , modelAnimationBones :: !(Ptr BoneInfo)
+    , modelAnimationFramePoses :: !(Ptr (Ptr BoneInfo))
+    }
+
+instance Storable ModelAnimation where
+    sizeOf _ = #{size ModelAnimation}
+    alignment _ = #{alignment ModelAnimation}
+    peek ptr = do
+        boneCount' <- (#peek ModelAnimation, boneCount) ptr
+        frameCount' <- (#peek ModelAnimation, frameCount) ptr
+        bones' <- (#peek ModelAnimation, bones) ptr
+        framePoses' <- (#peek ModelAnimation, framePoses) ptr
+        return $! ModelAnimation boneCount' frameCount' bones' framePoses'
+    poke ptr (ModelAnimation boneCount' frameCount' bones' framePoses') = do
+        (#poke ModelAnimation, boneCount) ptr boneCount'
+        (#poke ModelAnimation, frameCount) ptr frameCount'
+        (#poke ModelAnimation, bones) ptr bones'
+        (#poke ModelAnimation, framePoses) ptr framePoses'
+
+data Ray = Ray
+    { rayPosition :: !Vector3
+    , rayDirection :: !Vector3
+    }
+
+instance Storable Ray where
+    sizeOf _ = #{size Ray}
+    alignment _ = #{alignment Ray}
+    peek ptr = do
+        position' <- (#peek Ray, position) ptr
+        direction' <- (#peek Ray, direction) ptr
+        return $! Ray position' direction'
+    poke ptr (Ray position' direction') = do
+        (#poke Ray, position) ptr position'
+        (#poke Ray, direction) ptr direction'
+
+
+data RayCollision = RayCollision
+    { rayCollisionHit :: !CBool
+    , rayCollisionDistance :: !CFloat
+    , rayCollisionPoint :: !Vector3
+    , rayCollisionNormal :: !Vector3
+    }
+
+instance Storable RayCollision where
+    sizeOf _ = #{size RayCollision}
+    alignment _ = #{alignment RayCollision}
+    peek ptr = do
+        hit' <- (#peek RayCollision, hit) ptr
+        distance' <- (#peek RayCollision, distance) ptr
+        point' <- (#peek RayCollision, point) ptr
+        normal' <- (#peek RayCollision, normal) ptr
+        return $! RayCollision hit' distance' point' normal'
+    poke ptr (RayCollision hit' distance' point' normal') = do
+        (#poke RayCollision, hit) ptr hit'
+        (#poke RayCollision, distance) ptr distance'
+        (#poke RayCollision, point) ptr point'
+        (#poke RayCollision, normal) ptr normal'
+
+data BoundingBox = BoundingBox
+    { boundingBoxMin :: !Vector3
+    , boundingBoxMax :: !Vector3
+    }
+
+instance Storable BoundingBox where
+    sizeOf _ = #{size BoundingBox }
+    alignment _ = #{alignment BoundingBox}
+    peek ptr = do
+        min' <- (#peek BoundingBox, min) ptr
+        max' <- (#peek BoundingBox, max) ptr
+        return $! BoundingBox min' max'
+    poke ptr (BoundingBox min' max') = do
+        (#poke BoundingBox, min) ptr min'
+        (#poke BoundingBox, max) ptr max'
+
+data Wave = Wave
+    { waveFrameCount :: !CUInt
+    , waveSampleRate :: !CUInt
+    , waveSampleSize :: !CUInt
+    , waveChannels :: !CUInt
+    , waveData :: !(Ptr ())
+    }
+
+instance Storable Wave where
+    sizeOf _ = #{size Wave}
+    alignment _ = #{alignment Wave}
+    peek ptr = do
+        frameCount' <- (#peek Wave, frameCount) ptr
+        sampleRate' <- (#peek Wave, sampleRate) ptr
+        sampleSize' <- (#peek Wave, sampleSize) ptr
+        channels' <- (#peek Wave, channels) ptr
+        data' <- (#peek Wave, data) ptr
+        return $! Wave frameCount' sampleRate' sampleSize' channels' data'
+    poke ptr (Wave frameCount' sampleRate' sampleSize' channels' data') = do
+        (#poke Wave, frameCount) ptr frameCount'
+        (#poke Wave, sampleRate) ptr sampleRate'
+        (#poke Wave, sampleSize) ptr sampleSize'
+        (#poke Wave, channels) ptr channels'
+        (#poke Wave, data) ptr data'
+
+data Music = Music
+  { musicStream :: AudioStream
+  , musicFrameCount :: !CUInt
+  , musicLooping :: !CBool
+  , musicCtxType :: !CInt
+  , musicCtxData :: !(Ptr ())
+  }
+
+instance Storable Music where
+  sizeOf _ = #{size Music}
+  alignment _ = #{alignment Music}
+  peek ptr = do
+    stream' <- (#peek Music, stream) ptr
+    frameCount' <- (#peek Music, frameCount) ptr
+    looping' <- (#peek Music, looping) ptr
+    ctxType' <- (#peek Music, ctxType) ptr
+    ctxData' <- (#peek Music, ctxData) ptr
+    return $! Music stream' frameCount' looping' ctxType' ctxData'
+  poke ptr (Music stream' frameCount' looping' ctxType' ctxData') = do
+    (#poke Music, stream) ptr stream'
+    (#poke Music, frameCount) ptr frameCount'
+    (#poke Music, looping) ptr looping'
+    (#poke Music, ctxType) ptr ctxType'
+    (#poke Music, ctxData) ptr ctxData'
 
 

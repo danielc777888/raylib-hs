@@ -27,8 +27,6 @@ import Raylib.Enums
 
 #include <raylib.h>
 
--- window related functions
-
 foreign import ccall unsafe "raylib.h InitWindow" cInitWindow :: CInt -> CInt -> CString -> IO ()
 initWindow :: Int -> Int -> T.Text -> IO ()
 initWindow width height title = withCString (T.unpack title) (\title' ->
@@ -57,7 +55,6 @@ foreign import ccall unsafe "raylib.h GetMonitorHeight" cGetMonitorHeight :: CIn
 getMonitorHeight :: Int -> IO Int
 getMonitorHeight x = do h <- cGetMonitorHeight (fromIntegral x)
                         return (fromIntegral h)
-
 
 foreign import ccall unsafe "raylib.h SetTargetFPS" cSetTargetFPS :: CInt -> IO ()
 setTargetFPS :: Int -> IO ()
@@ -93,8 +90,6 @@ traceLog :: TraceLogLevel -> T.Text -> IO ()
 traceLog t s = withCString (T.unpack s) (\s' ->
                   cTraceLog (fromIntegral (fromEnum t)) s')
 
- -- drawing related functions
-
 foreign import ccall unsafe "raylib-hs.h C_ClearBackground" cClearBackground :: Ptr Color -> IO ()
 clearBackground :: Color -> IO ()
 clearBackground c = with c(\c_ptr -> cClearBackground c_ptr)
@@ -107,12 +102,9 @@ foreign import ccall unsafe "raylib.h EndDrawing" cEndDrawing :: IO ()
 endDrawing :: IO ()
 endDrawing = do cEndDrawing
 
--- gestures and touch handling functions
-
 foreign import ccall unsafe "raylib.h IsGestureDetected" cIsGestureDetected :: CInt -> IO CBool
 isGestureDetected :: Gesture -> IO Bool
 isGestureDetected g = do
                     d <- cIsGestureDetected (fromIntegral (fromEnum g))
                     return (toBool d)
-
 
