@@ -1,7 +1,8 @@
 module Raylib.Enums (
  KeyboardKey (..),
  Gesture (..),
- TraceLogLevel (..)) where
+ TraceLogLevel (..),
+ ConfigFlags (..)) where
 
 import Foreign.Storable
 import Foreign
@@ -391,4 +392,69 @@ instance Enum TraceLogLevel where
   toEnum #{const LOG_ERROR} = LogError
   toEnum #{const LOG_FATAL} = LogFatal
   toEnum #{const LOG_NONE} = LogNone
+
+    {-
+typedef enum {
+    FLAG_VSYNC_HINT         = 0x00000040,   // Set to try enabling V-Sync on GPU
+    FLAG_FULLSCREEN_MODE    = 0x00000002,   // Set to run program in fullscreen
+    FLAG_WINDOW_RESIZABLE   = 0x00000004,   // Set to allow resizable window
+    FLAG_WINDOW_UNDECORATED = 0x00000008,   // Set to disable window decoration (frame and buttons)
+    FLAG_WINDOW_HIDDEN      = 0x00000080,   // Set to hide window
+    FLAG_WINDOW_MINIMIZED   = 0x00000200,   // Set to minimize window (iconify)
+    FLAG_WINDOW_MAXIMIZED   = 0x00000400,   // Set to maximize window (expanded to monitor)
+    FLAG_WINDOW_UNFOCUSED   = 0x00000800,   // Set to window non focused
+    FLAG_WINDOW_TOPMOST     = 0x00001000,   // Set to window always on top
+    FLAG_WINDOW_ALWAYS_RUN  = 0x00000100,   // Set to allow windows running while minimized
+    FLAG_WINDOW_TRANSPARENT = 0x00000010,   // Set to allow transparent framebuffer
+    FLAG_WINDOW_HIGHDPI     = 0x00002000,   // Set to support HighDPI
+    FLAG_MSAA_4X_HINT       = 0x00000020,   // Set to try enabling MSAA 4X
+    FLAG_INTERLACED_HINT    = 0x00010000    // Set to try enabling interlaced video format (for V3D)
+} ConfigFlags;
+-}
+
+data ConfigFlags = FlagVSyncHint
+                 | FlagFullScreenMode
+                 | FlagWindowResizable
+                 | FlagWindowUndecorated
+                 | FlagWindowHidden
+                 | FlagWindowMinimized
+                 | FlagWindowMaximized
+                 | FlagWindowUnfocused
+                 | FlagWindowTopMost
+                 | FlagWindowAlwaysRun
+                 | FlagWindowTransparent
+                 | FlagWindowHighDPI
+                 | FlagMSAA4XHint
+                 | FlagInterlacedHint deriving (Show, Eq)
+
+instance Enum ConfigFlags where
+  fromEnum FlagVSyncHint = #{const FLAG_VSYNC_HINT}
+  fromEnum FlagFullScreenMode = #{const FLAG_FULLSCREEN_MODE}
+  fromEnum FlagWindowResizable = #{const FLAG_WINDOW_RESIZABLE}
+  fromEnum FlagWindowUndecorated = #{const FLAG_WINDOW_UNDECORATED}
+  fromEnum FlagWindowHidden = #{const FLAG_WINDOW_HIDDEN}
+  fromEnum FlagWindowMinimized = #{const FLAG_WINDOW_MINIMIZED}
+  fromEnum FlagWindowMaximized = #{const FLAG_WINDOW_MAXIMIZED}
+  fromEnum FlagWindowUnfocused = #{const FLAG_WINDOW_UNFOCUSED}
+  fromEnum FlagWindowTopMost = #{const FLAG_WINDOW_TOPMOST}
+  fromEnum FlagWindowAlwaysRun = #{const FLAG_WINDOW_ALWAYS_RUN}
+  fromEnum FlagWindowTransparent = #{const FLAG_WINDOW_TRANSPARENT}
+  fromEnum FlagWindowHighDPI = #{const FLAG_WINDOW_HIGHDPI}
+  fromEnum FlagMSAA4XHint = #{const FLAG_MSAA_4X_HINT}
+  fromEnum FlagInterlacedHint = #{const FLAG_INTERLACED_HINT}
+  toEnum #{const FLAG_VSYNC_HINT} = FlagVSyncHint
+  toEnum #{const FLAG_FULLSCREEN_MODE} = FlagFullScreenMode
+  toEnum #{const FLAG_WINDOW_RESIZABLE} = FlagWindowResizable
+  toEnum #{const FLAG_WINDOW_UNDECORATED} = FlagWindowUndecorated
+  toEnum #{const FLAG_WINDOW_HIDDEN} = FlagWindowHidden
+  toEnum #{const FLAG_WINDOW_MINIMIZED} = FlagWindowMinimized
+  toEnum #{const FLAG_WINDOW_MAXIMIZED} = FlagWindowMaximized
+  toEnum #{const FLAG_WINDOW_UNFOCUSED} = FlagWindowUnfocused
+  toEnum #{const FLAG_WINDOW_TOPMOST} = FlagWindowTopMost
+  toEnum #{const FLAG_WINDOW_ALWAYS_RUN} = FlagWindowAlwaysRun
+  toEnum #{const FLAG_WINDOW_TRANSPARENT} = FlagWindowTransparent
+  toEnum #{const FLAG_WINDOW_HIGHDPI} = FlagWindowHighDPI
+  toEnum #{const FLAG_MSAA_4X_HINT} = FlagMSAA4XHint
+  toEnum #{const FLAG_INTERLACED_HINT} = FlagInterlacedHint
+
 
