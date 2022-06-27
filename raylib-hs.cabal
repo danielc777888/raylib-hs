@@ -2,7 +2,7 @@ cabal-version:      3.6
 name:               raylib-hs
 version:            4.0.0.0
 author:             Daniel Cabral
-maintainer:         Daniel Cabral
+maintainer:         danielc777888@gmail.com
 copyright:          2022 Daniel Cabral
 build-type:         Simple
 license:            Zlib
@@ -10,7 +10,6 @@ homepage:           https://github.com/danielc777888/raylib-hs
 bug-reports:        https://github.com/danielc777888/raylib-hs/issues
 synopsis:           Haskell raylib bindings
 description:        Haskell raylib bindings
-
 
 extra-source-files:
     README.md
@@ -45,9 +44,8 @@ library
     includes:
       raylib.h
       cbits/raylib-hs.h
-    --remember to remove prefix "lib" from the c library name. **sigh** gets me all the time.
     extra-libraries:
-        raylib
+      raylib
     hs-source-dirs:      src
     extra-lib-dirs: /usr/local/lib
     include-dirs: /usr/local/include
@@ -61,5 +59,4 @@ executable core-basic-screen-manager
     build-depends: base, raylib-hs
     hs-source-dirs: examples/core
     main-is: core_basic_screen_manager.hs
-
 
