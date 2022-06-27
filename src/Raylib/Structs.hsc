@@ -30,7 +30,9 @@ module Raylib.Structs (
  Ray (..),
  RayCollision (..),
  Wave (..),
- Music (..)
+ Music (..),
+ VrDeviceInfo (..),
+ VrStereoConfig (..)
  ) where
 
 import Foreign.Storable
@@ -753,5 +755,78 @@ instance Storable Music where
     (#poke Music, looping) ptr looping'
     (#poke Music, ctxType) ptr ctxType'
     (#poke Music, ctxData) ptr ctxData'
+
+data VrDeviceInfo = VrDeviceInfo
+  { vrDeviceInfoHResolution :: !CInt
+  , vrDeviceInfoVResolution :: !CInt
+  , vrDeviceInfoHScreenSize :: !CFloat
+  , vrDeviceInfoVScreenSize :: !CFloat
+  , vrDeviceInfoVScreenCenter :: !CFloat
+  , vrDeviceInfoEyeToScreenDistance :: !CFloat
+  , vrDeviceInfoLensSeparationDistance :: !CFloat
+  , vrDeviceInfoInterpupillaryDistance :: !CFloat
+  , vrDeviceInfoLensDistortionValues :: ![CFloat]
+  , vrDeviceInfoChromaAbCorrection :: ![CFloat]
+  }
+
+instance Storable VrDeviceInfo where
+  sizeOf _ = #{size VrDeviceInfo}
+  alignment _ = #{alignment VrDeviceInfo}
+  peek ptr = do
+    hResolution' <- (#peek VrDeviceInfo, hResolution) ptr
+    vResolution' <- (#peek VrDeviceInfo, vResolution) ptr
+    hScreenSize' <- (#peek VrDeviceInfo, hScreenSize) ptr
+    vScreenSize' <- (#peek VrDeviceInfo, vScreenSize) ptr
+    vScreenCenter' <- (#peek VrDeviceInfo, vScreenCenter) ptr
+    eyeToScreenDistance' <- (#peek VrDeviceInfo, eyeToScreenDistance) ptr
+    lensSeparationDistance' <- (#peek VrDeviceInfo, lensSeparationDistance) ptr
+    interpupillaryDistance' <- (#peek VrDeviceInfo, interpupillaryDistance) ptr
+    lensDistortionValues' <-peekArray 4 ((#ptr VrDeviceInfo, lensDistortionValues) ptr)
+    chromaAbCorrection' <-peekArray 4 ((#ptr VrDeviceInfo, chromaAbCorrection) ptr)
+    return $! VrDeviceInfo hResolution' vResolution' hScreenSize' vScreenSize' vScreenCenter' eyeToScreenDistance' lensSeparationDistance' interpupillaryDistance' lensDistortionValues' chromaAbCorrection'
+  poke ptr (VrDeviceInfo hResolution' vResolution' hScreenSize' vScreenSize' vScreenCenter' eyeToScreenDistance' lensSeparationDistance' interpupillaryDistance' lensDistortionValues' chromaAbCorrection') = do
+    (#poke VrDeviceInfo, hResolution) ptr hResolution'
+    (#poke VrDeviceInfo, vResolution) ptr vResolution'
+    (#poke VrDeviceInfo, hScreenSize) ptr hScreenSize'
+    (#poke VrDeviceInfo, vScreenSize) ptr vScreenSize'
+    (#poke VrDeviceInfo, vScreenCenter) ptr vScreenCenter'
+    (#poke VrDeviceInfo, eyeToScreenDistance) ptr eyeToScreenDistance'
+    (#poke VrDeviceInfo, lensSeparationDistance) ptr lensSeparationDistance'
+    (#poke VrDeviceInfo, interpupillaryDistance) ptr interpupillaryDistance'
+    pokeArray ((#ptr VrDeviceInfo, lensDistortionValues) ptr) lensDistortionValues'
+    pokeArray ((#ptr VrDeviceInfo, chromaAbCorrection) ptr) chromaAbCorrection'
+
+data VrStereoConfig = VrStereoConfig
+  { vrStereoConfigProjection :: ![Matrix]
+  , vrStereoConfigViewOffset :: ![Matrix]
+  , vrStereoConfigLeftLensCenter :: ![CFloat]
+  , vrStereoConfigRightLensCenter :: ![CFloat]
+  , vrStereoConfigLeftScreenCenter :: ![CFloat]
+  , vrStereoConfigRightScreenCenter :: ![CFloat]
+  , vrStereoConfigScale :: ![CFloat]
+  , vrStereoConfigScaleIn :: ![CFloat]
+  }
+
+instance Storable VrStereoConfig where
+  sizeOf _ = #{size VrStereoConfig}
+  alignment _ = #{alignment VrStereoConfig}
+  peek ptr = do
+    projection' <-peekArray 2 ((#ptr VrStereoConfig, projection) ptr)
+    viewOffset' <-peekArray 2 ((#ptr VrStereoConfig, viewOffset) ptr)
+    leftLensCenter' <-peekArray 2 ((#ptr VrStereoConfig, leftLensCenter) ptr)
+    rightLensCenter' <-peekArray 2 ((#ptr VrStereoConfig, rightLensCenter) ptr)
+    leftScreenCenter' <-peekArray 2 ((#ptr VrStereoConfig, leftScreenCenter) ptr)
+    rightScreenCenter' <-peekArray 2 ((#ptr VrStereoConfig, rightScreenCenter) ptr)
+    scale' <-peekArray 2 ((#ptr VrStereoConfig, scale) ptr)
+    scaleIn' <-peekArray 2 ((#ptr VrStereoConfig, scaleIn) ptr)
+    return $! VrStereoConfig projection' viewOffset' leftLensCenter' rightLensCenter' leftScreenCenter' rightScreenCenter' scale' scaleIn'
+  poke ptr (VrStereoConfig projection' viewOffset' leftLensCenter' rightLensCenter' leftScreenCenter' rightScreenCenter' scale' scaleIn') = do
+    pokeArray ((#ptr VrStereoConfig, projection) ptr) projection'
+    pokeArray ((#ptr VrStereoConfig, viewOffset) ptr) viewOffset'
+    pokeArray ((#ptr VrStereoConfig, leftLensCenter) ptr) leftLensCenter'
+    pokeArray ((#ptr VrStereoConfig, rightLensCenter) ptr) rightLensCenter'
+    pokeArray ((#ptr VrStereoConfig, leftScreenCenter) ptr) leftScreenCenter'
+    pokeArray ((#ptr VrStereoConfig, rightScreenCenter) ptr) rightScreenCenter'
+    pokeArray ((#ptr VrStereoConfig, scale) ptr) scaleIn'
 
 
