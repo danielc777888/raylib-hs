@@ -1,8 +1,4 @@
-module Raylib.Enums (
- KeyboardKey (..),
- Gesture (..),
- TraceLogLevel (..),
- ConfigFlags (..)) where
+module Raylib.Enums where
 
 import Foreign.Storable
 import Foreign
@@ -437,5 +433,29 @@ instance Enum ConfigFlags where
   toEnum #{const FLAG_WINDOW_HIGHDPI} = FlagWindowHighDPI
   toEnum #{const FLAG_MSAA_4X_HINT} = FlagMSAA4XHint
   toEnum #{const FLAG_INTERLACED_HINT} = FlagInterlacedHint
+
+data MouseButton = MouseButtonLeft
+                 | MouseButtonRight
+                 | MouseButtonMiddle
+                 | MouseButtonSide
+                 | MouseButtonExtra
+                 | MouseButtonForward
+                 | MouseButtonBack deriving (Show, Eq)
+
+instance Enum MouseButton where
+    fromEnum MouseButtonLeft = #{const MOUSE_BUTTON_LEFT}
+    fromEnum MouseButtonRight = #{const MOUSE_BUTTON_RIGHT}
+    fromEnum MouseButtonMiddle = #{const MOUSE_BUTTON_MIDDLE}
+    fromEnum MouseButtonSide = #{const MOUSE_BUTTON_SIDE}
+    fromEnum MouseButtonExtra = #{const MOUSE_BUTTON_EXTRA}
+    fromEnum MouseButtonForward = #{const MOUSE_BUTTON_FORWARD}
+    fromEnum MouseButtonBack = #{const MOUSE_BUTTON_BACK}
+    toEnum #{const MOUSE_BUTTON_LEFT} = MouseButtonLeft
+    toEnum #{const MOUSE_BUTTON_RIGHT} = MouseButtonRight
+    toEnum #{const MOUSE_BUTTON_MIDDLE} = MouseButtonMiddle
+    toEnum #{const MOUSE_BUTTON_SIDE} = MouseButtonSide
+    toEnum #{const MOUSE_BUTTON_EXTRA} = MouseButtonExtra
+    toEnum #{const MOUSE_BUTTON_FORWARD} = MouseButtonForward
+    toEnum #{const MOUSE_BUTTON_BACK} = MouseButtonBack
 
 

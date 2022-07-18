@@ -1,39 +1,4 @@
-module Raylib.Structs (
- Texture (..),
- Texture2D (..),
- TextureCubeMap (..),
- RenderTexture (..),
- RenderTexture2D (..),
- Image (..),
- Font (..),
- Sound (..),
- AudioStream (..),
- Vector2 (..),
- Vector3 (..),
- Vector4 (..),
- Quaternion (..),
- Color (..),
- Rectangle (..),
- Matrix (..),
- NPatchInfo (..),
- Camera (..),
- Camera3D (..),
- Camera2D (..),
- Mesh (..),
- Shader (..),
- MaterialMap (..),
- Material (..),
- Transform (..),
- BoneInfo (..),
- Model (..),
- ModelAnimation (..),
- Ray (..),
- RayCollision (..),
- Wave (..),
- Music (..),
- VrDeviceInfo (..),
- VrStereoConfig (..)
- ) where
+module Raylib.Structs where
 
 import Foreign.Storable
 import Foreign
