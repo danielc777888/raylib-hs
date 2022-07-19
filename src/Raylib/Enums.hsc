@@ -1,4 +1,8 @@
-module Raylib.Enums where
+module Raylib.Enums (
+    KeyboardKey (..),
+    Gesture (..),
+    TraceLogLevel
+    ) where
 
 import Foreign.Storable
 import Foreign
@@ -458,4 +462,39 @@ instance Enum MouseButton where
     toEnum #{const MOUSE_BUTTON_FORWARD} = MouseButtonForward
     toEnum #{const MOUSE_BUTTON_BACK} = MouseButtonBack
 
+data MouseCursor = MouseCursorDefault
+                 | MouseCursorArrow
+                 | MouseCursorIBeam
+                 | MouseCursorCrossHair
+                 | MouseCursorPointingHand
+                 | MouseCursorResizeEW
+                 | MouseCursorResizeNS
+                 | MouseCursorResizeNWSE
+                 | MouseCursorResizeNESW
+                 | MouseCursorResizeAll
+                 | MouseCursorNotAllowed deriving (Show, Eq)
+
+instance Enum MouseCursor where
+    fromEnum MouseCursorDefault = #{const MOUSE_CURSOR_DEFAULT}
+    fromEnum MouseCursorArrow = #{const MOUSE_CURSOR_ARROW}
+    fromEnum MouseCursorIBeam = #{const MOUSE_CURSOR_IBEAM}
+    fromEnum MouseCursorCrossHair = #{const MOUSE_CURSOR_CROSSHAIR}
+    fromEnum MouseCursorPointingHand = #{const MOUSE_CURSOR_POINTING_HAND}
+    fromEnum MouseCursorResizeEW = #{const MOUSE_CURSOR_RESIZE_EW}
+    fromEnum MouseCursorResizeNS = #{const MOUSE_CURSOR_RESIZE_NS}
+    fromEnum MouseCursorResizeNWSE = #{const MOUSE_CURSOR_RESIZE_NWSE}
+    fromEnum MouseCursorResizeNESW = #{const MOUSE_CURSOR_RESIZE_NESW}
+    fromEnum MouseCursorResizeAll = #{const MOUSE_CURSOR_RESIZE_ALL}
+    fromEnum MouseCursorNotAllowed = #{const MOUSE_CURSOR_NOT_ALLOWED}
+    toEnum #{const MOUSE_CURSOR_DEFAULT} = MouseCursorDefault
+    toEnum #{const MOUSE_CURSOR_ARROW} = MouseCursorArrow
+    toEnum #{const MOUSE_CURSOR_IBEAM} = MouseCursorIBeam
+    toEnum #{const MOUSE_CURSOR_CROSSHAIR} = MouseCursorCrossHair
+    toEnum #{const MOUSE_CURSOR_POINTING_HAND} = MouseCursorPointingHand
+    toEnum #{const MOUSE_CURSOR_RESIZE_EW} = MouseCursorResizeEW
+    toEnum #{const MOUSE_CURSOR_RESIZE_NS} = MouseCursorResizeNS
+    toEnum #{const MOUSE_CURSOR_RESIZE_NWSE} = MouseCursorResizeNWSE
+    toEnum #{const MOUSE_CURSOR_RESIZE_NESW} = MouseCursorResizeNESW
+    toEnum #{const MOUSE_CURSOR_RESIZE_ALL} = MouseCursorResizeAll
+    toEnum #{const MOUSE_CURSOR_NOT_ALLOWED} = MouseCursorNotAllowed
 

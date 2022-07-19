@@ -1,4 +1,14 @@
-module Raylib.Structs where
+module Raylib.Structs (
+    Texture2D,
+    TextureCubeMap,
+    Quaternion,
+    Texture (..),
+    Color (..),
+    Sound,
+    Vector2,
+    Font,
+    Rectangle
+    ) where
 
 import Foreign.Storable
 import Foreign
