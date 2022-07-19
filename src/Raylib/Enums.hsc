@@ -1,7 +1,10 @@
 module Raylib.Enums (
-    KeyboardKey (..),
+    ConfigFlags (..),
     Gesture (..),
-    TraceLogLevel
+    KeyboardKey (..),
+    MouseButton (..),
+    MouseCursor (..),
+    TraceLogLevel (..)
     ) where
 
 import Foreign.Storable
