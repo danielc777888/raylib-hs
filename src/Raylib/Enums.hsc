@@ -1,5 +1,6 @@
 module Raylib.Enums (
     ConfigFlags (..),
+    GamepadButton (..),
     Gesture (..),
     KeyboardKey (..),
     MouseButton (..),
@@ -500,4 +501,59 @@ instance Enum MouseCursor where
     toEnum #{const MOUSE_CURSOR_RESIZE_NESW} = MouseCursorResizeNESW
     toEnum #{const MOUSE_CURSOR_RESIZE_ALL} = MouseCursorResizeAll
     toEnum #{const MOUSE_CURSOR_NOT_ALLOWED} = MouseCursorNotAllowed
+
+data GamepadButton = GamepadButtonUnknown
+                   | GamepadButtonLeftFaceUp
+                   | GamepadButtonLeftFaceRight
+                   | GamepadButtonLeftFaceDown
+                   | GamepadButtonLeftFaceLeft
+                   | GamepadButtonRightFaceUp
+                   | GamepadButtonRightFaceRight
+                   | GamepadButtonRightFaceDown
+                   | GamepadButtonRightFaceLeft
+                   | GamepadButtonLeftTrigger1
+                   | GamepadButtonLeftTrigger2
+                   | GamepadButtonRightTrigger1
+                   | GamepadButtonRightTrigger2
+                   | GamepadButtonMiddleLeft
+                   | GamepadButtonMiddle
+                   | GamepadButtonMiddleRight
+                   | GamepadButtonLeftThumb
+                   | GamepadButtonRightThumb deriving (Show, Eq)
+
+instance Enum GamepadButton where
+    fromEnum GamepadButtonUnknown = #{const GAMEPAD_BUTTON_UNKNOWN}
+    fromEnum GamepadButtonLeftFaceUp = #{const GAMEPAD_BUTTON_LEFT_FACE_UP}
+    fromEnum GamepadButtonLeftFaceRight = #{const GAMEPAD_BUTTON_LEFT_FACE_RIGHT}
+    fromEnum GamepadButtonLeftFaceDown = #{const GAMEPAD_BUTTON_LEFT_FACE_DOWN}
+    fromEnum GamepadButtonLeftFaceLeft = #{const GAMEPAD_BUTTON_LEFT_FACE_LEFT}
+    fromEnum GamepadButtonRightFaceUp = #{const GAMEPAD_BUTTON_RIGHT_FACE_UP}
+    fromEnum GamepadButtonRightFaceRight = #{const GAMEPAD_BUTTON_RIGHT_FACE_RIGHT}
+    fromEnum GamepadButtonRightFaceDown = #{const GAMEPAD_BUTTON_RIGHT_FACE_DOWN}
+    fromEnum GamepadButtonRightFaceLeft = #{const GAMEPAD_BUTTON_RIGHT_FACE_LEFT}
+    fromEnum GamepadButtonLeftTrigger1 = #{const GAMEPAD_BUTTON_LEFT_TRIGGER_1}
+    fromEnum GamepadButtonLeftTrigger2 = #{const GAMEPAD_BUTTON_LEFT_TRIGGER_2}
+    fromEnum GamepadButtonRightTrigger1 = #{const GAMEPAD_BUTTON_RIGHT_TRIGGER_1}
+    fromEnum GamepadButtonMiddleLeft = #{const GAMEPAD_BUTTON_MIDDLE_LEFT}
+    fromEnum GamepadButtonMiddle = #{const GAMEPAD_BUTTON_MIDDLE}
+    fromEnum GamepadButtonMiddleRight = #{const GAMEPAD_BUTTON_MIDDLE_RIGHT}
+    fromEnum GamepadButtonLeftThumb = #{const GAMEPAD_BUTTON_LEFT_THUMB}
+    fromEnum GamepadButtonRightThumb = #{const GAMEPAD_BUTTON_RIGHT_THUMB}
+    toEnum #{const GAMEPAD_BUTTON_UNKNOWN} = GamepadButtonUnknown
+    toEnum #{const GAMEPAD_BUTTON_LEFT_FACE_UP} = GamepadButtonLeftFaceUp
+    toEnum #{const GAMEPAD_BUTTON_LEFT_FACE_RIGHT} = GamepadButtonLeftFaceRight
+    toEnum #{const GAMEPAD_BUTTON_LEFT_FACE_DOWN} = GamepadButtonLeftFaceDown
+    toEnum #{const GAMEPAD_BUTTON_LEFT_FACE_LEFT} = GamepadButtonLeftFaceLeft
+    toEnum #{const GAMEPAD_BUTTON_RIGHT_FACE_UP} = GamepadButtonRightFaceUp
+    toEnum #{const GAMEPAD_BUTTON_RIGHT_FACE_RIGHT} = GamepadButtonRightFaceRight
+    toEnum #{const GAMEPAD_BUTTON_RIGHT_FACE_DOWN} = GamepadButtonRightFaceDown
+    toEnum #{const GAMEPAD_BUTTON_RIGHT_FACE_LEFT} = GamepadButtonRightFaceLeft
+    toEnum #{const GAMEPAD_BUTTON_LEFT_TRIGGER_1} = GamepadButtonLeftTrigger1
+    toEnum #{const GAMEPAD_BUTTON_LEFT_TRIGGER_2} = GamepadButtonLeftTrigger2
+    toEnum #{const GAMEPAD_BUTTON_RIGHT_TRIGGER_1} = GamepadButtonRightTrigger1
+    toEnum #{const GAMEPAD_BUTTON_MIDDLE_LEFT} = GamepadButtonMiddleLeft
+    toEnum #{const GAMEPAD_BUTTON_MIDDLE} = GamepadButtonMiddle
+    toEnum #{const GAMEPAD_BUTTON_MIDDLE_RIGHT} = GamepadButtonMiddleRight
+    toEnum #{const GAMEPAD_BUTTON_LEFT_THUMB} = GamepadButtonLeftThumb
+    toEnum #{const GAMEPAD_BUTTON_RIGHT_THUMB} = GamepadButtonRightThumb
 
