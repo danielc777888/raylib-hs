@@ -1,5 +1,6 @@
 module Raylib.Enums (
     ConfigFlags (..),
+    GamepadAxis (..),
     GamepadButton (..),
     Gesture (..),
     KeyboardKey (..),
@@ -557,3 +558,24 @@ instance Enum GamepadButton where
     toEnum #{const GAMEPAD_BUTTON_LEFT_THUMB} = GamepadButtonLeftThumb
     toEnum #{const GAMEPAD_BUTTON_RIGHT_THUMB} = GamepadButtonRightThumb
 
+
+data GamepadAxis = GamepadAxisLeftX
+                 | GamepadAxisLeftY
+                 | GamepadAxisRightX
+                 | GamepadAxisRightY
+                 | GamepadAxisLeftTrigger
+                 | GamepadAxisRightTrigger deriving (Show, Eq)
+
+instance Enum GamepadAxis where
+    fromEnum GamepadAxisLeftX = #{const GAMEPAD_AXIS_LEFT_X}
+    fromEnum GamepadAxisLeftY = #{const GAMEPAD_AXIS_LEFT_Y}
+    fromEnum GamepadAxisRightX = #{const GAMEPAD_AXIS_RIGHT_X}
+    fromEnum GamepadAxisRightY = #{const GAMEPAD_AXIS_RIGHT_Y}
+    fromEnum GamepadAxisLeftTrigger = #{const GAMEPAD_AXIS_LEFT_TRIGGER}
+    fromEnum GamepadAxisRightTrigger = #{const GAMEPAD_AXIS_RIGHT_TRIGGER}
+    toEnum #{const GAMEPAD_AXIS_LEFT_X} = GamepadAxisLeftX
+    toEnum #{const GAMEPAD_AXIS_LEFT_Y} = GamepadAxisLeftY
+    toEnum #{const GAMEPAD_AXIS_RIGHT_X} = GamepadAxisRightX
+    toEnum #{const GAMEPAD_AXIS_RIGHT_Y} = GamepadAxisRightY
+    toEnum #{const GAMEPAD_AXIS_LEFT_TRIGGER} = GamepadAxisLeftTrigger
+    toEnum #{const GAMEPAD_AXIS_RIGHT_TRIGGER} = GamepadAxisRightTrigger

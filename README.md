@@ -1,5 +1,6 @@
 # raylib-hs
-- haskell bindings to raylib 4.0.0.0 game library
+- haskell bindings to raylib 4.0.0.0 game library for learning purposes
+- feel free to take any learnings/code and make it a package for the community
 
 ## TODO
 - use raylib parser to auto generate binding code
