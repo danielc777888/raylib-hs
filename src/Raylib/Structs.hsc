@@ -48,11 +48,11 @@ type TextureCubeMap = Texture
 type Quaternion = Vector4
 
 data Texture = Texture
-  { textureId :: !CInt
-  , textureWidth :: !CInt
-  , textureHeight :: !CInt
-  , textureMipmaps :: !CInt
-  , textureFormat :: !CInt
+  { textureId :: CInt
+  , textureWidth :: CInt
+  , textureHeight :: CInt
+  , textureMipmaps :: CInt
+  , textureFormat :: CInt
   } deriving (Eq, Show)
 
 instance Storable Texture where
@@ -64,7 +64,7 @@ instance Storable Texture where
     height' <- (#peek Texture, height) ptr
     mipmaps' <- (#peek Texture, mipmaps) ptr
     format' <- (#peek Texture, format) ptr
-    return $! Texture id' width' height' mipmaps' format'
+    return (Texture id' width' height' mipmaps' format')
   poke ptr (Texture id' width' height' mipmaps' format') = do
     (#poke Texture, id) ptr id'
     (#poke Texture, width) ptr width'
@@ -75,9 +75,9 @@ instance Storable Texture where
 type RenderTexture2D = RenderTexture
 
 data RenderTexture = RenderTexture
-  { renderTextureId :: !CInt
-  , renderTextureTexture :: !Texture
-  , renderTextureDepth :: !Texture
+  { rtxId :: CInt
+  , rtxTexture :: Texture
+  , rtxDepth :: Texture
   }
 
 instance Storable RenderTexture where
@@ -87,17 +87,17 @@ instance Storable RenderTexture where
     id' <- (#peek RenderTexture, id) ptr
     texture' <- (#peek RenderTexture, texture) ptr
     depth' <- (#peek RenderTexture, depth) ptr
-    return $! RenderTexture id' texture' depth'
+    return (RenderTexture id' texture' depth')
   poke ptr (RenderTexture id' texture' depth') = do
     (#poke RenderTexture, id) ptr id'
     (#poke RenderTexture, texture) ptr texture'
     (#poke RenderTexture, depth) ptr depth'
 
 data Color = Color
-  { colorR :: !CUChar
-  , colorG :: !CUChar
-  , colorB :: !CUChar
-  , colorA :: !CUChar
+  { r :: CUChar
+  , g :: CUChar
+  , b :: CUChar
+  , a :: CUChar
   } deriving (Eq, Show)
 
 instance Storable Color where
@@ -108,7 +108,7 @@ instance Storable Color where
     g' <- (#peek Color, g) ptr
     b' <- (#peek Color, b) ptr
     a' <- (#peek Color, a) ptr
-    return $! Color r' g' b' a'
+    return (Color r' g' b' a')
   poke ptr (Color r' g' b' a') = do
     (#poke Color, r) ptr r'
     (#poke Color, g) ptr g'
@@ -117,10 +117,10 @@ instance Storable Color where
 
 
 data AudioStream = AudioStream
-  { audioStreamBuffer :: !(Ptr CInt)
-  , audioStreamSampleRate :: !CUInt
-  , audioStreamSampleSize :: !CUInt
-  , audioStreamChannels :: !CUInt
+  { ausBuffer :: (Ptr CInt)
+  , ausSampleRate :: CUInt
+  , ausSampleSize :: CUInt
+  , ausChannels :: CUInt
   }
 
 instance Storable AudioStream where
@@ -131,7 +131,7 @@ instance Storable AudioStream where
     sampleRate' <- (#peek AudioStream, sampleRate) ptr
     sampleSize' <- (#peek AudioStream, sampleSize) ptr
     channels' <- (#peek AudioStream, channels) ptr
-    return $! AudioStream buffer' sampleRate' sampleSize' channels'
+    return (AudioStream buffer' sampleRate' sampleSize' channels')
   poke ptr (AudioStream buffer' sampleRate' sampleSize' channels') = do
     (#poke AudioStream, buffer) ptr buffer'
     (#poke AudioStream, sampleRate) ptr sampleRate'
@@ -140,7 +140,7 @@ instance Storable AudioStream where
 
 data Sound = Sound
   { soundStream :: AudioStream
-  , soundFrameCount :: !CUInt
+  , soundFrameCount :: CUInt
   }
 
 instance Storable Sound where
@@ -149,14 +149,14 @@ instance Storable Sound where
   peek ptr = do
     stream' <- (#peek Sound, stream) ptr
     frameCount' <- (#peek Sound, frameCount) ptr
-    return $! Sound stream' frameCount'
+    return (Sound stream' frameCount')
   poke ptr (Sound stream' frameCount') = do
     (#poke Sound, stream) ptr stream'
     (#poke Sound, frameCount) ptr frameCount'
 
 data Vector2 = Vector2
-  { vector2X :: !CFloat
-  , vector2Y :: !CFloat
+  { vec2X :: CFloat
+  , vec2Y :: CFloat
   } deriving (Show, Eq)
 
 instance Storable Vector2 where
@@ -165,15 +165,15 @@ instance Storable Vector2 where
   peek ptr = do
     x' <- (#peek Vector2, x) ptr
     y' <- (#peek Vector2, y) ptr
-    return $! Vector2 x' y'
+    return (Vector2 x' y')
   poke ptr (Vector2 x' y') = do
     (#poke Vector2, x) ptr x'
     (#poke Vector2, y) ptr y'
 
 data Vector3 = Vector3
-  { vector3X :: !CFloat
-  , vector3Y :: !CFloat
-  , vector3Z :: !CFloat
+  { vec3X :: CFloat
+  , vec3Y :: CFloat
+  , vec3Z :: CFloat
   } deriving (Show, Eq)
 
 instance Storable Vector3 where
@@ -183,17 +183,17 @@ instance Storable Vector3 where
     x' <- (#peek Vector3, x) ptr
     y' <- (#peek Vector3, y) ptr
     z' <- (#peek Vector3, z) ptr
-    return $! Vector3 x' y' z'
+    return (Vector3 x' y' z')
   poke ptr (Vector3 x' y' z') = do
     (#poke Vector3, x) ptr x'
     (#poke Vector3, y) ptr y'
     (#poke Vector3, z) ptr z'
 
 data Vector4 = Vector4
-  { vector4X :: !CFloat
-  , vector4Y :: !CFloat
-  , vector4Z :: !CFloat
-  , vector4W :: !CFloat
+  { vec4X :: CFloat
+  , vec4Y :: CFloat
+  , vec4Z :: CFloat
+  , vec4W :: CFloat
   } deriving (Show, Eq)
 
 instance Storable Vector4 where
@@ -204,7 +204,7 @@ instance Storable Vector4 where
     y' <- (#peek Vector4, y) ptr
     z' <- (#peek Vector4, z) ptr
     w' <- (#peek Vector4, w) ptr
-    return $! Vector4 x' y' z' w'
+    return (Vector4 x' y' z' w')
   poke ptr (Vector4 x' y' z' w') = do
     (#poke Vector4, x) ptr x'
     (#poke Vector4, y) ptr y'
@@ -213,11 +213,11 @@ instance Storable Vector4 where
 
 
 data Image = Image
-  { imageData :: !(Ptr CInt)
-  , imageWidth :: !CInt
-  , imageHeight :: !CInt
-  , imageMipmaps :: !CInt
-  , imageFormat :: !CInt
+  { imageData :: (Ptr CInt)
+  , imageWidth :: CInt
+  , imageHeight :: CInt
+  , imageMipmaps :: CInt
+  , imageFormat :: CInt
   }
 
 instance Storable Image where
@@ -229,7 +229,7 @@ instance Storable Image where
     height' <- (#peek Image, height) ptr
     mipmaps' <- (#peek Image, mipmaps) ptr
     format' <- (#peek Image, format) ptr
-    return $! Image data' width' height' mipmaps' format'
+    return (Image data' width' height' mipmaps' format')
   poke ptr (Image data' width' height' mipmaps' format') = do
     (#poke Image, data) ptr data'
     (#poke Image, width) ptr width'
@@ -238,11 +238,11 @@ instance Storable Image where
     (#poke Image, format) ptr format'
 
 data GlyphInfo = GlyphInfo
-  { glyphInfoValue :: !CInt
-  , glyphInfoOffsetX :: !CInt
-  , glyphInfoOffsetY :: !CInt
-  , glyphInfoAdvanceX :: !CInt
-  , glyphInfoImage :: !Image
+  { giValue :: CInt
+  , giOffsetX :: CInt
+  , giOffsetY :: CInt
+  , giAdvanceX :: CInt
+  , giImage :: Image
   }
 
 instance Storable GlyphInfo where
@@ -254,7 +254,7 @@ instance Storable GlyphInfo where
     offsetY' <- (#peek GlyphInfo, offsetY) ptr
     advanceX' <- (#peek GlyphInfo, advanceX) ptr
     image' <- (#peek GlyphInfo, image) ptr
-    return $! GlyphInfo value' offsetX' offsetY' advanceX' image'
+    return (GlyphInfo value' offsetX' offsetY' advanceX' image')
   poke ptr (GlyphInfo value' offsetX' offsetY' advanceX' image') = do
     (#poke GlyphInfo, value) ptr value'
     (#poke GlyphInfo, offsetX) ptr offsetX'
@@ -263,10 +263,10 @@ instance Storable GlyphInfo where
     (#poke GlyphInfo, image) ptr image'
 
 data Rectangle = Rectangle
-  { rectangleX :: !CFloat
-  , rectangleY :: !CFloat
-  , rectangleWidth :: !CFloat
-  , rectangleHeight :: !CFloat
+  { recX :: CFloat
+  , recY :: CFloat
+  , recWidth :: CFloat
+  , recHeight :: CFloat
   } deriving (Show, Eq)
 
 instance Storable Rectangle where
@@ -277,7 +277,7 @@ instance Storable Rectangle where
     y' <- (#peek Rectangle, y) ptr
     width' <- (#peek Rectangle, width) ptr
     height' <- (#peek Rectangle, height) ptr
-    return $! Rectangle x' y' width' height'
+    return (Rectangle x' y' width' height')
   poke ptr (Rectangle x' y' width' height') = do
     (#poke Rectangle, x) ptr x'
     (#poke Rectangle, y) ptr y'
@@ -285,12 +285,12 @@ instance Storable Rectangle where
     (#poke Rectangle, height) ptr height'
 
 data Font = Font
-  { fontBaseSize :: !CInt
-  , fontGlyphCount :: !CInt
-  , fontGlyphPadding :: !CInt
-  , fontTexture :: !Texture2D
-  , fontRecs :: !(Ptr Rectangle)
-  , fontGlyphs :: !(Ptr GlyphInfo)
+  { fontBaseSize :: CInt
+  , fontGlyphCount :: CInt
+  , fontGlyphPadding :: CInt
+  , fontTexture :: Texture2D
+  , fontRecs :: (Ptr Rectangle)
+  , fontGlyphs :: (Ptr GlyphInfo)
   }
 
 instance Storable Font where
@@ -303,7 +303,7 @@ instance Storable Font where
     texture' <- (#peek Font, texture) ptr
     recs' <- (#peek Font, recs) ptr
     glyphs' <- (#peek Font, glyphs) ptr
-    return $! Font baseSize' glyphCount' glyphPadding' texture' recs' glyphs'
+    return (Font baseSize' glyphCount' glyphPadding' texture' recs' glyphs')
   poke ptr (Font baseSize' glyphCount' glyphPadding' texture' recs' glyphs') = do
     (#poke Font, baseSize) ptr baseSize'
     (#poke Font, glyphCount) ptr glyphCount'
@@ -314,22 +314,22 @@ instance Storable Font where
 
 
 data Matrix = Matrix
-  { matrixM0 :: !CFloat
-  , matrixM1 :: !CFloat
-  , matrixM2 :: !CFloat
-  , matrixM3 :: !CFloat
-  , matrixM4 :: !CFloat
-  , matrixM5 :: !CFloat
-  , matrixM6 :: !CFloat
-  , matrixM7 :: !CFloat
-  , matrixM8 :: !CFloat
-  , matrixM9 :: !CFloat
-  , matrixM10 :: !CFloat
-  , matrixM11 :: !CFloat
-  , matrixM12 :: !CFloat
-  , matrixM13 :: !CFloat
-  , matrixM14 :: !CFloat
-  , matrixM15 :: !CFloat
+  { mxM0 :: CFloat
+  , mxM1 :: CFloat
+  , mxM2 :: CFloat
+  , mxM3 :: CFloat
+  , mxM4 :: CFloat
+  , mxM5 :: CFloat
+  , mxM6 :: CFloat
+  , mxM7 :: CFloat
+  , mxM8 :: CFloat
+  , mxM9 :: CFloat
+  , mxM10 :: CFloat
+  , mxM11 :: CFloat
+  , mxM12 :: CFloat
+  , mxM13 :: CFloat
+  , mxM14 :: CFloat
+  , mxM15 :: CFloat
   } deriving (Show, Eq)
 
 instance Storable Matrix where
@@ -352,7 +352,7 @@ instance Storable Matrix where
     m13' <- (#peek Matrix, m13) ptr
     m14' <- (#peek Matrix, m14) ptr
     m15' <- (#peek Matrix, m15) ptr
-    return $! Matrix m0' m1' m2' m3' m4' m5' m6' m7' m8' m9' m10' m11' m12' m13' m14' m15'
+    return (Matrix m0' m1' m2' m3' m4' m5' m6' m7' m8' m9' m10' m11' m12' m13' m14' m15')
   poke ptr (Matrix m0' m1' m2' m3' m4' m5' m6' m7' m8' m9' m10' m11' m12' m13' m14' m15') = do
     (#poke Matrix, m0) ptr m0'
     (#poke Matrix, m1) ptr m1'
@@ -372,12 +372,12 @@ instance Storable Matrix where
     (#poke Matrix, m15) ptr m15'
 
 data NPatchInfo = NPatchInfo
-  { nPatchInfoSource :: !Rectangle
-  , nPatchInfoLeft :: !CInt
-  , nPatchInfoTop :: !CInt
-  , nPatchInfoRight :: !CInt
-  , nPatchInfoBottom :: !CInt
-  , nPatchInfoLayout :: !CInt
+  { npiSource :: Rectangle
+  , npiLeft :: CInt
+  , npiTop :: CInt
+  , npiRight :: CInt
+  , npiBottom :: CInt
+  , npiLayout :: CInt
   }
 
 instance Storable NPatchInfo where
@@ -390,7 +390,7 @@ instance Storable NPatchInfo where
     right' <- (#peek NPatchInfo, right) ptr
     bottom' <- (#peek NPatchInfo, bottom) ptr
     layout' <- (#peek NPatchInfo, layout) ptr
-    return $! NPatchInfo source' left' top' right' bottom' layout'
+    return (NPatchInfo source' left' top' right' bottom' layout')
   poke ptr (NPatchInfo source' left' top' right' bottom' layout') = do
     (#poke NPatchInfo, source) ptr source'
     (#poke NPatchInfo, left) ptr left'
@@ -402,11 +402,11 @@ instance Storable NPatchInfo where
 type Camera = Camera3D
 
 data Camera3D = Camera3D
-  { camera3DPosition :: !Vector3
-  , camera3DTarget :: !Vector3
-  , camera3DUp :: !Vector3
-  , camera3DFovy :: !CFloat
-  , camera3DProjection :: !CInt
+  { cam3DPosition :: Vector3
+  , cam3DTarget :: Vector3
+  , cam3DUp :: Vector3
+  , cam3DFovy :: CFloat
+  , cam3DProjection :: CInt
   }
 
 instance Storable Camera3D where
@@ -418,7 +418,7 @@ instance Storable Camera3D where
     up' <- (#peek Camera3D, up) ptr
     fovy' <- (#peek Camera3D, fovy) ptr
     projection' <- (#peek Camera3D, projection) ptr
-    return $! Camera3D position' target' up' fovy' projection'
+    return (Camera3D position' target' up' fovy' projection')
   poke ptr (Camera3D position' target' up' fovy' projection') = do
     (#poke Camera3D, position) ptr position'
     (#poke Camera3D, target) ptr target'
@@ -427,10 +427,10 @@ instance Storable Camera3D where
     (#poke Camera3D, projection) ptr projection'
 
 data Camera2D = Camera2D
-  { camera2DOffset :: !Vector2
-  , camera2DTarget :: !Vector2
-  , camera2DRotation :: !CFloat
-  , camera2DZoom :: !CFloat
+  { cam2DOffset :: Vector2
+  , cam2DTarget :: Vector2
+  , cam2DRotation :: CFloat
+  , cam2DZoom :: CFloat
   }
 
 instance Storable Camera2D where
@@ -441,7 +441,7 @@ instance Storable Camera2D where
     target' <- (#peek Camera2D, target) ptr
     rotation' <- (#peek Camera2D, rotation) ptr
     zoom' <- (#peek Camera2D, zoom) ptr
-    return $! Camera2D offset' target' rotation' zoom'
+    return $ Camera2D offset' target' rotation' zoom'
   poke ptr (Camera2D offset' target' rotation' zoom') = do
     (#poke Camera2D, offset) ptr offset'
     (#poke Camera2D, target) ptr target'
@@ -449,21 +449,21 @@ instance Storable Camera2D where
     (#poke Camera2D, zoom) ptr zoom'
 
 data Mesh = Mesh
-  { meshVertexCount :: !CInt
-  , meshTriangleCount :: !CInt
-  , meshVertices :: !(Ptr CFloat)
-  , meshTexcoords :: !(Ptr CFloat)
-  , meshTexcoords2 :: !(Ptr CFloat)
-  , meshNormals :: !(Ptr CFloat)
-  , meshTangents :: !(Ptr CFloat)
-  , meshColors :: !(Ptr CInt)
-  , meshIndices :: !(Ptr CInt)
-  , meshAnimVertices :: !(Ptr CFloat)
-  , meshAnimNormals :: !(Ptr CFloat)
-  , meshBoneIds :: !(Ptr CInt)
-  , meshBoneWeights :: !(Ptr CFloat)
-  , meshVaoId :: !CInt
-  , meshVboId :: !(Ptr CInt)
+  { meshVertexCount :: CInt
+  , meshTriangleCount :: CInt
+  , meshVertices :: (Ptr CFloat)
+  , meshTexcoords :: (Ptr CFloat)
+  , meshTexcoords2 :: (Ptr CFloat)
+  , meshNormals :: (Ptr CFloat)
+  , meshTangents :: (Ptr CFloat)
+  , meshColors :: (Ptr CInt)
+  , meshIndices :: (Ptr CInt)
+  , meshAnimVertices :: (Ptr CFloat)
+  , meshAnimNormals :: (Ptr CFloat)
+  , meshBoneIds :: (Ptr CInt)
+  , meshBoneWeights :: (Ptr CFloat)
+  , meshVaoId :: CInt
+  , meshVboId :: (Ptr CInt)
   }
 
 instance Storable Mesh where
@@ -485,7 +485,7 @@ instance Storable Mesh where
     boneWeights' <- (#peek Mesh, boneWeights) ptr
     vaoId' <- (#peek Mesh, vaoId) ptr
     vboId' <- (#peek Mesh, vboId) ptr
-    return $! Mesh vertexCount' triangleCount' vertices' texcoords' texcoords2' normals' tangents' colors' indices' animVertices' animNormals' boneIds' boneWeights' vaoId' vboId'
+    return (Mesh vertexCount' triangleCount' vertices' texcoords' texcoords2' normals' tangents' colors' indices' animVertices' animNormals' boneIds' boneWeights' vaoId' vboId')
   poke ptr (Mesh vertexCount' triangleCount' vertices' texcoords' texcoords2' normals' tangents' colors' indices' animVertices' animNormals' boneIds' boneWeights' vaoId' vboId') = do
     (#poke Mesh, vertexCount) ptr vertexCount'
     (#poke Mesh, triangleCount) ptr triangleCount'
@@ -504,8 +504,8 @@ instance Storable Mesh where
     (#poke Mesh, vboId) ptr vboId'
 
 data Shader = Shader
-    { shaderId :: !CInt
-    , shaderLocs :: !(Ptr CInt)
+    { shaderId :: CInt
+    , shaderLocs :: (Ptr CInt)
     }
 
 instance Storable Shader where
@@ -514,15 +514,15 @@ instance Storable Shader where
     peek ptr = do
         id' <- (#peek Shader, id) ptr
         locs' <- (#peek Shader, locs) ptr
-        return $! Shader id' locs'
+        return $ Shader id' locs'
     poke ptr (Shader id' locs') = do
         (#poke Shader, id) ptr id'
         (#poke Shader, locs) ptr locs'
 
 data MaterialMap = MaterialMap
-    { materialMapTexture :: !Texture2D
-    , materialMapColor :: !Color
-    , materialMapValue :: !CFloat
+    { matMapTexture :: Texture2D
+    , matMapColor :: Color
+    , matMapValue :: CFloat
     }
 
 instance Storable MaterialMap where
@@ -532,16 +532,16 @@ instance Storable MaterialMap where
         texture' <- (#peek MaterialMap, texture) ptr
         color' <- (#peek MaterialMap, color) ptr
         value' <- (#peek MaterialMap, value) ptr
-        return $! MaterialMap texture' color' value'
+        return (MaterialMap texture' color' value')
     poke ptr (MaterialMap texture' color' value') = do
         (#poke MaterialMap, texture) ptr texture'
         (#poke MaterialMap, color) ptr color'
         (#poke MaterialMap, value) ptr value'
 
 data Material = Material
-    { materialShader :: !Shader
-    , materialMaps :: !(Ptr MaterialMap)
-    , materialParams :: ![CFloat]
+    { matShader :: Shader
+    , matMaps :: (Ptr MaterialMap)
+    , matParams :: [CFloat]
     }
 
 instance Storable Material where
@@ -551,16 +551,16 @@ instance Storable Material where
         shader' <- (#peek Material, shader) ptr
         maps' <- (#peek Material, maps) ptr
         params' <- peekArray 4 ((#ptr Material, params) ptr)
-        return $! Material shader' maps' params'
+        return (Material shader' maps' params')
     poke ptr (Material shader' maps' params') = do
         (#poke Material, shader) ptr shader'
         (#poke Material, maps) ptr maps'
         pokeArray ((#ptr Material, params) ptr) params'
 
 data Transform = Transform
-    { transformTranslation :: !Vector3
-    , transformRotation :: !Quaternion
-    , transformScale :: !Vector3
+    { transTranslation :: Vector3
+    , transRotation :: Quaternion
+    , transScale :: Vector3
     }
 
 instance Storable Transform where
@@ -570,15 +570,15 @@ instance Storable Transform where
         translation' <- (#peek Transform, translation) ptr
         rotation' <- (#peek Transform, rotation) ptr
         scale' <- (#peek Transform, scale) ptr
-        return $! Transform translation' rotation' scale'
+        return (Transform translation' rotation' scale')
     poke ptr (Transform translation' rotation' scale') = do
         (#poke Transform, translation) ptr translation'
         (#poke Transform, rotation) ptr rotation'
         (#poke Transform, scale) ptr scale'
 
 data BoneInfo = BoneInfo
-    { boneInfoName :: ![CChar]
-    , boneInfoParent :: !CInt
+    { biName :: [CChar]
+    , biParent :: CInt
     }
 
 instance Storable BoneInfo where
@@ -587,22 +587,22 @@ instance Storable BoneInfo where
     peek ptr = do
         name' <- peekArray 32 ((#ptr BoneInfo, name) ptr)
         parent' <- (#peek BoneInfo, parent) ptr
-        return $! BoneInfo name' parent'
+        return (BoneInfo name' parent')
     poke ptr (BoneInfo name' parent') = do
         pokeArray ((#ptr BoneInfo, name) ptr) name'
         (#poke BoneInfo, parent) ptr parent'
 
 
 data Model = Model
-    { modelTransform :: !Matrix
-    , modelMeshCount :: !CInt
-    , modelMaterialCount :: !CInt
-    , modelMeshes :: !(Ptr Mesh)
-    , modelMaterials :: !(Ptr Material)
-    , modelMeshMaterial :: !(Ptr CInt)
-    , modelBoneCount :: !CInt
-    , modelBones :: !(Ptr BoneInfo)
-    , modelBindPose :: !(Ptr Transform)
+    { modelTransform :: Matrix
+    , modelMeshCount :: CInt
+    , modelMaterialCount :: CInt
+    , modelMeshes :: (Ptr Mesh)
+    , modelMaterials :: (Ptr Material)
+    , modelMeshMaterial :: (Ptr CInt)
+    , modelBoneCount :: CInt
+    , modelBones :: (Ptr BoneInfo)
+    , modelBindPose :: (Ptr Transform)
     }
 
 instance Storable Model where
@@ -618,7 +618,7 @@ instance Storable Model where
         boneCount' <- (#peek Model, boneCount) ptr
         bones' <- (#peek Model, bones) ptr
         bindPose' <- (#peek Model, bindPose) ptr
-        return $! Model transform' meshCount' materialCount' meshes' materials' meshMaterial' boneCount' bones' bindPose'
+        return (Model transform' meshCount' materialCount' meshes' materials' meshMaterial' boneCount' bones' bindPose')
     poke ptr (Model transform' meshCount' materialCount' meshes' materials' meshMaterial' boneCount' bones' bindPose') = do
         (#poke Model, transform) ptr transform'
         (#poke Model, meshCount) ptr meshCount'
@@ -631,10 +631,10 @@ instance Storable Model where
         (#poke Model, bindPose) ptr bindPose'
 
 data ModelAnimation = ModelAnimation
-    { modelAnimationBoneCount :: !CInt
-    , modelAnimationFrameCount :: !CInt
-    , modelAnimationBones :: !(Ptr BoneInfo)
-    , modelAnimationFramePoses :: !(Ptr (Ptr BoneInfo))
+    { mdaBoneCount :: CInt
+    , mdaFrameCount :: CInt
+    , mdaBones :: (Ptr BoneInfo)
+    , mdaFramePoses :: (Ptr (Ptr BoneInfo))
     }
 
 instance Storable ModelAnimation where
@@ -645,7 +645,7 @@ instance Storable ModelAnimation where
         frameCount' <- (#peek ModelAnimation, frameCount) ptr
         bones' <- (#peek ModelAnimation, bones) ptr
         framePoses' <- (#peek ModelAnimation, framePoses) ptr
-        return $! ModelAnimation boneCount' frameCount' bones' framePoses'
+        return (ModelAnimation boneCount' frameCount' bones' framePoses')
     poke ptr (ModelAnimation boneCount' frameCount' bones' framePoses') = do
         (#poke ModelAnimation, boneCount) ptr boneCount'
         (#poke ModelAnimation, frameCount) ptr frameCount'
@@ -653,8 +653,8 @@ instance Storable ModelAnimation where
         (#poke ModelAnimation, framePoses) ptr framePoses'
 
 data Ray = Ray
-    { rayPosition :: !Vector3
-    , rayDirection :: !Vector3
+    { rayPosition :: Vector3
+    , rayDirection :: Vector3
     }
 
 instance Storable Ray where
@@ -663,17 +663,17 @@ instance Storable Ray where
     peek ptr = do
         position' <- (#peek Ray, position) ptr
         direction' <- (#peek Ray, direction) ptr
-        return $! Ray position' direction'
+        return $ Ray position' direction'
     poke ptr (Ray position' direction') = do
         (#poke Ray, position) ptr position'
         (#poke Ray, direction) ptr direction'
 
 
 data RayCollision = RayCollision
-    { rayCollisionHit :: !CBool
-    , rayCollisionDistance :: !CFloat
-    , rayCollisionPoint :: !Vector3
-    , rayCollisionNormal :: !Vector3
+    { rycHit :: CBool
+    , rycDistance :: CFloat
+    , rycPoint :: Vector3
+    , rycNormal :: Vector3
     }
 
 instance Storable RayCollision where
@@ -684,7 +684,7 @@ instance Storable RayCollision where
         distance' <- (#peek RayCollision, distance) ptr
         point' <- (#peek RayCollision, point) ptr
         normal' <- (#peek RayCollision, normal) ptr
-        return $! RayCollision hit' distance' point' normal'
+        return (RayCollision hit' distance' point' normal')
     poke ptr (RayCollision hit' distance' point' normal') = do
         (#poke RayCollision, hit) ptr hit'
         (#poke RayCollision, distance) ptr distance'
@@ -692,8 +692,8 @@ instance Storable RayCollision where
         (#poke RayCollision, normal) ptr normal'
 
 data BoundingBox = BoundingBox
-    { boundingBoxMin :: !Vector3
-    , boundingBoxMax :: !Vector3
+    { bbMin :: Vector3
+    , bbMax :: Vector3
     }
 
 instance Storable BoundingBox where
@@ -702,17 +702,17 @@ instance Storable BoundingBox where
     peek ptr = do
         min' <- (#peek BoundingBox, min) ptr
         max' <- (#peek BoundingBox, max) ptr
-        return $! BoundingBox min' max'
+        return (BoundingBox min' max')
     poke ptr (BoundingBox min' max') = do
         (#poke BoundingBox, min) ptr min'
         (#poke BoundingBox, max) ptr max'
 
 data Wave = Wave
-    { waveFrameCount :: !CUInt
-    , waveSampleRate :: !CUInt
-    , waveSampleSize :: !CUInt
-    , waveChannels :: !CUInt
-    , waveData :: !(Ptr ())
+    { waveFrameCount :: CUInt
+    , waveSampleRate :: CUInt
+    , waveSampleSize :: CUInt
+    , waveChannels :: CUInt
+    , waveData :: (Ptr ())
     }
 
 instance Storable Wave where
@@ -724,7 +724,7 @@ instance Storable Wave where
         sampleSize' <- (#peek Wave, sampleSize) ptr
         channels' <- (#peek Wave, channels) ptr
         data' <- (#peek Wave, data) ptr
-        return $! Wave frameCount' sampleRate' sampleSize' channels' data'
+        return (Wave frameCount' sampleRate' sampleSize' channels' data')
     poke ptr (Wave frameCount' sampleRate' sampleSize' channels' data') = do
         (#poke Wave, frameCount) ptr frameCount'
         (#poke Wave, sampleRate) ptr sampleRate'
@@ -734,10 +734,10 @@ instance Storable Wave where
 
 data Music = Music
   { musicStream :: AudioStream
-  , musicFrameCount :: !CUInt
-  , musicLooping :: !CBool
-  , musicCtxType :: !CInt
-  , musicCtxData :: !(Ptr ())
+  , musicFrameCount :: CUInt
+  , musicLooping :: CBool
+  , musicCtxType :: CInt
+  , musicCtxData :: (Ptr ())
   }
 
 instance Storable Music where
@@ -749,7 +749,7 @@ instance Storable Music where
     looping' <- (#peek Music, looping) ptr
     ctxType' <- (#peek Music, ctxType) ptr
     ctxData' <- (#peek Music, ctxData) ptr
-    return $! Music stream' frameCount' looping' ctxType' ctxData'
+    return (Music stream' frameCount' looping' ctxType' ctxData')
   poke ptr (Music stream' frameCount' looping' ctxType' ctxData') = do
     (#poke Music, stream) ptr stream'
     (#poke Music, frameCount) ptr frameCount'
@@ -758,16 +758,16 @@ instance Storable Music where
     (#poke Music, ctxData) ptr ctxData'
 
 data VrDeviceInfo = VrDeviceInfo
-  { vrDeviceInfoHResolution :: !CInt
-  , vrDeviceInfoVResolution :: !CInt
-  , vrDeviceInfoHScreenSize :: !CFloat
-  , vrDeviceInfoVScreenSize :: !CFloat
-  , vrDeviceInfoVScreenCenter :: !CFloat
-  , vrDeviceInfoEyeToScreenDistance :: !CFloat
-  , vrDeviceInfoLensSeparationDistance :: !CFloat
-  , vrDeviceInfoInterpupillaryDistance :: !CFloat
-  , vrDeviceInfoLensDistortionValues :: ![CFloat]
-  , vrDeviceInfoChromaAbCorrection :: ![CFloat]
+  { vdiHResolution :: CInt
+  , vdiVResolution :: CInt
+  , vdiHScreenSize :: CFloat
+  , vdiVScreenSize :: CFloat
+  , vdiVScreenCenter :: CFloat
+  , vdiEyeToScreenDistance :: CFloat
+  , vdiLensSeparationDistance :: CFloat
+  , vdiInterpupillaryDistance :: CFloat
+  , vdiLensDistortionValues :: [CFloat]
+  , vdiChromaAbCorrection :: [CFloat]
   }
 
 instance Storable VrDeviceInfo where
@@ -784,7 +784,7 @@ instance Storable VrDeviceInfo where
     interpupillaryDistance' <- (#peek VrDeviceInfo, interpupillaryDistance) ptr
     lensDistortionValues' <-peekArray 4 ((#ptr VrDeviceInfo, lensDistortionValues) ptr)
     chromaAbCorrection' <-peekArray 4 ((#ptr VrDeviceInfo, chromaAbCorrection) ptr)
-    return $! VrDeviceInfo hResolution' vResolution' hScreenSize' vScreenSize' vScreenCenter' eyeToScreenDistance' lensSeparationDistance' interpupillaryDistance' lensDistortionValues' chromaAbCorrection'
+    return (VrDeviceInfo hResolution' vResolution' hScreenSize' vScreenSize' vScreenCenter' eyeToScreenDistance' lensSeparationDistance' interpupillaryDistance' lensDistortionValues' chromaAbCorrection')
   poke ptr (VrDeviceInfo hResolution' vResolution' hScreenSize' vScreenSize' vScreenCenter' eyeToScreenDistance' lensSeparationDistance' interpupillaryDistance' lensDistortionValues' chromaAbCorrection') = do
     (#poke VrDeviceInfo, hResolution) ptr hResolution'
     (#poke VrDeviceInfo, vResolution) ptr vResolution'
@@ -798,14 +798,14 @@ instance Storable VrDeviceInfo where
     pokeArray ((#ptr VrDeviceInfo, chromaAbCorrection) ptr) chromaAbCorrection'
 
 data VrStereoConfig = VrStereoConfig
-  { vrStereoConfigProjection :: ![Matrix]
-  , vrStereoConfigViewOffset :: ![Matrix]
-  , vrStereoConfigLeftLensCenter :: ![CFloat]
-  , vrStereoConfigRightLensCenter :: ![CFloat]
-  , vrStereoConfigLeftScreenCenter :: ![CFloat]
-  , vrStereoConfigRightScreenCenter :: ![CFloat]
-  , vrStereoConfigScale :: ![CFloat]
-  , vrStereoConfigScaleIn :: ![CFloat]
+  { vscProjection :: [Matrix]
+  , vscViewOffset :: [Matrix]
+  , vscLeftLensCenter :: [CFloat]
+  , vscRightLensCenter :: [CFloat]
+  , vscLeftScreenCenter :: [CFloat]
+  , vscRightScreenCenter :: [CFloat]
+  , vscScale :: [CFloat]
+  , vscScaleIn :: [CFloat]
   }
 
 instance Storable VrStereoConfig where
@@ -820,7 +820,7 @@ instance Storable VrStereoConfig where
     rightScreenCenter' <-peekArray 2 ((#ptr VrStereoConfig, rightScreenCenter) ptr)
     scale' <-peekArray 2 ((#ptr VrStereoConfig, scale) ptr)
     scaleIn' <-peekArray 2 ((#ptr VrStereoConfig, scaleIn) ptr)
-    return $! VrStereoConfig projection' viewOffset' leftLensCenter' rightLensCenter' leftScreenCenter' rightScreenCenter' scale' scaleIn'
+    return (VrStereoConfig projection' viewOffset' leftLensCenter' rightLensCenter' leftScreenCenter' rightScreenCenter' scale' scaleIn')
   poke ptr (VrStereoConfig projection' viewOffset' leftLensCenter' rightLensCenter' leftScreenCenter' rightScreenCenter' scale' scaleIn') = do
     pokeArray ((#ptr VrStereoConfig, projection) ptr) projection'
     pokeArray ((#ptr VrStereoConfig, viewOffset) ptr) viewOffset'
