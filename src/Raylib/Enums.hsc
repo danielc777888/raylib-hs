@@ -4,8 +4,11 @@ module Raylib.Enums (
     GamepadButton (..),
     Gesture (..),
     KeyboardKey (..),
+    MaterialMapIndex (..),
     MouseButton (..),
     MouseCursor (..),
+    ShaderLocationIndex (..),
+    ShaderUniformDataType (..),
     TraceLogLevel (..)
     ) where
 
@@ -579,3 +582,145 @@ instance Enum GamepadAxis where
     toEnum #{const GAMEPAD_AXIS_RIGHT_Y} = GamepadAxisRightY
     toEnum #{const GAMEPAD_AXIS_LEFT_TRIGGER} = GamepadAxisLeftTrigger
     toEnum #{const GAMEPAD_AXIS_RIGHT_TRIGGER} = GamepadAxisRightTrigger
+
+data MaterialMapIndex = MaterialMapAlbedo
+                      | MaterialMapMetalness
+                      | MaterialMapNormal
+                      | MaterialMapRoughness
+                      | MaterialMapOcclusion
+                      | MaterialMapEmission
+                      | MaterialMapHeight
+                      | MaterialMapCubemap
+                      | MaterialMapIrradiance
+                      | MaterialMapPrefilter
+                      | MaterialMapBrdf deriving (Show, Eq)
+
+instance Enum MaterialMapIndex where
+    fromEnum MaterialMapAlbedo = #{const MATERIAL_MAP_ALBEDO}
+    fromEnum MaterialMapMetalness = #{const MATERIAL_MAP_METALNESS}
+    fromEnum MaterialMapNormal = #{const MATERIAL_MAP_NORMAL}
+    fromEnum MaterialMapRoughness = #{const MATERIAL_MAP_ROUGHNESS}
+    fromEnum MaterialMapOcclusion = #{const MATERIAL_MAP_OCCLUSION}
+    fromEnum MaterialMapEmission = #{const MATERIAL_MAP_EMISSION}
+    fromEnum MaterialMapHeight = #{const MATERIAL_MAP_HEIGHT}
+    fromEnum MaterialMapCubemap = #{const MATERIAL_MAP_CUBEMAP}
+    fromEnum MaterialMapIrradiance = #{const MATERIAL_MAP_IRRADIANCE}
+    fromEnum MaterialMapPrefilter = #{const MATERIAL_MAP_PREFILTER}
+    fromEnum MaterialMapBrdf = #{const MATERIAL_MAP_BRDF}
+    toEnum #{const MATERIAL_MAP_ALBEDO} = MaterialMapAlbedo
+    toEnum #{const MATERIAL_MAP_METALNESS} = MaterialMapMetalness
+    toEnum #{const MATERIAL_MAP_NORMAL} = MaterialMapNormal
+    toEnum #{const MATERIAL_MAP_ROUGHNESS} = MaterialMapRoughness
+    toEnum #{const MATERIAL_MAP_OCCLUSION} = MaterialMapOcclusion
+    toEnum #{const MATERIAL_MAP_EMISSION} = MaterialMapEmission
+    toEnum #{const MATERIAL_MAP_HEIGHT} = MaterialMapHeight
+    toEnum #{const MATERIAL_MAP_CUBEMAP} = MaterialMapCubemap
+    toEnum #{const MATERIAL_MAP_IRRADIANCE} = MaterialMapIrradiance
+    toEnum #{const MATERIAL_MAP_PREFILTER} = MaterialMapPrefilter
+    toEnum #{const MATERIAL_MAP_BRDF} = MaterialMapBrdf
+
+data ShaderLocationIndex = ShaderLocVertexPosition
+                         | ShaderLocVertexTexcoord01
+                         | ShaderLocVertexTexcoord02
+                         | ShaderLocVertexNormal
+                         | ShaderLocVertexTangent
+                         | ShaderLocVertexColor
+                         | ShaderLocMatrixMvp
+                         | ShaderLocMatrixView
+                         | ShaderLocMatrixNormal
+                         | ShaderLocVectorView
+                         | ShaderLocColorDiffuse
+                         | ShaderLocColorSpecular
+                         | ShaderLocColorAmbient
+                         | ShaderLocMapAlbedo
+                         | ShaderLocMapMetalness
+                         | ShaderLocMapNormal
+                         | ShaderLocMapRoughness
+                         | ShaderLocMapOcclusion
+                         | ShaderLocMapEmission
+                         | ShaderLocMapHeight
+                         | ShaderLocMapCubemap
+                         | ShaderLocMapIrradiance
+                         | ShaderLocMapPrefilter
+                         | ShaderLocMapBrdf deriving (Show, Eq)
+
+
+instance Enum ShaderLocationIndex where
+    fromEnum ShaderLocVertexPosition = #{const SHADER_LOC_VERTEX_POSITION}
+    fromEnum ShaderLocVertexTexcoord01 = #{const SHADER_LOC_VERTEX_TEXCOORD01}
+    fromEnum ShaderLocVertexTexcoord02 = #{const SHADER_LOC_VERTEX_TEXCOORD02}
+    fromEnum ShaderLocVertexNormal = #{const SHADER_LOC_VERTEX_NORMAL}
+    fromEnum ShaderLocVertexTangent = #{const SHADER_LOC_VERTEX_TANGENT}
+    fromEnum ShaderLocVertexColor = #{const SHADER_LOC_VERTEX_COLOR}
+    fromEnum ShaderLocMatrixMvp = #{const SHADER_LOC_MATRIX_MVP}
+    fromEnum ShaderLocMatrixView = #{const SHADER_LOC_MATRIX_VIEW}
+    fromEnum ShaderLocMatrixNormal = #{const SHADER_LOC_MATRIX_NORMAL}
+    fromEnum ShaderLocVectorView = #{const SHADER_LOC_VECTOR_VIEW}
+    fromEnum ShaderLocColorDiffuse = #{const SHADER_LOC_COLOR_DIFFUSE}
+    fromEnum ShaderLocColorSpecular = #{const SHADER_LOC_COLOR_SPECULAR}
+    fromEnum ShaderLocColorAmbient = #{const SHADER_LOC_COLOR_AMBIENT}
+    fromEnum ShaderLocMapAlbedo = #{const SHADER_LOC_MAP_ALBEDO}
+    fromEnum ShaderLocMapMetalness = #{const SHADER_LOC_MAP_METALNESS}
+    fromEnum ShaderLocMapNormal = #{const SHADER_LOC_MAP_NORMAL}
+    fromEnum ShaderLocMapRoughness = #{const SHADER_LOC_MAP_ROUGHNESS}
+    fromEnum ShaderLocMapOcclusion = #{const SHADER_LOC_MAP_OCCLUSION}
+    fromEnum ShaderLocMapEmission = #{const SHADER_LOC_MAP_EMISSION}
+    fromEnum ShaderLocMapHeight = #{const SHADER_LOC_MAP_HEIGHT}
+    fromEnum ShaderLocMapCubemap = #{const SHADER_LOC_MAP_CUBEMAP}
+    fromEnum ShaderLocMapPrefilter = #{const SHADER_LOC_MAP_PREFILTER}
+    fromEnum ShaderLocMapBrdf = #{const SHADER_LOC_MAP_BRDF}
+    toEnum #{const SHADER_LOC_VERTEX_POSITION} = ShaderLocVertexPosition
+    toEnum #{const SHADER_LOC_VERTEX_TEXCOORD01} = ShaderLocVertexTexcoord01
+    toEnum #{const SHADER_LOC_VERTEX_TEXCOORD02} = ShaderLocVertexTexcoord02
+    toEnum #{const SHADER_LOC_VERTEX_NORMAL} = ShaderLocVertexNormal
+    toEnum #{const SHADER_LOC_VERTEX_TANGENT} = ShaderLocVertexTangent
+    toEnum #{const SHADER_LOC_VERTEX_COLOR} = ShaderLocVertexColor
+    toEnum #{const SHADER_LOC_MATRIX_MVP} = ShaderLocMatrixMvp
+    toEnum #{const SHADER_LOC_MATRIX_VIEW} = ShaderLocMatrixView
+    toEnum #{const SHADER_LOC_MATRIX_NORMAL} = ShaderLocMatrixNormal
+    toEnum #{const SHADER_LOC_VECTOR_VIEW} = ShaderLocVectorView
+    toEnum #{const SHADER_LOC_COLOR_DIFFUSE} = ShaderLocColorDiffuse
+    toEnum #{const SHADER_LOC_COLOR_SPECULAR} = ShaderLocColorSpecular
+    toEnum #{const SHADER_LOC_COLOR_AMBIENT} = ShaderLocColorAmbient
+    toEnum #{const SHADER_LOC_MAP_ALBEDO} = ShaderLocMapAlbedo
+    toEnum #{const SHADER_LOC_MAP_METALNESS} = ShaderLocMapMetalness
+    toEnum #{const SHADER_LOC_MAP_NORMAL} = ShaderLocMapNormal
+    toEnum #{const SHADER_LOC_MAP_ROUGHNESS} = ShaderLocMapRoughness
+    toEnum #{const SHADER_LOC_MAP_OCCLUSION} = ShaderLocMapOcclusion
+    toEnum #{const SHADER_LOC_MAP_EMISSION} = ShaderLocMapEmission
+    toEnum #{const SHADER_LOC_MAP_HEIGHT} = ShaderLocMapHeight
+    toEnum #{const SHADER_LOC_MAP_CUBEMAP} = ShaderLocMapCubemap
+    toEnum #{const SHADER_LOC_MAP_PREFILTER} = ShaderLocMapPrefilter
+    toEnum #{const SHADER_LOC_MAP_BRDF} = ShaderLocMapBrdf
+
+
+data ShaderUniformDataType = ShaderUniformFloat
+                            | ShaderUniformVec2
+                            | ShaderUniformVec3
+                            | ShaderUniformVec4
+                            | ShaderUniformInt
+                            | ShaderUniformIVec2
+                            | ShaderUniformIVec3
+                            | ShaderUniformIVec4
+                            | ShaderUniformSampler2D deriving (Show, Eq)
+
+instance Enum ShaderUniformDataType where
+    fromEnum ShaderUniformFloat = #{const SHADER_UNIFORM_FLOAT}
+    fromEnum ShaderUniformVec2 = #{const SHADER_UNIFORM_VEC2}
+    fromEnum ShaderUniformVec3 = #{const SHADER_UNIFORM_VEC3}
+    fromEnum ShaderUniformVec4 = #{const SHADER_UNIFORM_VEC4}
+    fromEnum ShaderUniformInt = #{const SHADER_UNIFORM_INT}
+    fromEnum ShaderUniformIVec2 = #{const SHADER_UNIFORM_IVEC2}
+    fromEnum ShaderUniformIVec3 = #{const SHADER_UNIFORM_IVEC3}
+    fromEnum ShaderUniformIVec4 = #{const SHADER_UNIFORM_IVEC4}
+    fromEnum ShaderUniformSampler2D = #{const SHADER_UNIFORM_SAMPLER2D}
+    toEnum #{const SHADER_UNIFORM_FLOAT} = ShaderUniformFloat
+    toEnum #{const SHADER_UNIFORM_VEC2} = ShaderUniformVec2
+    toEnum #{const SHADER_UNIFORM_VEC3} = ShaderUniformVec3
+    toEnum #{const SHADER_UNIFORM_VEC4} = ShaderUniformVec4
+    toEnum #{const SHADER_UNIFORM_INT} = ShaderUniformInt
+    toEnum #{const SHADER_UNIFORM_IVEC2} = ShaderUniformIVec2
+    toEnum #{const SHADER_UNIFORM_IVEC3} = ShaderUniformIVec3
+    toEnum #{const SHADER_UNIFORM_IVEC4} = ShaderUniformIVec4
+    toEnum #{const SHADER_UNIFORM_SAMPLER2D} = ShaderUniformSampler2D
+
