@@ -7,6 +7,8 @@ module Raylib.Enums (
     MaterialMapIndex (..),
     MouseButton (..),
     MouseCursor (..),
+    PixelFormat (..),
+    ShaderAttributeDataType (..),
     ShaderLocationIndex (..),
     ShaderUniformDataType (..),
     TraceLogLevel (..)
@@ -723,4 +725,87 @@ instance Enum ShaderUniformDataType where
     toEnum #{const SHADER_UNIFORM_IVEC3} = ShaderUniformIVec3
     toEnum #{const SHADER_UNIFORM_IVEC4} = ShaderUniformIVec4
     toEnum #{const SHADER_UNIFORM_SAMPLER2D} = ShaderUniformSampler2D
+
+
+data ShaderAttributeDataType = ShaderAttribFloat
+                             | ShaderAttribVec2
+                             | ShaderAttribVec3
+                             | ShaderAttribVec4 deriving (Show, Eq)
+
+instance Enum ShaderAttributeDataType where
+    fromEnum ShaderAttribFloat = #{const SHADER_ATTRIB_FLOAT}
+    fromEnum ShaderAttribVec2 = #{const SHADER_ATTRIB_VEC2}
+    fromEnum ShaderAttribVec3 = #{const SHADER_ATTRIB_VEC3}
+    fromEnum ShaderAttribVec4 = #{const SHADER_ATTRIB_VEC4}
+    toEnum #{const SHADER_ATTRIB_FLOAT} = ShaderAttribFloat
+    toEnum #{const SHADER_ATTRIB_VEC2} = ShaderAttribVec2
+    toEnum #{const SHADER_ATTRIB_VEC3} = ShaderAttribVec3
+    toEnum #{const SHADER_ATTRIB_VEC4} = ShaderAttribVec4
+
+data PixelFormat = PixelFormatUncompressedGrayscale
+                 | PixelFormatUncompressedGrayAlpha
+                 | PixelFormatUncompressedR5G6B5
+                 | PixelFormatUncompressedR8G8B8
+                 | PixelFormatUncompressedR5G5B5A1
+                 | PixelFormatUncompressedR4G4B4A4
+                 | PixelFormatUncompressedR8G8B8A8
+                 | PixelFormatUncompressedR32
+                 | PixelFormatUncompressedR32G32B32
+                 | PixelFormatUncompressedR32G32B32A32
+                 | PixelFormatCompressedDXT1RGB
+                 | PixelFormatCompressedDXT1RGBA
+                 | PixelFormatCompressedDXT3RGBA
+                 | PixelFormatCompressedDXT5RGBA
+                 | PixelFormatCompressedETC1RGB
+                 | PixelFormatCompressedETC2RGB
+                 | PixelFormatCompressedETC2EACRGBA
+                 | PixelFormatCompressedPVRTRGB
+                 | PixelFormatCompressedPVRTRGBA
+                 | PixelFormatCompressedASTC4x4RGBA
+                 | PixelFormatCompressedASTC8x8RGBA deriving (Show, Eq)
+
+instance Enum PixelFormat where
+    fromEnum PixelFormatUncompressedGrayscale = #{const PIXELFORMAT_UNCOMPRESSED_GRAYSCALE}
+    fromEnum PixelFormatUncompressedGrayAlpha = #{const PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA}
+    fromEnum PixelFormatUncompressedR5G6B5 = #{const PIXELFORMAT_UNCOMPRESSED_R5G6B5}
+    fromEnum PixelFormatUncompressedR8G8B8 = #{const PIXELFORMAT_UNCOMPRESSED_R8G8B8}
+    fromEnum PixelFormatUncompressedR5G5B5A1 = #{const PIXELFORMAT_UNCOMPRESSED_R5G5B5A1}
+    fromEnum PixelFormatUncompressedR4G4B4A4 = #{const PIXELFORMAT_UNCOMPRESSED_R4G4B4A4}
+    fromEnum PixelFormatUncompressedR8G8B8A8 = #{const PIXELFORMAT_UNCOMPRESSED_R8G8B8A8}
+    fromEnum PixelFormatUncompressedR32 = #{const PIXELFORMAT_UNCOMPRESSED_R32}
+    fromEnum PixelFormatUncompressedR32G32B32 = #{const PIXELFORMAT_UNCOMPRESSED_R32G32B32}
+    fromEnum PixelFormatUncompressedR32G32B32A32 = #{const PIXELFORMAT_UNCOMPRESSED_R32G32B32A32}
+    fromEnum PixelFormatCompressedDXT1RGB = #{const PIXELFORMAT_COMPRESSED_DXT1_RGB}
+    fromEnum PixelFormatCompressedDXT1RGBA = #{const PIXELFORMAT_COMPRESSED_DXT1_RGBA}
+    fromEnum PixelFormatCompressedDXT3RGBA = #{const PIXELFORMAT_COMPRESSED_DXT3_RGBA}
+    fromEnum PixelFormatCompressedDXT5RGBA = #{const PIXELFORMAT_COMPRESSED_DXT5_RGBA}
+    fromEnum PixelFormatCompressedETC1RGB = #{const PIXELFORMAT_COMPRESSED_ETC1_RGB}
+    fromEnum PixelFormatCompressedETC2RGB = #{const PIXELFORMAT_COMPRESSED_ETC2_RGB}
+    fromEnum PixelFormatCompressedETC2EACRGBA = #{const PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA}
+    fromEnum PixelFormatCompressedPVRTRGB = #{const PIXELFORMAT_COMPRESSED_PVRT_RGB}
+    fromEnum PixelFormatCompressedPVRTRGBA = #{const PIXELFORMAT_COMPRESSED_PVRT_RGBA}
+    fromEnum PixelFormatCompressedASTC4x4RGBA = #{const PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA}
+    fromEnum PixelFormatCompressedASTC8x8RGBA = #{const PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA}
+    toEnum #{const PIXELFORMAT_UNCOMPRESSED_GRAYSCALE} = PixelFormatUncompressedGrayscale
+    toEnum #{const PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA} = PixelFormatUncompressedGrayAlpha
+    toEnum #{const PIXELFORMAT_UNCOMPRESSED_R5G6B5} = PixelFormatUncompressedR5G6B5
+    toEnum #{const PIXELFORMAT_UNCOMPRESSED_R8G8B8} = PixelFormatUncompressedR8G8B8
+    toEnum #{const PIXELFORMAT_UNCOMPRESSED_R5G5B5A1} = PixelFormatUncompressedR5G5B5A1
+    toEnum #{const PIXELFORMAT_UNCOMPRESSED_R4G4B4A4} = PixelFormatUncompressedR4G4B4A4
+    toEnum #{const PIXELFORMAT_UNCOMPRESSED_R8G8B8A8} = PixelFormatUncompressedR8G8B8A8
+    toEnum #{const PIXELFORMAT_UNCOMPRESSED_R32} = PixelFormatUncompressedR32
+    toEnum #{const PIXELFORMAT_UNCOMPRESSED_R32G32B32} = PixelFormatUncompressedR32G32B32
+    toEnum #{const PIXELFORMAT_UNCOMPRESSED_R32G32B32A32} = PixelFormatUncompressedR32G32B32A32
+    toEnum #{const PIXELFORMAT_COMPRESSED_DXT1_RGB} = PixelFormatCompressedDXT1RGB
+    toEnum #{const PIXELFORMAT_COMPRESSED_DXT1_RGBA} = PixelFormatCompressedDXT1RGBA
+    toEnum #{const PIXELFORMAT_COMPRESSED_DXT3_RGBA} = PixelFormatCompressedDXT3RGBA
+    toEnum #{const PIXELFORMAT_COMPRESSED_DXT5_RGBA} = PixelFormatCompressedDXT5RGBA
+    toEnum #{const PIXELFORMAT_COMPRESSED_ETC1_RGB} = PixelFormatCompressedETC1RGB
+    toEnum #{const PIXELFORMAT_COMPRESSED_ETC2_RGB} = PixelFormatCompressedETC2RGB
+    toEnum #{const PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA} = PixelFormatCompressedETC2EACRGBA
+    toEnum #{const PIXELFORMAT_COMPRESSED_PVRT_RGB} = PixelFormatCompressedPVRTRGB
+    toEnum #{const PIXELFORMAT_COMPRESSED_PVRT_RGBA} = PixelFormatCompressedPVRTRGBA
+    toEnum #{const PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA} = PixelFormatCompressedASTC4x4RGBA
+    toEnum #{const PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA} = PixelFormatCompressedASTC8x8RGBA
+
 
