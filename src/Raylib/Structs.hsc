@@ -48,11 +48,11 @@ type TextureCubeMap = Texture
 type Quaternion = Vector4
 
 data Texture = Texture
-  { textureId :: CInt
-  , textureWidth :: CInt
-  , textureHeight :: CInt
-  , textureMipmaps :: CInt
-  , textureFormat :: CInt
+  { txtId :: CInt
+  , txtWidth :: CInt
+  , txtHeight :: CInt
+  , txtMipmaps :: CInt
+  , txtFormat :: CInt
   } deriving (Eq, Show)
 
 instance Storable Texture where
@@ -94,10 +94,10 @@ instance Storable RenderTexture where
     (#poke RenderTexture, depth) ptr depth'
 
 data Color = Color
-  { r :: CUChar
-  , g :: CUChar
-  , b :: CUChar
-  , a :: CUChar
+  { colorR :: CUChar
+  , colorG :: CUChar
+  , colorB :: CUChar
+  , colorA :: CUChar
   } deriving (Eq, Show)
 
 instance Storable Color where
@@ -171,9 +171,9 @@ instance Storable Vector2 where
     (#poke Vector2, y) ptr y'
 
 data Vector3 = Vector3
-  { vec3X :: CFloat
-  , vec3Y :: CFloat
-  , vec3Z :: CFloat
+  { vc3X :: CFloat
+  , vc3Y :: CFloat
+  , vc3Z :: CFloat
   } deriving (Show, Eq)
 
 instance Storable Vector3 where
@@ -190,10 +190,10 @@ instance Storable Vector3 where
     (#poke Vector3, z) ptr z'
 
 data Vector4 = Vector4
-  { vec4X :: CFloat
-  , vec4Y :: CFloat
-  , vec4Z :: CFloat
-  , vec4W :: CFloat
+  { vc4X :: CFloat
+  , vc4Y :: CFloat
+  , vc4Z :: CFloat
+  , vc4W :: CFloat
   } deriving (Show, Eq)
 
 instance Storable Vector4 where
@@ -314,22 +314,22 @@ instance Storable Font where
 
 
 data Matrix = Matrix
-  { mxM0 :: CFloat
-  , mxM1 :: CFloat
-  , mxM2 :: CFloat
-  , mxM3 :: CFloat
-  , mxM4 :: CFloat
-  , mxM5 :: CFloat
-  , mxM6 :: CFloat
-  , mxM7 :: CFloat
-  , mxM8 :: CFloat
-  , mxM9 :: CFloat
-  , mxM10 :: CFloat
-  , mxM11 :: CFloat
-  , mxM12 :: CFloat
-  , mxM13 :: CFloat
-  , mxM14 :: CFloat
-  , mxM15 :: CFloat
+  { mtxM0 :: CFloat
+  , mtxM1 :: CFloat
+  , mtxM2 :: CFloat
+  , mtxM3 :: CFloat
+  , mtxM4 :: CFloat
+  , mtxM5 :: CFloat
+  , mtxM6 :: CFloat
+  , mtxM7 :: CFloat
+  , mtxM8 :: CFloat
+  , mtxM9 :: CFloat
+  , mtxM10 :: CFloat
+  , mtxM11 :: CFloat
+  , mtxM12 :: CFloat
+  , mtxM13 :: CFloat
+  , mtxM14 :: CFloat
+  , mtxM15 :: CFloat
   } deriving (Show, Eq)
 
 instance Storable Matrix where
@@ -504,8 +504,8 @@ instance Storable Mesh where
     (#poke Mesh, vboId) ptr vboId'
 
 data Shader = Shader
-    { shaderId :: CInt
-    , shaderLocs :: (Ptr CInt)
+    { shdId :: CInt
+    , shdLocs :: (Ptr CInt)
     }
 
 instance Storable Shader where
@@ -558,9 +558,9 @@ instance Storable Material where
         pokeArray ((#ptr Material, params) ptr) params'
 
 data Transform = Transform
-    { transTranslation :: Vector3
-    , transRotation :: Quaternion
-    , transScale :: Vector3
+    { tsfTranslation :: Vector3
+    , tsfRotation :: Quaternion
+    , tsfScale :: Vector3
     }
 
 instance Storable Transform where
