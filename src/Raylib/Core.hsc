@@ -1,21 +1,23 @@
 module Raylib.Core (
- initWindow,
- windowShouldClose,
- closeWindow,
- toggleFullScreen,
- getMonitorWidth,
- getMonitorHeight,
- clearBackground,
- beginDrawing,
- endDrawing,
- setTargetFPS,
- getTime,
- getFrameTime,
- isKeyPressed,
- isKeyDown,
- getRandomValue,
- traceLog,
- isGestureDetected
+    -- window-related
+    initWindow,
+    windowShouldClose,
+    closeWindow,
+    isWindowReady,
+    toggleFullScreen,
+    getMonitorWidth,
+    getMonitorHeight,
+    clearBackground,
+    beginDrawing,
+    endDrawing,
+    setTargetFPS,
+    getTime,
+    getFrameTime,
+    isKeyPressed,
+    isKeyDown,
+    getRandomValue,
+    traceLog,
+    isGestureDetected
 ) where
 
 import Foreign.Storable
@@ -34,13 +36,17 @@ initWindow width height title = withCString (T.unpack title) (\title' ->
 
 foreign import ccall unsafe "raylib.h WindowShouldClose" cWindowShouldClose :: IO CBool
 windowShouldClose :: IO Bool
-windowShouldClose = do
-                    done <- cWindowShouldClose
-                    return (toBool done)
+windowShouldClose = do done <- cWindowShouldClose
+                       return (toBool done)
 
 foreign import ccall unsafe "raylib.h CloseWindow" cCloseWindow :: IO ()
 closeWindow :: IO ()
 closeWindow = do cCloseWindow
+
+foreign import ccall unsafe "raylib.h IsWindowReady" cIsWindowReady :: IO CBool
+isWindowReady :: IO Bool
+isWindowReady = do done <- cIsWindowReady
+                   return (toBool done)
 
 foreign import ccall unsafe "raylib.h ToggleFullscreen" cToggleFullScreen :: IO ()
 toggleFullScreen :: IO ()
