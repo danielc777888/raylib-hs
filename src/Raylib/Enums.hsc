@@ -11,6 +11,7 @@ module Raylib.Enums (
     ShaderAttributeDataType (..),
     ShaderLocationIndex (..),
     ShaderUniformDataType (..),
+    TextureFilter (..),
     TraceLogLevel (..)
     ) where
 
@@ -809,3 +810,24 @@ instance Enum PixelFormat where
     toEnum #{const PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA} = PixelFormatCompressedASTC8x8RGBA
 
 
+data TextureFilter = TextureFilterPoint
+                   | TextureFilterBilinear
+                   | TextureFilterTrilinear
+                   | TextureFilterAnisotropic4X
+                   | TextureFilterAnisotropic8X
+                   | TextureFilterAnisotropic16X deriving (Show, Eq)
+
+
+instance Enum TextureFilter where
+    fromEnum TextureFilterPoint = #{const TEXTURE_FILTER_POINT}
+    fromEnum TextureFilterBilinear = #{const TEXTURE_FILTER_BILINEAR}
+    fromEnum TextureFilterTrilinear = #{const TEXTURE_FILTER_TRILINEAR}
+    fromEnum TextureFilterAnisotropic4X = #{const TEXTURE_FILTER_ANISOTROPIC_4X}
+    fromEnum TextureFilterAnisotropic8X = #{const TEXTURE_FILTER_ANISOTROPIC_8X}
+    fromEnum TextureFilterAnisotropic16X = #{const TEXTURE_FILTER_ANISOTROPIC_16X}
+    toEnum #{const TEXTURE_FILTER_POINT} = TextureFilterPoint
+    toEnum #{const TEXTURE_FILTER_BILINEAR} = TextureFilterBilinear
+    toEnum #{const TEXTURE_FILTER_TRILINEAR} = TextureFilterTrilinear
+    toEnum #{const TEXTURE_FILTER_ANISOTROPIC_4X} = TextureFilterAnisotropic4X
+    toEnum #{const TEXTURE_FILTER_ANISOTROPIC_8X} = TextureFilterAnisotropic8X
+    toEnum #{const TEXTURE_FILTER_ANISOTROPIC_16X} = TextureFilterAnisotropic16X
