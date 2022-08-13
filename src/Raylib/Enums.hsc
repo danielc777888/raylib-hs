@@ -1,5 +1,10 @@
 module Raylib.Enums (
+    BlendMode (..),
+    CameraMode (..),
+    CameraProjection (..),
     ConfigFlags (..),
+    CubemapLayout (..),
+    FontType (..),
     GamepadAxis (..),
     GamepadButton (..),
     Gesture (..),
@@ -7,11 +12,13 @@ module Raylib.Enums (
     MaterialMapIndex (..),
     MouseButton (..),
     MouseCursor (..),
+    NPatchLayout (..),
     PixelFormat (..),
     ShaderAttributeDataType (..),
     ShaderLocationIndex (..),
     ShaderUniformDataType (..),
     TextureFilter (..),
+    TextureWrap (..),
     TraceLogLevel (..)
     ) where
 
@@ -416,6 +423,7 @@ data ConfigFlags = FlagVSyncHint
                  | FlagWindowAlwaysRun
                  | FlagWindowTransparent
                  | FlagWindowHighDPI
+                 | FlagWindowMousePassthrough
                  | FlagMSAA4XHint
                  | FlagInterlacedHint deriving (Show, Eq)
 
@@ -432,6 +440,7 @@ instance Enum ConfigFlags where
   fromEnum FlagWindowAlwaysRun = #{const FLAG_WINDOW_ALWAYS_RUN}
   fromEnum FlagWindowTransparent = #{const FLAG_WINDOW_TRANSPARENT}
   fromEnum FlagWindowHighDPI = #{const FLAG_WINDOW_HIGHDPI}
+  fromEnum FlagWindowMousePassthrough = #{const FLAG_WINDOW_MOUSE_PASSTHROUGH}
   fromEnum FlagMSAA4XHint = #{const FLAG_MSAA_4X_HINT}
   fromEnum FlagInterlacedHint = #{const FLAG_INTERLACED_HINT}
   toEnum #{const FLAG_VSYNC_HINT} = FlagVSyncHint
@@ -446,6 +455,7 @@ instance Enum ConfigFlags where
   toEnum #{const FLAG_WINDOW_ALWAYS_RUN} = FlagWindowAlwaysRun
   toEnum #{const FLAG_WINDOW_TRANSPARENT} = FlagWindowTransparent
   toEnum #{const FLAG_WINDOW_HIGHDPI} = FlagWindowHighDPI
+  toEnum #{const FLAG_WINDOW_MOUSE_PASSTHROUGH} = FlagWindowMousePassthrough
   toEnum #{const FLAG_MSAA_4X_HINT} = FlagMSAA4XHint
   toEnum #{const FLAG_INTERLACED_HINT} = FlagInterlacedHint
 
@@ -831,3 +841,119 @@ instance Enum TextureFilter where
     toEnum #{const TEXTURE_FILTER_ANISOTROPIC_4X} = TextureFilterAnisotropic4X
     toEnum #{const TEXTURE_FILTER_ANISOTROPIC_8X} = TextureFilterAnisotropic8X
     toEnum #{const TEXTURE_FILTER_ANISOTROPIC_16X} = TextureFilterAnisotropic16X
+
+
+data TextureWrap = TextureWrapRepeat
+                 | TextureWrapClamp
+                 | TextureWrapMirrorRepeat
+                 | TextureWrapMirrorClamp deriving (Show, Eq)
+
+instance Enum TextureWrap where
+    fromEnum TextureWrapRepeat = #{const TEXTURE_WRAP_REPEAT}
+    fromEnum TextureWrapClamp = #{const TEXTURE_WRAP_CLAMP}
+    fromEnum TextureWrapMirrorRepeat = #{const TEXTURE_WRAP_MIRROR_REPEAT}
+    fromEnum TextureWrapMirrorClamp = #{const TEXTURE_WRAP_MIRROR_CLAMP}
+    toEnum #{const TEXTURE_WRAP_REPEAT} = TextureWrapRepeat
+    toEnum #{const TEXTURE_WRAP_CLAMP} = TextureWrapClamp
+    toEnum #{const TEXTURE_WRAP_MIRROR_REPEAT} = TextureWrapMirrorRepeat
+    toEnum #{const TEXTURE_WRAP_MIRROR_CLAMP} = TextureWrapMirrorClamp
+
+data CubemapLayout = CubemapLayoutAutoDetect
+                   | CubemapLayoutLineVertical
+                   | CubemapLayoutLineHorizontal
+                   | CubemapLayoutCrossThreeByFour
+                   | CubemapLayoutCrossFourByThree
+                   | CubemapLayoutPanorama deriving (Show, Eq)
+
+instance Enum CubemapLayout where
+    fromEnum CubemapLayoutAutoDetect = #{const CUBEMAP_LAYOUT_AUTO_DETECT}
+    fromEnum CubemapLayoutLineVertical = #{const CUBEMAP_LAYOUT_LINE_VERTICAL}
+    fromEnum CubemapLayoutLineHorizontal = #{const CUBEMAP_LAYOUT_LINE_HORIZONTAL}
+    fromEnum CubemapLayoutCrossThreeByFour = #{const CUBEMAP_LAYOUT_CROSS_THREE_BY_FOUR}
+    fromEnum CubemapLayoutCrossFourByThree = #{const CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE}
+    fromEnum CubemapLayoutPanorama = #{const CUBEMAP_LAYOUT_PANORAMA}
+    toEnum #{const CUBEMAP_LAYOUT_AUTO_DETECT} = CubemapLayoutAutoDetect
+    toEnum #{const CUBEMAP_LAYOUT_LINE_VERTICAL} = CubemapLayoutLineVertical
+    toEnum #{const CUBEMAP_LAYOUT_LINE_HORIZONTAL} = CubemapLayoutLineHorizontal
+    toEnum #{const CUBEMAP_LAYOUT_CROSS_THREE_BY_FOUR} = CubemapLayoutCrossThreeByFour
+    toEnum #{const CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE} = CubemapLayoutCrossFourByThree
+    toEnum #{const CUBEMAP_LAYOUT_PANORAMA} = CubemapLayoutPanorama
+
+data FontType = FontDefault
+              | FontBitmap
+              | FontSDF deriving (Show, Eq)
+
+instance Enum FontType where
+    fromEnum FontDefault = #{const FONT_DEFAULT}
+    fromEnum FontBitmap = #{const FONT_BITMAP}
+    fromEnum FontSDF = #{const FONT_SDF}
+    toEnum #{const FONT_DEFAULT} = FontDefault
+    toEnum #{const FONT_BITMAP} = FontBitmap
+    toEnum #{const FONT_SDF} = FontSDF
+
+data BlendMode = BlendAlpha
+               | BlendAdditive
+               | BlendMultiplied
+               | BlendAddColors
+               | BlendSubtractColors
+               | BlendAlphaPremultiply
+               | BlendCustom deriving (Show, Eq)
+
+instance Enum BlendMode where
+    fromEnum BlendAlpha = #{const BLEND_ALPHA}
+    fromEnum BlendAdditive = #{const BLEND_ADDITIVE}
+    fromEnum BlendMultiplied = #{const BLEND_MULTIPLIED}
+    fromEnum BlendAddColors = #{const BLEND_ADD_COLORS}
+    fromEnum BlendSubtractColors = #{const BLEND_SUBTRACT_COLORS}
+    fromEnum BlendAlphaPremultiply = #{const BLEND_ALPHA_PREMULTIPLY}
+    fromEnum BlendCustom = #{const BLEND_CUSTOM}
+    toEnum #{const BLEND_ALPHA} = BlendAlpha
+    toEnum #{const BLEND_ADDITIVE} = BlendAdditive
+    toEnum #{const BLEND_MULTIPLIED} = BlendMultiplied
+    toEnum #{const BLEND_ADD_COLORS} = BlendAddColors
+    toEnum #{const BLEND_SUBTRACT_COLORS} = BlendSubtractColors
+    toEnum #{const BLEND_ALPHA_PREMULTIPLY} = BlendAlphaPremultiply
+    toEnum #{const BLEND_CUSTOM} = BlendCustom
+
+
+data CameraMode = CameraCustom
+                | CameraFree
+                | CameraOrbital
+                | CameraFirstPerson
+                | CameraThirdPerson deriving (Show, Eq)
+
+instance Enum CameraMode where
+    fromEnum CameraCustom = #{const CAMERA_CUSTOM}
+    fromEnum CameraFree = #{const CAMERA_FREE}
+    fromEnum CameraOrbital = #{const CAMERA_ORBITAL}
+    fromEnum CameraFirstPerson = #{const CAMERA_FIRST_PERSON}
+    fromEnum CameraThirdPerson = #{const CAMERA_THIRD_PERSON}
+    toEnum #{const CAMERA_CUSTOM} = CameraCustom
+    toEnum #{const CAMERA_FREE} = CameraFree
+    toEnum #{const CAMERA_ORBITAL} = CameraOrbital
+    toEnum #{const CAMERA_FIRST_PERSON} = CameraFirstPerson
+    toEnum #{const CAMERA_THIRD_PERSON} = CameraThirdPerson
+
+data CameraProjection = CameraPerspective
+                      | CameraOrthographic deriving (Show, Eq)
+
+
+instance Enum CameraProjection where
+    fromEnum CameraPerspective = #{const CAMERA_PERSPECTIVE}
+    fromEnum CameraOrthographic = #{const CAMERA_ORTHOGRAPHIC}
+    toEnum #{const CAMERA_PERSPECTIVE} = CameraPerspective
+    toEnum #{const CAMERA_ORTHOGRAPHIC} = CameraOrthographic
+
+data NPatchLayout = NPatchNinePatch
+                  | NPatchThreePatchVertical
+                  | NPatchThreePatchHorizontal deriving (Show, Eq)
+
+
+instance Enum NPatchLayout where
+    fromEnum NPatchNinePatch = #{const NPATCH_NINE_PATCH}
+    fromEnum NPatchThreePatchVertical = #{const NPATCH_THREE_PATCH_VERTICAL}
+    fromEnum NPatchThreePatchHorizontal = #{const NPATCH_THREE_PATCH_HORIZONTAL}
+    toEnum #{const NPATCH_NINE_PATCH} = NPatchNinePatch
+    toEnum #{const NPATCH_THREE_PATCH_VERTICAL} = NPatchThreePatchVertical
+    toEnum #{const NPATCH_THREE_PATCH_HORIZONTAL} = NPatchThreePatchHorizontal
+

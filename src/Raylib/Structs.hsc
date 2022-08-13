@@ -5,6 +5,7 @@ module Raylib.Structs (
     Camera2D (..),
     Camera3D,
     Color (..),
+    FilePathList (..),
     Font (..),
     GlyphInfo (..),
     Image (..),
@@ -118,6 +119,7 @@ instance Storable Color where
 
 data AudioStream = AudioStream
   { ausBuffer :: (Ptr CInt)
+  , ausProcessor :: (Ptr CInt)
   , ausSampleRate :: CUInt
   , ausSampleSize :: CUInt
   , ausChannels :: CUInt
@@ -128,12 +130,14 @@ instance Storable AudioStream where
   alignment _ = #{alignment AudioStream}
   peek ptr = do
     buffer' <- (#peek AudioStream, buffer) ptr
+    processor' <- (#peek AudioStream, processor) ptr
     sampleRate' <- (#peek AudioStream, sampleRate) ptr
     sampleSize' <- (#peek AudioStream, sampleSize) ptr
     channels' <- (#peek AudioStream, channels) ptr
-    return (AudioStream buffer' sampleRate' sampleSize' channels')
-  poke ptr (AudioStream buffer' sampleRate' sampleSize' channels') = do
+    return (AudioStream buffer' processor' sampleRate' sampleSize' channels')
+  poke ptr (AudioStream buffer' processor' sampleRate' sampleSize' channels') = do
     (#poke AudioStream, buffer) ptr buffer'
+    (#poke AudioStream, processor) ptr processor'
     (#poke AudioStream, sampleRate) ptr sampleRate'
     (#poke AudioStream, sampleSize) ptr sampleSize'
     (#poke AudioStream, channels) ptr channels'
@@ -829,5 +833,24 @@ instance Storable VrStereoConfig where
     pokeArray ((#ptr VrStereoConfig, leftScreenCenter) ptr) leftScreenCenter'
     pokeArray ((#ptr VrStereoConfig, rightScreenCenter) ptr) rightScreenCenter'
     pokeArray ((#ptr VrStereoConfig, scale) ptr) scaleIn'
+
+data FilePathList = FilePathList
+    { fplCapacity :: CUInt
+    , fplCount :: CUInt
+    , fplPaths :: (Ptr (Ptr CInt))
+    }
+
+instance Storable FilePathList where
+  sizeOf _ = #{size FilePathList}
+  alignment _ = #{alignment FilePathList}
+  peek ptr = do
+    capacity' <- (#peek FilePathList, capacity) ptr
+    count' <- (#peek FilePathList, count) ptr
+    paths' <- (#peek FilePathList, paths) ptr
+    return (FilePathList capacity' count' paths')
+  poke ptr (FilePathList capacity' count' paths') = do
+    (#poke FilePathList, capacity) ptr capacity'
+    (#poke FilePathList, count) ptr count'
+    (#poke FilePathList, paths) ptr paths'
 
 

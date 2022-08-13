@@ -1,6 +1,6 @@
 cabal-version:      3.6
 name:               raylib-hs
-version:            1.0.0.0
+version:            4.2.0.0
 author:             Daniel Cabral
 maintainer:         danielc777888@gmail.com
 copyright:          2022 Daniel Cabral
