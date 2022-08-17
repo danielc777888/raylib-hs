@@ -4,6 +4,15 @@ module Raylib.Core (
     windowShouldClose,
     closeWindow,
     isWindowReady,
+    isWindowFullscreen,
+    isWindowHidden,
+    isWindowMinimized,
+    isWindowMaximized,
+    isWindowFocused,
+    isWindowResized,
+    isWindowState,
+    setWindowState,
+    clearWindowState,
     toggleFullScreen,
     getMonitorWidth,
     getMonitorHeight,
@@ -47,6 +56,49 @@ foreign import ccall unsafe "raylib.h IsWindowReady" cIsWindowReady :: IO CBool
 isWindowReady :: IO Bool
 isWindowReady = do done <- cIsWindowReady
                    return (toBool done)
+
+foreign import ccall unsafe "raylib.h IsWindowFullscreen" cIsWindowFullscreen :: IO CBool
+isWindowFullscreen :: IO Bool
+isWindowFullscreen = do done <- cIsWindowFullscreen
+                        return (toBool done)
+
+foreign import ccall unsafe "raylib.h IsWindowHidden" cIsWindowHidden :: IO CBool
+isWindowHidden :: IO Bool
+isWindowHidden = do done <- cIsWindowHidden
+                    return (toBool done)
+
+foreign import ccall unsafe "raylib.h IsWindowMinimized" cIsWindowMinimized :: IO CBool
+isWindowMinimized :: IO Bool
+isWindowMinimized = do done <- cIsWindowMinimized
+                       return (toBool done)
+
+foreign import ccall unsafe "raylib.h IsWindowMaximized" cIsWindowMaximized :: IO CBool
+isWindowMaximized :: IO Bool
+isWindowMaximized = do done <- cIsWindowMaximized
+                       return (toBool done)
+
+foreign import ccall unsafe "raylib.h IsWindowFocused" cIsWindowFocused :: IO CBool
+isWindowFocused :: IO Bool
+isWindowFocused = do done <- cIsWindowFocused
+                     return (toBool done)
+
+foreign import ccall unsafe "raylib.h IsWindowResized" cIsWindowResized :: IO CBool
+isWindowResized :: IO Bool
+isWindowResized = do done <- cIsWindowResized
+                     return (toBool done)
+
+foreign import ccall unsafe "raylib.h IsWindowState" cIsWindowState :: CUInt -> IO CBool
+isWindowState :: Int -> IO Bool
+isWindowState x = do ws <- cIsWindowState (fromIntegral x)
+                     return (toBool ws)
+
+foreign import ccall unsafe "raylib.h SetWindowState" cSetWindowState :: CUInt -> IO ()
+setWindowState :: Int -> IO ()
+setWindowState x = do cSetWindowState (fromIntegral x)
+
+foreign import ccall unsafe "raylib.h ClearWindowState" cClearWindowState :: CUInt -> IO ()
+clearWindowState :: Int -> IO ()
+clearWindowState x = do cClearWindowState (fromIntegral x)
 
 foreign import ccall unsafe "raylib.h ToggleFullscreen" cToggleFullScreen :: IO ()
 toggleFullScreen :: IO ()

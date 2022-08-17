@@ -53,10 +53,10 @@ library
 executable core-basic-window
     build-depends: base, raylib-hs
     hs-source-dirs: examples/core
-    main-is: core_basic_window.hs
+    main-is: core-basic-window.hs
 
 executable core-basic-screen-manager
     build-depends: base, raylib-hs
     hs-source-dirs: examples/core
-    main-is: core_basic_screen_manager.hs
+    main-is: core-basic-screen-manager.hs
 
