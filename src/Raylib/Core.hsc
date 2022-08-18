@@ -14,6 +14,9 @@ module Raylib.Core (
     setWindowState,
     clearWindowState,
     toggleFullScreen,
+    maximizeWindow,
+    minimizeWindow,
+    restoreWindow,
     getMonitorWidth,
     getMonitorHeight,
     clearBackground,
@@ -103,6 +106,18 @@ clearWindowState x = do cClearWindowState (fromIntegral x)
 foreign import ccall unsafe "raylib.h ToggleFullscreen" cToggleFullScreen :: IO ()
 toggleFullScreen :: IO ()
 toggleFullScreen = do cToggleFullScreen
+
+foreign import ccall unsafe "raylib.h MaximizeWindow" cMaximizeWindow :: IO ()
+maximizeWindow :: IO ()
+maximizeWindow = do cMaximizeWindow
+
+foreign import ccall unsafe "raylib.h MinimizeWindow" cMinimizeWindow :: IO ()
+minimizeWindow :: IO ()
+minimizeWindow = do cMinimizeWindow
+
+foreign import ccall unsafe "raylib.h RestoreWindow" cRestoreWindow :: IO ()
+restoreWindow :: IO ()
+restoreWindow = do cRestoreWindow
 
 foreign import ccall unsafe "raylib.h GetMonitorWidth" cGetMonitorWidth :: CInt -> IO CInt
 getMonitorWidth :: Int -> IO Int
