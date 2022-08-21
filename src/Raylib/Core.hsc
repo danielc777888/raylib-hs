@@ -17,6 +17,7 @@ module Raylib.Core (
     maximizeWindow,
     minimizeWindow,
     restoreWindow,
+    setWindowIcon,
     getMonitorWidth,
     getMonitorHeight,
     clearBackground,
@@ -118,6 +119,10 @@ minimizeWindow = do cMinimizeWindow
 foreign import ccall unsafe "raylib.h RestoreWindow" cRestoreWindow :: IO ()
 restoreWindow :: IO ()
 restoreWindow = do cRestoreWindow
+
+foreign import ccall unsafe "raylib-hs.h C_SetWindowIcon" cSetWindowIcon :: Ptr Image -> IO ()
+setWindowIcon :: Ptr Image -> IO ()
+setWindowIcon i_ptr = do cSetWindowIcon i_ptr
 
 foreign import ccall unsafe "raylib.h GetMonitorWidth" cGetMonitorWidth :: CInt -> IO CInt
 getMonitorWidth :: Int -> IO Int

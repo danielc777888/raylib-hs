@@ -7,6 +7,11 @@ void C_ClearBackground(Color *color)
   ClearBackground(*color);
 }
 
+void C_SetWindowIcon(Image *image)
+{
+  SetWindowIcon(*image);
+}
+
 // texture
 Texture2D *C_LoadTexture(const char *fileName)
 {

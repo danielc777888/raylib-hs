@@ -1,5 +1,6 @@
 // core
 void C_ClearBackground(Color *color);
+void C_SetWindowIcon(Image *image);
 
 // texture
 Texture2D *C_LoadTexture(const char *fileName);
