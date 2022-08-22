@@ -12,6 +12,7 @@ module Raylib.Core (
     isWindowResized,
     isWindowState,
     setWindowState,
+    setWindowTitle,
     clearWindowState,
     toggleFullScreen,
     maximizeWindow,
@@ -123,6 +124,10 @@ restoreWindow = do cRestoreWindow
 foreign import ccall unsafe "raylib-hs.h C_SetWindowIcon" cSetWindowIcon :: Ptr Image -> IO ()
 setWindowIcon :: Ptr Image -> IO ()
 setWindowIcon i_ptr = do cSetWindowIcon i_ptr
+
+foreign import ccall unsafe "raylib-hs.h C_SetWindowTitle" cSetWindowTitle :: CString -> IO ()
+setWindowTitle :: T.Text -> IO ()
+setWindowTitle t = withCString (T.unpack t) (\t' -> cSetWindowTitle t')
 
 foreign import ccall unsafe "raylib.h GetMonitorWidth" cGetMonitorWidth :: CInt -> IO CInt
 getMonitorWidth :: Int -> IO Int

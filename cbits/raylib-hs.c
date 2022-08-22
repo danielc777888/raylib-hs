@@ -12,6 +12,11 @@ void C_SetWindowIcon(Image *image)
   SetWindowIcon(*image);
 }
 
+void C_SetWindowTitle(const char *title)
+{
+  SetWindowTitle(title);
+}
+
 // texture
 Texture2D *C_LoadTexture(const char *fileName)
 {
