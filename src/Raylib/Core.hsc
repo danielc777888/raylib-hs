@@ -13,6 +13,7 @@ module Raylib.Core (
     isWindowState,
     setWindowState,
     setWindowTitle,
+    setWindowPosition,
     clearWindowState,
     toggleFullScreen,
     maximizeWindow,
@@ -128,6 +129,10 @@ setWindowIcon i_ptr = do cSetWindowIcon i_ptr
 foreign import ccall unsafe "raylib-hs.h C_SetWindowTitle" cSetWindowTitle :: CString -> IO ()
 setWindowTitle :: T.Text -> IO ()
 setWindowTitle t = withCString (T.unpack t) (\t' -> cSetWindowTitle t')
+
+foreign import ccall unsafe "raylib.h SetWindowPosition" cSetWindowPosition :: CInt -> CInt -> IO ()
+setWindowPosition :: Int -> Int -> IO ()
+setWindowPosition x y = do cSetWindowPosition (fromIntegral x) (fromIntegral y)
 
 foreign import ccall unsafe "raylib.h GetMonitorWidth" cGetMonitorWidth :: CInt -> IO CInt
 getMonitorWidth :: Int -> IO Int
