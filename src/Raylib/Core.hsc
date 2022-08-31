@@ -1,3 +1,4 @@
+
 module Raylib.Core (
     -- window-related
     initWindow,
@@ -17,6 +18,8 @@ module Raylib.Core (
     setWindowMonitor,
     setWindowMinSize,
     setWindowSize,
+    setWindowOpacity,
+    getWindowHandle,
     clearWindowState,
     toggleFullScreen,
     maximizeWindow,
@@ -148,6 +151,14 @@ setWindowMinSize w h = do cSetWindowMinSize (fromIntegral w) (fromIntegral h)
 foreign import ccall unsafe "raylib.h SetWindowSize" cSetWindowSize :: CInt -> CInt -> IO ()
 setWindowSize :: Int -> Int -> IO ()
 setWindowSize w h = do cSetWindowSize (fromIntegral w) (fromIntegral h)
+
+foreign import ccall unsafe "raylib.h SetWindowOpacity" cSetWindowOpacity :: CFloat -> IO ()
+setWindowOpacity :: Float -> IO ()
+setWindowOpacity o = do cSetWindowOpacity (realToFrac o) 
+
+foreign import ccall unsafe "raylib.h GetWindowHandle" cGetWindowHandle :: IO (Ptr CInt)
+getWindowHandle :: IO (Ptr CInt)
+getWindowHandle = do cGetWindowHandle 
 
 foreign import ccall unsafe "raylib.h GetMonitorWidth" cGetMonitorWidth :: CInt -> IO CInt
 getMonitorWidth :: Int -> IO Int
