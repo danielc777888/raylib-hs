@@ -175,9 +175,9 @@ instance Storable Vector2 where
     (#poke Vector2, y) ptr y'
 
 data Vector3 = Vector3
-  { vc3X :: CFloat
-  , vc3Y :: CFloat
-  , vc3Z :: CFloat
+  { vec3X :: CFloat
+  , vec3Y :: CFloat
+  , vec3Z :: CFloat
   } deriving (Show, Eq)
 
 instance Storable Vector3 where
@@ -194,10 +194,10 @@ instance Storable Vector3 where
     (#poke Vector3, z) ptr z'
 
 data Vector4 = Vector4
-  { vc4X :: CFloat
-  , vc4Y :: CFloat
-  , vc4Z :: CFloat
-  , vc4W :: CFloat
+  { vec4X :: CFloat
+  , vec4Y :: CFloat
+  , vec4Z :: CFloat
+  , vec4W :: CFloat
   } deriving (Show, Eq)
 
 instance Storable Vector4 where
