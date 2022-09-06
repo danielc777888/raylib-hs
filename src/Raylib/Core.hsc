@@ -20,6 +20,11 @@ module Raylib.Core (
     setWindowSize,
     setWindowOpacity,
     getWindowHandle,
+    getScreenWidth,
+    getScreenHeight,
+    getRenderWidth,
+    getRenderHeight,
+    getMonitorCount,
     clearWindowState,
     toggleFullScreen,
     maximizeWindow,
@@ -158,7 +163,32 @@ setWindowOpacity o = do cSetWindowOpacity (realToFrac o)
 
 foreign import ccall unsafe "raylib.h GetWindowHandle" cGetWindowHandle :: IO (Ptr CInt)
 getWindowHandle :: IO (Ptr CInt)
-getWindowHandle = do cGetWindowHandle 
+getWindowHandle = do cGetWindowHandle
+
+foreign import ccall unsafe "raylib.h GetScreenWidth" cGetScreenWidth :: IO CInt
+getScreenWidth :: IO Int
+getScreenWidth = do w <- cGetScreenWidth
+                    return (fromIntegral w)
+
+foreign import ccall unsafe "raylib.h GetScreenHeight" cGetScreenHeight :: IO CInt
+getScreenHeight :: IO Int
+getScreenHeight = do h <- cGetScreenHeight
+                     return (fromIntegral h)
+
+foreign import ccall unsafe "raylib.h GetRenderWidth" cGetRenderWidth :: IO CInt
+getRenderWidth :: IO Int
+getRenderWidth = do w <- cGetRenderWidth
+                    return (fromIntegral w)
+
+foreign import ccall unsafe "raylib.h GetRenderHeight" cGetRenderHeight :: IO CInt
+getRenderHeight :: IO Int
+getRenderHeight = do h <- cGetRenderHeight
+                     return (fromIntegral h)
+
+foreign import ccall unsafe "raylib.h GetMonitorCount" cGetMonitorCount :: IO CInt
+getMonitorCount :: IO Int
+getMonitorCount = do c <- cGetMonitorCount
+                     return (fromIntegral c)
 
 foreign import ccall unsafe "raylib.h GetMonitorWidth" cGetMonitorWidth :: CInt -> IO CInt
 getMonitorWidth :: Int -> IO Int
