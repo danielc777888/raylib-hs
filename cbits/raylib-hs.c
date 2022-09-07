@@ -17,6 +17,11 @@ void C_SetWindowTitle(const char *title)
   SetWindowTitle(title);
 }
 
+void C_GetMonitorPosition(int monitor, Vector2 *result)
+{
+  *result = GetMonitorPosition(monitor);
+}
+
 // texture
 Texture2D *C_LoadTexture(const char *fileName)
 {

@@ -25,14 +25,16 @@ module Raylib.Core (
     getRenderWidth,
     getRenderHeight,
     getMonitorCount,
+    getCurrentMonitor,
+    getMonitorPosition,
+    getMonitorWidth,
+    getMonitorHeight,
     clearWindowState,
     toggleFullScreen,
     maximizeWindow,
     minimizeWindow,
     restoreWindow,
     setWindowIcon,
-    getMonitorWidth,
-    getMonitorHeight,
     clearBackground,
     beginDrawing,
     endDrawing,
@@ -189,6 +191,18 @@ foreign import ccall unsafe "raylib.h GetMonitorCount" cGetMonitorCount :: IO CI
 getMonitorCount :: IO Int
 getMonitorCount = do c <- cGetMonitorCount
                      return (fromIntegral c)
+
+foreign import ccall unsafe "raylib.h GetCurrentMonitor" cGetCurrentMonitor :: IO CInt
+getCurrentMonitor :: IO Int
+getCurrentMonitor = do c <- cGetCurrentMonitor
+                       return (fromIntegral c)
+
+foreign import ccall unsafe "raylib-hs.h C_GetMonitorPosition" cGetMonitorPosition :: CInt -> Ptr Vector2 -> IO ()
+getMonitorPosition :: Int -> IO Vector2
+getMonitorPosition x =
+  alloca $ \vector2Ptr -> do
+    cGetMonitorPosition (fromIntegral x) vector2Ptr
+    peek vector2Ptr
 
 foreign import ccall unsafe "raylib.h GetMonitorWidth" cGetMonitorWidth :: CInt -> IO CInt
 getMonitorWidth :: Int -> IO Int
