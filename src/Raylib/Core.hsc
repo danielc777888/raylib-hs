@@ -32,6 +32,8 @@ module Raylib.Core (
     getMonitorPhysicalWidth,
     getMonitorPhysicalHeight,
     getMonitorRefreshRate,
+    getWindowPosition,
+    getWindowScaleDPI,
     clearWindowState,
     toggleFullScreen,
     maximizeWindow,
@@ -232,6 +234,21 @@ foreign import ccall unsafe "raylib.h GetMonitorRefreshRate" cGetMonitorRefreshR
 getMonitorRefreshRate :: Int -> IO Int
 getMonitorRefreshRate x = do h <- cGetMonitorRefreshRate (fromIntegral x)
                              return (fromIntegral h)
+
+foreign import ccall unsafe "raylib-hs.h C_GetWindowPosition" cGetWindowPosition :: Ptr Vector2 -> IO ()
+getWindowPosition :: IO Vector2
+getWindowPosition  =
+  alloca $ \vector2Ptr -> do
+    cGetWindowPosition vector2Ptr
+    peek vector2Ptr
+
+foreign import ccall unsafe "raylib-hs.h C_GetWindowScaleDPI" cGetWindowScaleDPI :: Ptr Vector2 -> IO ()
+getWindowScaleDPI :: IO Vector2
+getWindowScaleDPI =
+  alloca $ \vector2Ptr -> do
+    cGetWindowScaleDPI vector2Ptr
+    peek vector2Ptr
+
 
 foreign import ccall unsafe "raylib.h SetTargetFPS" cSetTargetFPS :: CInt -> IO ()
 setTargetFPS :: Int -> IO ()

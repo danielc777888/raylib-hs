@@ -22,6 +22,16 @@ void C_GetMonitorPosition(int monitor, Vector2 *result)
   *result = GetMonitorPosition(monitor);
 }
 
+void C_GetWindowPosition(Vector2 *result)
+{
+  *result = GetWindowPosition();
+}
+
+void C_GetWindowScaleDPI(Vector2 *result)
+{
+  *result = GetWindowScaleDPI();
+}
+
 // texture
 Texture2D *C_LoadTexture(const char *fileName)
 {

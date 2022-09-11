@@ -3,6 +3,8 @@ void C_ClearBackground(Color *color);
 void C_SetWindowIcon(Image *image);
 void C_SetWindowTitle(const char *title);
 void C_GetMonitorPosition(int monitor, Vector2 *result);
+void C_GetWindowPosition(Vector2 *result);
+void C_GetWindowScaleDPI(Vector2 *result);
 
 // texture
 Texture2D *C_LoadTexture(const char *fileName);
