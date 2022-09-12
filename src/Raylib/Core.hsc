@@ -34,6 +34,7 @@ module Raylib.Core (
     getMonitorRefreshRate,
     getWindowPosition,
     getWindowScaleDPI,
+    getMonitorName,
     clearWindowState,
     toggleFullScreen,
     maximizeWindow,
@@ -249,6 +250,10 @@ getWindowScaleDPI =
     cGetWindowScaleDPI vector2Ptr
     peek vector2Ptr
 
+foreign import ccall unsafe "raylib.h GetMonitorName" cGetMonitorName :: CInt -> IO CString
+getMonitorName :: Int -> IO String
+getMonitorName m  = do n <- cGetMonitorName (fromIntegral m)
+                       peekCString n
 
 foreign import ccall unsafe "raylib.h SetTargetFPS" cSetTargetFPS :: CInt -> IO ()
 setTargetFPS :: Int -> IO ()
