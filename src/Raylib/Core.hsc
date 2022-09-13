@@ -1,4 +1,3 @@
-
 module Raylib.Core (
     -- window-related
     initWindow,
@@ -35,6 +34,10 @@ module Raylib.Core (
     getWindowPosition,
     getWindowScaleDPI,
     getMonitorName,
+    setClipboardText,
+    getClipboardText,
+    enableEventWaiting,
+    disableEventWaiting,
     clearWindowState,
     toggleFullScreen,
     maximizeWindow,
@@ -253,6 +256,23 @@ foreign import ccall unsafe "raylib.h GetMonitorName" cGetMonitorName :: CInt ->
 getMonitorName :: Int -> IO String
 getMonitorName m  = do n <- cGetMonitorName (fromIntegral m)
                        peekCString n
+
+foreign import ccall unsafe "raylib.h SetClipboardText" cSetClipboardText :: CString -> IO ()
+setClipboardText :: String -> IO ()
+setClipboardText t = withCString t (\t' -> cSetClipboardText t')
+
+foreign import ccall unsafe "raylib.h GetClipboardText" cGetClipboardText :: IO CString
+getClipboardText :: IO String
+getClipboardText = do t <- cGetClipboardText
+                      peekCString t
+
+foreign import ccall unsafe "raylib.h EnableEventWaiting" cEnableEventWaiting :: IO ()
+enableEventWaiting :: IO ()
+enableEventWaiting = do enableEventWaiting
+
+foreign import ccall unsafe "raylib.h DisableEventWaiting" cDisableEventWaiting :: IO ()
+disableEventWaiting :: IO ()
+disableEventWaiting = do disableEventWaiting
 
 foreign import ccall unsafe "raylib.h SetTargetFPS" cSetTargetFPS :: CInt -> IO ()
 setTargetFPS :: Int -> IO ()
