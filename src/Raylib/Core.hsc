@@ -57,15 +57,14 @@ module Raylib.Core (
 import Foreign.Storable
 import Foreign
 import Foreign.C
-import qualified Data.Text as T
 import Raylib.Structs
 import Raylib.Enums
 
 #include <raylib.h>
 
 foreign import ccall unsafe "raylib.h InitWindow" cInitWindow :: CInt -> CInt -> CString -> IO ()
-initWindow :: Int -> Int -> T.Text -> IO ()
-initWindow width height title = withCString (T.unpack title) (\title' ->
+initWindow :: Int -> Int -> String -> IO ()
+initWindow width height title = withCString title (\title' ->
                                    cInitWindow (fromIntegral width) (fromIntegral height) title')
 
 foreign import ccall unsafe "raylib.h WindowShouldClose" cWindowShouldClose :: IO CBool
@@ -146,8 +145,8 @@ setWindowIcon :: Ptr Image -> IO ()
 setWindowIcon i_ptr = do cSetWindowIcon i_ptr
 
 foreign import ccall unsafe "raylib-hs.h C_SetWindowTitle" cSetWindowTitle :: CString -> IO ()
-setWindowTitle :: T.Text -> IO ()
-setWindowTitle t = withCString (T.unpack t) (\t' -> cSetWindowTitle t')
+setWindowTitle :: String -> IO ()
+setWindowTitle t = withCString t (\t' -> cSetWindowTitle t')
 
 foreign import ccall unsafe "raylib.h SetWindowPosition" cSetWindowPosition :: CInt -> CInt -> IO ()
 setWindowPosition :: Int -> Int -> IO ()
@@ -285,8 +284,8 @@ getRandomValue min max = do v <- cGetRandomValue (fromIntegral min) (fromIntegra
                             return (fromIntegral v)
 
 foreign import ccall unsafe "raylib.h TraceLog" cTraceLog :: CInt -> CString -> IO ()
-traceLog :: TraceLogLevel -> T.Text -> IO ()
-traceLog t s = withCString (T.unpack s) (\s' ->
+traceLog :: TraceLogLevel -> String -> IO ()
+traceLog t s = withCString s (\s' ->
                   cTraceLog (fromIntegral (fromEnum t)) s')
 
 foreign import ccall unsafe "raylib-hs.h C_ClearBackground" cClearBackground :: Ptr Color -> IO ()

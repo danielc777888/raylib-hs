@@ -2,14 +2,12 @@ module Raylib.Shapes(
     drawRectangle
 ) where
 
-import qualified Data.Text as T
 import Foreign.Storable
 import Foreign
 import Foreign.C
 import Raylib.Structs
 
 #include <raylib.h>
-
 
 -- basic shapes drawing functions
 
